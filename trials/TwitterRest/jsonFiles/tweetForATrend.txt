@@ -1,0 +1,101 @@
+{
+    "contributors": null,
+    "text": "what is your take on Doniger's book 'The Hindus'??",
+    "geo": null,
+    "retweeted": false,
+    "in_reply_to_screen_name": null,
+    "truncated": false,
+    "lang": "en",
+    "entities": {
+        "symbols": [],
+        "urls": [],
+        "hashtags": [],
+        "user_mentions": []
+    },
+    "in_reply_to_status_id_str": null,
+    "id": 433212337521061900,
+    "source": "web",
+    "in_reply_to_user_id_str": null,
+    "favorited": false,
+    "in_reply_to_status_id": null,
+    "retweet_count": 0,
+    "created_at": "Tue Feb 11 12:14:04 +0000 2014",
+    "in_reply_to_user_id": null,
+    "favorite_count": 0,
+    "id_str": "433212337521061888",
+    "place": null,
+    "user": {
+        "location": "Mumbai",
+        "default_profile": false,
+        "profile_background_tile": false,
+        "statuses_count": 79511,
+        "lang": "en",
+        "profile_link_color": "EB3A2A",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/88136479/1392037974",
+        "id": 88136479,
+        "following": false,
+        "protected": false,
+        "favourites_count": 87,
+        "profile_text_color": "CAD3E6",
+        "description": "Journalist,CEO-NBC, Ethical hacker (LPT)  http://t.co/a69z38dNJz   mail-vaidehisachin@gmail.com",
+        "verified": false,
+        "contributors_enabled": false,
+        "profile_sidebar_border_color": "FFFFFF",
+        "name": "QueenBee ?",
+        "profile_background_color": "EBE5E2",
+        "created_at": "Sat Nov 07 07:16:55 +0000 2009",
+        "is_translation_enabled": false,
+        "default_profile_image": false,
+        "followers_count": 4974,
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/431364779781804032/Ll6RudRd_normal.jpeg",
+        "geo_enabled": false,
+        "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/378800000153494288/tIbVemn_.jpeg",
+        "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/378800000153494288/tIbVemn_.jpeg",
+        "follow_request_sent": false,
+        "entities": {
+            "description": {
+                "urls": [
+                    {
+                        "expanded_url": "http://www.youtube.com/watch?v=zEUq9Fzm-Xc&feature=related",
+                        "indices": [
+                            42,
+                            64
+                        ],
+                        "display_url": "youtube.com/watch?v=zEUq9F…",
+                        "url": "http://t.co/a69z38dNJz"
+                    }
+                ]
+            },
+            "url": {
+                "urls": [
+                    {
+                        "expanded_url": "http://www.afternoonvoice.com",
+                        "indices": [
+                            0,
+                            22
+                        ],
+                        "display_url": "afternoonvoice.com",
+                        "url": "http://t.co/GM6SDG0w7i"
+                    }
+                ]
+            }
+        },
+        "url": "http://t.co/GM6SDG0w7i",
+        "utc_offset": 19800,
+        "time_zone": "Mumbai",
+        "notifications": false,
+        "profile_use_background_image": true,
+        "friends_count": 0,
+        "profile_sidebar_fill_color": "2C3030",
+        "screen_name": "vaidehisachin",
+        "id_str": "88136479",
+        "profile_image_url": "http://pbs.twimg.com/profile_images/431364779781804032/Ll6RudRd_normal.jpeg",
+        "listed_count": 79,
+        "is_translator": false
+    },
+    "coordinates": null,
+    "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "en"
+    }
+}

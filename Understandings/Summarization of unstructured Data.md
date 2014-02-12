@@ -19,7 +19,7 @@ Brief Paper on summarization of unstructured data:
 	2) Should i use search / streaming api?
 	3) Create MySQL database to hold trends and required data from tweets
 	4) Create dump of trends and tweets on mongodb with all fields.
-	
+	5) Get a vbox with ubuntu.
 	
 
 

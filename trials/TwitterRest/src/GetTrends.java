@@ -19,17 +19,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GetTrends {
+public class GetTrends  {
+   
+    
+
     
     public GetTrends() {
     
     }
     
-    public void buildConsumerPool(){
-        
-    }
-    
-    public static void main(String args[]) {
+    public void buildConsumerPool() {
         
         //setting the config path
         PropertyHandler.setConfigPath("/twitter.properties");
@@ -48,14 +47,18 @@ public class GetTrends {
         //creating consumer objects for each app
         for (int numberOfAccounts = 0; numberOfAccounts < splitconsumerKeys.length; numberOfAccounts++) {
             
-            try {
                 String consumerKey = splitconsumerKeys[numberOfAccounts];
                 String consumerSecret = splitconsumerSecret[numberOfAccounts];
                 String accessToken = splitaccessToken[numberOfAccounts];
                 String tokenSecret = splittokenSecret[numberOfAccounts];
-                OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumerKey, consumerSecret);
+        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumerKey, consumerSecret);
+        consumer.setTokenWithSecret(accessToken, tokenSecret);
                 
-                consumer.setTokenWithSecret(accessToken, tokenSecret);
+        }
+    }
+    
+    public static void main(String args[]) {
+        
                 HttpGet request = new HttpGet("https://api.twitter.com" + "/1.1/trends/place.json?id=2295420");
                 
                 consumer.sign(request);
@@ -87,21 +90,5 @@ public class GetTrends {
                     break;
                 }
                 
-            } catch (OAuthMessageSignerException e) {
-                e.printStackTrace();
-            } catch (OAuthExpectationFailedException e) {
-                e.printStackTrace();
-            } catch (OAuthCommunicationException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            
         }
-        
-    }
 }

@@ -15,11 +15,10 @@ Brief Paper on summarization of unstructured data:
 
 ###Things to do:
 	
-	1) How to use streaming API and spawn threads. When to stop logic?
-	2) Should i use search / streaming api?
-	3) Create MySQL database to hold trends and required data from tweets
-	4) Create dump of trends and tweets on mongodb with all fields.
-	5) Get a vbox with ubuntu.
+	
+	1) Should i use search / streaming api? Using search api.
+	2) Use postgres to store raw data and processed data
+	3) Finish the whole pipline of consumer pool , executors and threads.
 	
 
 

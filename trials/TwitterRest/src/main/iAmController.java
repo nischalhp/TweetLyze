@@ -2,7 +2,10 @@ package main;
 
 import helpers.PropertyHandler;
 
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import oauth.signpost.OAuthConsumer;
 
@@ -24,6 +27,16 @@ public class iAmController {
         Logger log = Logger.getLogger(iAmController.class.getName());
         log.info("consumer pool created");
         
+        //Adding executors
+        
+        int NumberOfThreads = 2*consumerPool.size();
+        ExecutorService executor = Executors.newFixedThreadPool(NumberOfThreads);
+        ArrayList<String> trendsGlobalList = new ArrayList<String>();
+        while(true){
+            
+
+        }
+
     }
     
 }

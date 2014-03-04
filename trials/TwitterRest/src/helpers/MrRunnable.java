@@ -29,21 +29,6 @@ public class MrRunnable implements Runnable {
     @Override
     public void run() {
     
-        try {
-           //creating an object of getDataFromTwitter
-           //check the url for trends or search , create an object respective to that 
-            
-        } catch (OAuthMessageSignerException e) {
-            e.printStackTrace();
-        } catch (OAuthExpectationFailedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (OAuthCommunicationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            
-        }
         
     }
     

@@ -13,6 +13,8 @@ import oauth.signpost.OAuthConsumer;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import twitter.GetTrends;
+
 public class iAmControllerOfTrends {
     
     private static String propertiesMain = "/properties/property.properties";
@@ -37,6 +39,7 @@ public class iAmControllerOfTrends {
             int timeToGetTrends = getSystemTime();
             if(timeToGetTrends == 06){
                 //get trends for the day
+            	GetTrends trends = new GetTrends();
             }
         }
         

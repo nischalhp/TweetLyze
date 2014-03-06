@@ -8,7 +8,7 @@ import java.io.IOException;
 public class LocationUpdater {
 
 	private static String propertiesMain = "properties/property.properties";
-
+	
 	// updating the postgres locations db
 	public static void updateLocationTable() throws IOException {
 

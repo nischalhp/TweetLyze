@@ -22,6 +22,7 @@ public class iAmControllerOfTrends {
     public static void main(String args[]) {
     
         PropertyHandler.setConfigPath(propertiesMain);
+
         ConsumerPool consumerObjects = new ConsumerPool();
         BlockingQueue<OAuthConsumer> consumerPool = consumerObjects.buildConsumerPool();
         String logPath = PropertyHandler.getProperty("logPath");
@@ -37,10 +38,11 @@ public class iAmControllerOfTrends {
         while (true) {
            
             int timeToGetTrends = getSystemTime();
-            if(timeToGetTrends == 06){
+           /* if(timeToGetTrends == 06){
                 //get trends for the day
             	GetTrends trends = new GetTrends();
-            }
+            }*/
+            
         }
         
     }
@@ -51,6 +53,7 @@ public class iAmControllerOfTrends {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(millis);
         return(cal.getTime().getHours());
-        
+
     }
+   
 }

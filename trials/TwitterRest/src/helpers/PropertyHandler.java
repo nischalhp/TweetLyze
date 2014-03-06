@@ -22,6 +22,9 @@ public class PropertyHandler {
 		configPath = path;
 	}
 
+	public static String getConfigPath(){
+		return configPath;
+	}
 	/**
 	 * Property Handler method for all the classes
 	 */

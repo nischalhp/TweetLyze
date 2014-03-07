@@ -37,8 +37,8 @@ public class MrPostgres {
 			}
 		} catch (SQLException e) {
 			log.error("Something went wrong whille opening the connection to postgres");
-		}finally{
-			return conn;
 		}
+		return conn;
+
 	}
 }

@@ -26,7 +26,7 @@ public class LocationUpdater {
 
 
 			String logPath = PropertyHandler.getProperty("logPath");
-			PropertyConfigurator.configure(logPath);
+			PropertyConfigurator.configure("properties/log.properties");
 			log = Logger.getLogger(LocationUpdater.class.getName());
 
 			String dbTables = PropertyHandler.getProperty("dbTables");

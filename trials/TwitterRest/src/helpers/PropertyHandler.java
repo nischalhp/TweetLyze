@@ -34,7 +34,6 @@ public class PropertyHandler {
 			prop = new Properties();
 			config = new FileInputStream(configPath);
 			prop.load(config);
-			System.out.println(config);
 			/*log.info("Properties loaded");
 */
 		} catch (FileNotFoundException e) {

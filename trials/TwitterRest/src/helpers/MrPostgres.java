@@ -12,7 +12,7 @@ public class MrPostgres {
 	private static String propertiesMain = "properties/property.properties";
 
 	@SuppressWarnings("finally")
-	public Connection getPostGresConnection() {
+	public static Connection getPostGresConnection() {
 
 		Connection conn = null;
 		Logger log = null;
@@ -36,9 +36,14 @@ public class MrPostgres {
 				log.error("Connection to postgres is unsuccesfull");
 			}
 		} catch (SQLException e) {
+				System.out.println("initialization failed");
 			log.error("Something went wrong whille opening the connection to postgres");
 		}
 		return conn;
 
+	}
+	
+	public static void main(String args[]){
+		Connection conn = getPostGresConnection(); 
 	}
 }

@@ -41,6 +41,7 @@ public class LocationUpdater {
 				// get a postGres connection object
 				MrPostgres postgresObj = new MrPostgres();
 				Connection conn = postgresObj.getPostGresConnection();
+				System.out.println(conn);
 				log.info("Connection object to postgres database recieved");
 				Statement stmt = conn.createStatement();
 				String locationTableName = PropertyHandler.getProperty("location");

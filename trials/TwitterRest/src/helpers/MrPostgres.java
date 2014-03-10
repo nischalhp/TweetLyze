@@ -20,7 +20,7 @@ public class MrPostgres {
 			PropertyHandler.setConfigPath(propertiesMain);
 			String hostName = PropertyHandler.getProperty("hostName");
 			String port = PropertyHandler.getProperty("port");
-			String dbName = PropertyHandler.getProperty("tweetyfox");
+			String dbName = PropertyHandler.getProperty("dbName");
 			String uname = PropertyHandler.getProperty("uname");
 			String pwd = PropertyHandler.getProperty("pwd");
 			String logPath = PropertyHandler.getProperty("logPath");
@@ -36,14 +36,13 @@ public class MrPostgres {
 				log.error("Connection to postgres is unsuccesfull");
 			}
 		} catch (SQLException e) {
-				System.out.println("initialization failed");
 			log.error("Something went wrong whille opening the connection to postgres");
 		}
 		return conn;
 
 	}
-	
-	public static void main(String args[]){
-		Connection conn = getPostGresConnection(); 
+
+	public static void main(String args[]) {
+		Connection conn = getPostGresConnection();
 	}
 }

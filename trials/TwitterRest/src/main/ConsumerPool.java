@@ -1,7 +1,7 @@
 package main;
 
-import helpers.PropertyHandler;
-
+import java.io.FileInputStream;
+import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,7 +14,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class ConsumerPool {
     
     private static Logger log;
-    private static String propertiesMain = "/properties/property.properties";
+    private static String propertiesMain = "properties/property.properties";
     
     //building consumer Pool
     @SuppressWarnings("finally")
@@ -22,13 +22,16 @@ public class ConsumerPool {
     
         BlockingQueue<OAuthConsumer> consumerObjectsQueue = null;
         try {
+
             //setting the config path
-            PropertyHandler.setConfigPath(propertiesMain);
+        	Properties PropertyHandler = new Properties();
+            PropertyHandler.load(new FileInputStream(propertiesMain));
             String twitterPath = PropertyHandler.getProperty("twitterPath");
             String logPath = PropertyHandler.getProperty("logPath");
             
             //setting config for twitter
-            PropertyHandler.setConfigPath(twitterPath);
+            Properties PropertyHandlerTwitter = new Properties();
+            PropertyHandlerTwitter.load(new FileInputStream(twitterPath));
             //Blocking Linked Queue
             
             consumerObjectsQueue = new LinkedBlockingQueue<OAuthConsumer>();

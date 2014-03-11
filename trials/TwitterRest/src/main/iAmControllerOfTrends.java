@@ -3,6 +3,7 @@ package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
@@ -10,9 +11,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import oauth.signpost.OAuthConsumer;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.JSONException;
+
+import twitter.GetTrends;
 
 public class iAmControllerOfTrends {
 
@@ -41,18 +49,40 @@ public class iAmControllerOfTrends {
 					.newFixedThreadPool(NumberOfThreads);
 			while (true) {
 
-//				int timeToGetTrends = getSystemTime();
-				
+				int timeToGetTrends = getSystemTime();
+				if (timeToGetTrends == 23) {
+					GetTrends getTrends = new GetTrends();
+					OAuthConsumer consumerObj = consumerPool.take();
+					getTrends.retrieveTrends(consumerObj);
+				}
 
 			}
 		} catch (FileNotFoundException e) {
-			log.error("Cant set properties file"+e.getMessage()); 
+			log.error("Cant set properties file" + e.getMessage());
+
+		} catch (OAuthMessageSignerException e) {
+			log.error("When signing the request using the consumer object something went wrong "
+					+ e.getMessage());
+
+		} catch (ClientProtocolException e) {
+			log.error("While requesting for data from twitter using the client something went wrong "
+					+ e.getMessage());
 
 		} catch (IOException e) {
 			log.error("Something went wrong while setting properties file"
-					+e.getMessage()); 
-		}
+					+ e.getMessage());
 
+		} catch (OAuthExpectationFailedException e) {
+			log.info(e.getMessage());
+		} catch (JSONException e) {
+			log.info(e.getMessage());
+		} catch (SQLException e) {
+			log.info(e.getMessage());
+		} catch (InterruptedException e) {
+			log.info(e.getMessage());
+		} catch (OAuthCommunicationException e) {
+			log.info(e.getMessage());
+		}
 	}
 
 	public static int getSystemTime() {

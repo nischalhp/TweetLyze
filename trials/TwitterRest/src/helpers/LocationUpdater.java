@@ -35,18 +35,17 @@ public class LocationUpdater {
 			String dbTables = mainProperties.getProperty("dbTables");
 			Properties dbProperties = new Properties();
 			dbProperties.load(new FileInputStream(dbTables));
+			// get a postGres connection object
+			Connection conn = MrPostgres.getPostGresConnection();
+			log.info("Connection object to postgres database recieved");
+			String locationTableName = dbProperties.getProperty("location");
+			String queryToInsert = "INSERT INTO location(id,city) values(?,?)";
+			PreparedStatement stmt = conn.prepareStatement(queryToInsert);
 			for (int numberOfLocations = 0; numberOfLocations < place.length; numberOfLocations++) {
 
 				// System.out.println("Place name is " +
 				// place[numberOfLocations]
 				// + " and the geoid is " + location[numberOfLocations]);
-
-				// get a postGres connection object
-				Connection conn = MrPostgres.getPostGresConnection();
-				log.info("Connection object to postgres database recieved");
-				String locationTableName = dbProperties.getProperty("location");
-				String queryToInsert = "INSERT INTO location(id,city) values(?,?)";
-				PreparedStatement stmt = conn.prepareStatement(queryToInsert);
 				stmt.setString(1, location[numberOfLocations]);
 				stmt.setString(2, place[numberOfLocations]);
 				log.info("insert query " + stmt.toString());

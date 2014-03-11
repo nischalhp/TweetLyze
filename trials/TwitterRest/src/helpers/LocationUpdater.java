@@ -50,9 +50,9 @@ public class LocationUpdater {
 				stmt.setString(2, place[numberOfLocations]);
 				log.info("insert query " + stmt.toString());
 				stmt.executeUpdate();
-				conn.close();
 
 			}
+			conn.close();
 		} catch (SQLException e) {
 			log.error(" Something went wrong while creating connectin to postgres or inserting to location table in postgres");
 		} catch (FileNotFoundException e) {

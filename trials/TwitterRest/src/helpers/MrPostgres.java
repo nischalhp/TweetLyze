@@ -33,10 +33,10 @@ public class MrPostgres {
 			if (conn != null) {
 				log.info("Connection to postgres is succesfull");
 			} else {
-				log.error("Connection to postgres is unsuccesfull");
+				log.error("Connection to postgres is unsuccesfull ");
 			}
 		} catch (SQLException e) {
-			log.error("Something went wrong whille opening the connection to postgres");
+			log.error("Something went wrong whille opening the connection to postgres " +e.getMessage() );
 		}
 		return conn;
 

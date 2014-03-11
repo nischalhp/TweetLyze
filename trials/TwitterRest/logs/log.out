@@ -1,66 +1,17 @@
-2014-03-10 10:24 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:24 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:26 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:26 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:26 [helpers.LocationUpdater ~ updateLocationTable:45] INFO  -Connection object to postgres database recieved
-2014-03-10 10:27 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:27 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:27 [helpers.LocationUpdater ~ updateLocationTable:44] INFO  -Connection object to postgres database recieved
-2014-03-10 10:28 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:28 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:28 [helpers.LocationUpdater ~ updateLocationTable:44] INFO  -Connection object to postgres database recieved
-2014-03-10 10:29 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:29 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:29 [helpers.LocationUpdater ~ updateLocationTable:44] INFO  -Connection object to postgres database recieved
-2014-03-10 10:30 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:30 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:30 [helpers.LocationUpdater ~ updateLocationTable:43] INFO  -Connection object to postgres database recieved
-2014-03-10 10:31 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:31 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:31 [helpers.LocationUpdater ~ updateLocationTable:44] INFO  -Connection object to postgres database recieved
-2014-03-10 10:34 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:34 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:34 [helpers.LocationUpdater ~ updateLocationTable:44] INFO  -Connection object to postgres database recieved
-2014-03-10 10:39 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:39 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:39 [helpers.LocationUpdater ~ updateLocationTable:45] INFO  -Connection object to postgres database recieved
-2014-03-10 10:43 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 10:43 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 10:43 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:18 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:18 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:18 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:18 [helpers.LocationUpdater ~ updateLocationTable:50] INFO  -insert query INSERT INTO location(id,city) values(2295420,bangalore)
-2014-03-10 11:18 [helpers.LocationUpdater ~ updateLocationTable:56] ERROR - Something went wrong while creating connectin to postgres or inserting to location table in postgres
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('2295420','bangalore')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('2487956','san fransico')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('2442047','los angeles')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('44418','london')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('23424948','singapore')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('2450022','miami')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('2357024','atlanta')
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-10 11:21 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:46] INFO  -Connection object to postgres database recieved
-2014-03-10 11:21 [helpers.LocationUpdater ~ updateLocationTable:52] INFO  -insert query INSERT INTO location(id,city) values('28743736','new delhi')
+2014-03-11 22:20 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
+2014-03-11 22:20 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
+2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:40] INFO  -Connection object to postgres database recieved
+2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2295420','bangalore')
+2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2487956','san fransico')
+2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:57] ERROR - Something went wrong while creating connectin to postgres or inserting to location table in postgres
+2014-03-11 22:54 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
+2014-03-11 22:54 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:40] INFO  -Connection object to postgres database recieved
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2295420','bangalore')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2487956','san fransico')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2442047','los angeles')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('44418','london')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('23424948','singapore')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2450022','miami')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2357024','atlanta')
+2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('28743736','new delhi')

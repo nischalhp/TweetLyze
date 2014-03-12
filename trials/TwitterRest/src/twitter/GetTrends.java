@@ -32,7 +32,7 @@ import org.json.JSONObject;
 public class GetTrends {
 
 	private static Logger log;
-	private static String propertiesMain = "/properties/property.properties";
+	private static String propertiesMain = "properties/property.properties";
 
 	public GetTrends() {
 
@@ -45,7 +45,6 @@ public class GetTrends {
 			OAuthCommunicationException {
 
 		// Output is an arraylist of trends
-		ArrayList<String> trends = null;
 		Logger log = null;
 		// Setting the property file handler and retrieving url and places
 		Properties PropertyHandler = new Properties();
@@ -86,6 +85,11 @@ public class GetTrends {
 				consumer.sign(request);
 				HttpClient client = new DefaultHttpClient();
 				HttpResponse response = client.execute(request);
+
+				/*
+				 * getting status code based on status code continue the process
+				 */
+
 				int statusCode = response.getStatusLine().getStatusCode();
 				log.info(response.getStatusLine().getReasonPhrase()
 						+ " , status code " + statusCode);
@@ -99,7 +103,6 @@ public class GetTrends {
 			}
 		}
 
-		// getting status code
 		/*
 		 * for (int i = 0; i < jsonArrayTrends.length(); i++) { JSONObject
 		 * jsonObjTrend = jsonArrayTrends.getJSONObject(i);

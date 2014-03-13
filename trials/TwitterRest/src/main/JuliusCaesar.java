@@ -33,8 +33,7 @@ public class JuliusCaesar {
 		try {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 
-			ConsumerPool consumerObjects = new ConsumerPool();
-			BlockingQueue<OAuthConsumer> consumerPool = consumerObjects
+			BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool 
 					.buildConsumerPool();
 			String logPath = PropertyHandler.getProperty("logPath");
 
@@ -51,10 +50,14 @@ public class JuliusCaesar {
 			while (true) {
 
 				int timeToGetTrends = getSystemTime();
-				if (timeToGetTrends == 23) {
-					GetTrends getTrends = new GetTrends();
-					OAuthConsumer consumerObj = consumerPool.take();
-					getTrends.retrieveTrends(consumerObj);
+				if (timeToGetTrends == Integer.parseInt(PropertyHandler
+						.getProperty("trendsTime"))) {
+					//peeking to see if a consumer object is free
+					OAuthConsumer consumerObj = consumerPool.peek();
+					//if its null you need to wait to pick up the object
+					if(consumerObj!=null){
+				MrRunnable trendsRunnable = new MrRunnable()	
+					}
 				}
 				/*
 				 * based on the number of retrieved trends set time gaps so that

@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 import oauth.signpost.OAuthConsumer;
@@ -18,6 +17,7 @@ import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -42,7 +42,7 @@ public class GetTrends {
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, ClientProtocolException,
 			IOException, JSONException, SQLException,
-			OAuthCommunicationException {
+			OAuthCommunicationException, HttpException {
 
 		// Output is an arraylist of trends
 		Logger log = null;
@@ -81,25 +81,30 @@ public class GetTrends {
 				String id = rs.getString(1);
 				String cityName = rs.getString(2);
 				// request object created
-				HttpGet request = new HttpGet(trendsUrl + id);
+				String toFireUrl = trendsUrl + id;
+				HttpGet request = new HttpGet(toFireUrl);
+				log.info("Firing request to " + toFireUrl);
 				consumer.sign(request);
+				log.info("Request object has been signed");
 				HttpClient client = new DefaultHttpClient();
 				HttpResponse response = client.execute(request);
-
 				/*
 				 * getting status code based on status code continue the process
 				 */
-
 				int statusCode = response.getStatusLine().getStatusCode();
-				log.info(response.getStatusLine().getReasonPhrase()
+				System.out.println(response.getStatusLine().getReasonPhrase()
 						+ " , status code " + statusCode);
-				StringWriter writer = new StringWriter();
-				IOUtils.copy(response.getEntity().getContent(), writer);
-				String jsonStr = writer.toString();
-				System.out.println(jsonStr);
-				JSONArray jsonArray = new JSONArray(jsonStr);
-				JSONObject jsonObj = jsonArray.getJSONObject(0);
-				JSONArray jsonArrayTrends = jsonObj.getJSONArray("trends");
+				System.out.println(response);
+				if (statusCode == 200) {
+					StringWriter writer = new StringWriter();
+					IOUtils.copy(response.getEntity().getContent(), writer);
+					String jsonStr = writer.toString();
+					JSONArray jsonArray = new JSONArray(jsonStr);
+					JSONObject jsonObj = jsonArray.getJSONObject(0);
+					JSONArray jsonArrayTrends = jsonObj.getJSONArray("trends");
+				}else{
+					throw new HttpException("The status code returned is " +statusCode+ " and this is a problem");
+				}
 			}
 		}
 
@@ -119,8 +124,6 @@ public class GetTrends {
 	 * searchUrl.replaceAll("/search", "/search/tweets.json"); searchUrl =
 	 * searchUrl.replaceAll("//twitter.com", "//api.twitter.com/1.1"); searchUrl
 	 * = searchUrl.replaceAll("http", "https"); searchUrl = searchUrl +
-	 * "&lang=en"; System.out.println(searchUrl);
-	 */public static void main(String args[]) {
-
-	}
+	 * "&lang=en"; System.out.println(searchUrl)
+	 */
 }

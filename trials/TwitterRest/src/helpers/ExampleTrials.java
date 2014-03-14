@@ -14,14 +14,14 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.HttpException;
 import org.json.JSONException;
 
 import twitter.GetTrends;
 
 public class ExampleTrials {
 
-	public static void main(String args[]) throws SQLException {
+	public static void main(String args[]) {
 
 		getSystemTime();
 		// connectToPostgresServer();
@@ -33,7 +33,8 @@ public class ExampleTrials {
 			GetTrends trendsObj = new GetTrends();
 			trendsObj.retrieveTrends(consumerObj);
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IOException | JSONException e) {
+				| OAuthCommunicationException | IOException | JSONException
+				 | HttpException | SQLException e) {
 			e.printStackTrace();
 
 		} catch (InterruptedException e) {

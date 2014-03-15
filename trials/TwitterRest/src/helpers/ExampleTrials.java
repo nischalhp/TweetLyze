@@ -34,11 +34,15 @@ public class ExampleTrials {
 			trendsObj.retrieveTrends(consumerObj);
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
 				| OAuthCommunicationException | IOException | JSONException
-				 | HttpException | SQLException e) {
+				 | SQLException e) {
 			e.printStackTrace();
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} catch (HttpException e){
+			if(e.equals("429")){
+				
+			}
 		}
 	}
 

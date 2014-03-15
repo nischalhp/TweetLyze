@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.UUID;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -102,20 +103,22 @@ public class GetTrends {
 					JSONArray jsonArray = new JSONArray(jsonStr);
 					JSONObject jsonObj = jsonArray.getJSONObject(0);
 					JSONArray jsonArrayTrends = jsonObj.getJSONArray("trends");
-				}else{
-					throw new HttpException("The status code returned is " +statusCode+ " and this is a problem");
+					for (int i = 0; i < jsonArrayTrends.length(); i++) {
+						JSONObject jsonObjTrend = jsonArrayTrends
+								.getJSONObject(i);
+						System.out.println(jsonObjTrend); // String searchUrl =
+						String name = jsonObjTrend.getString("name");
+						name = name.replaceAll("#", "%23");
+						UUID uuid = UUID.randomUUID();
+					}
+
+				} else {
+					throw new HttpException(Integer.toString(statusCode));
 				}
+				break;
 			}
 		}
 
-		/*
-		 * for (int i = 0; i < jsonArrayTrends.length(); i++) { JSONObject
-		 * jsonObjTrend = jsonArrayTrends.getJSONObject(i);
-		 * System.out.println(jsonObjTrend); // String searchUrl =
-		 * jsonObjTrend.getString("url");
-		 * 
-		 * }
-		 */
 		// return trends;
 	}
 

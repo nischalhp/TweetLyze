@@ -1,17 +1,59 @@
-2014-03-11 22:20 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-11 22:20 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:40] INFO  -Connection object to postgres database recieved
-2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2295420','bangalore')
-2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2487956','san fransico')
-2014-03-11 22:20 [helpers.LocationUpdater ~ updateLocationTable:57] ERROR - Something went wrong while creating connectin to postgres or inserting to location table in postgres
-2014-03-11 22:54 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
-2014-03-11 22:54 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:40] INFO  -Connection object to postgres database recieved
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2295420','bangalore')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2487956','san fransico')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2442047','los angeles')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('44418','london')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('23424948','singapore')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2450022','miami')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('2357024','atlanta')
-2014-03-11 22:54 [helpers.LocationUpdater ~ updateLocationTable:51] INFO  -insert query INSERT INTO location(id,city) values('28743736','new delhi')
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:42] INFO  -Fetching api details for the twitter apps
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 0
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are 3pJIcVf0QUzcLpWlWXqB5A,6XTtv1cMTNlDbdTVyCh14HN5DKCSOBasLwpqGgiWKM,126065173-Sl3zH61tgYeIO7EgFsltkGz7NOSjnH9yhJuknIQB,a3GK8YxsqF7kNtYbDoR0FAsO5GkYwpxB37I9Aq0fUctew
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 1
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are eW9rNmevoCfhSfMdD9g,mdhtfBuIoJpUeeVysrqiqQvz9htVsoawbRUCSvBE5eY,2315638718-i4dXs2KHaZS6ccrq96sqPrzj1EI0qkomwUEx1op,T5cvZNyXo35G7qsowa52cr8K6LygR0tyBhchvm18akEcR
+2014-03-15 12:10 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:55] INFO  -Property file initialized , logger initialized
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:57] INFO  -trend url retrieved https://api.twitter.com/1.1/trends/place.json?id=
+2014-03-15 12:10 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
+2014-03-15 12:10 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:63] INFO  -Connection object to postgres is created
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:73] INFO  -Statement prepared to get city and id from location table Select id,city from location
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2295420
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2487956
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2442047
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=44418
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=23424948
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2450022
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2357024
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=28743736
+2014-03-15 12:10 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:42] INFO  -Fetching api details for the twitter apps
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 0
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are 3pJIcVf0QUzcLpWlWXqB5A,6XTtv1cMTNlDbdTVyCh14HN5DKCSOBasLwpqGgiWKM,126065173-Sl3zH61tgYeIO7EgFsltkGz7NOSjnH9yhJuknIQB,a3GK8YxsqF7kNtYbDoR0FAsO5GkYwpxB37I9Aq0fUctew
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 1
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are eW9rNmevoCfhSfMdD9g,mdhtfBuIoJpUeeVysrqiqQvz9htVsoawbRUCSvBE5eY,2315638718-i4dXs2KHaZS6ccrq96sqPrzj1EI0qkomwUEx1op,T5cvZNyXo35G7qsowa52cr8K6LygR0tyBhchvm18akEcR
+2014-03-15 17:36 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:55] INFO  -Property file initialized , logger initialized
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:57] INFO  -trend url retrieved https://api.twitter.com/1.1/trends/place.json?id=
+2014-03-15 17:36 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
+2014-03-15 17:36 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:63] INFO  -Connection object to postgres is created
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:73] INFO  -Statement prepared to get city and id from location table Select id,city from location
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2295420
+2014-03-15 17:36 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:42] INFO  -Fetching api details for the twitter apps
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 0
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are 3pJIcVf0QUzcLpWlWXqB5A,6XTtv1cMTNlDbdTVyCh14HN5DKCSOBasLwpqGgiWKM,126065173-Sl3zH61tgYeIO7EgFsltkGz7NOSjnH9yhJuknIQB,a3GK8YxsqF7kNtYbDoR0FAsO5GkYwpxB37I9Aq0fUctew
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:61] INFO  -constructing consumer object for twitter api 1
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:67] INFO  -the keys used to build the oauthObject are eW9rNmevoCfhSfMdD9g,mdhtfBuIoJpUeeVysrqiqQvz9htVsoawbRUCSvBE5eY,2315638718-i4dXs2KHaZS6ccrq96sqPrzj1EI0qkomwUEx1op,T5cvZNyXo35G7qsowa52cr8K6LygR0tyBhchvm18akEcR
+2014-03-15 17:39 [main.ConsumerPool ~ buildConsumerPool:74] INFO  -added the consumer object to que pool
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:55] INFO  -Property file initialized , logger initialized
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:57] INFO  -trend url retrieved https://api.twitter.com/1.1/trends/place.json?id=
+2014-03-15 17:39 [helpers.MrPostgres ~ getPostGresConnection:30] INFO  - Required credentials to connect to the postgres server is complete
+2014-03-15 17:39 [helpers.MrPostgres ~ getPostGresConnection:34] INFO  -Connection to postgres is succesfull
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:63] INFO  -Connection object to postgres is created
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:73] INFO  -Statement prepared to get city and id from location table Select id,city from location
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:86] INFO  -Firing request to https://api.twitter.com/1.1/trends/place.json?id=2295420
+2014-03-15 17:39 [twitter.GetTrends ~ retrieveTrends:88] INFO  -Request object has been signed

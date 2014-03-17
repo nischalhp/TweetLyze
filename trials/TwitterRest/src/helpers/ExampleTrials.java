@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.concurrent.BlockingQueue;
 
@@ -33,7 +34,7 @@ public class ExampleTrials {
 			GetTrends trendsObj = new GetTrends();
 			trendsObj.retrieveTrends(consumerObj);
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IOException | JSONException
+				| OAuthCommunicationException | IOException | JSONException | ParseException
 				 | SQLException e) {
 			e.printStackTrace();
 

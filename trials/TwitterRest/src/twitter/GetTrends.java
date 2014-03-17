@@ -9,6 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -43,7 +48,7 @@ public class GetTrends {
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, ClientProtocolException,
 			IOException, JSONException, SQLException,
-			OAuthCommunicationException, HttpException {
+			OAuthCommunicationException, HttpException, ParseException {
 
 		// Output is an arraylist of trends
 		Logger log = null;
@@ -110,6 +115,19 @@ public class GetTrends {
 						String name = jsonObjTrend.getString("name");
 						name = name.replaceAll("#", "%23");
 						UUID uuid = UUID.randomUUID();
+						Date currentDate = getDate();
+						String insertQuery = "INSERT INTO trends(id,trend,date,locationId) values(?,?,?,?)";
+						PreparedStatement insertStmt = conn
+								.prepareStatement(insertQuery);
+						int parameterPlaceHolder = 1;
+						insertStmt.setObject(parameterPlaceHolder++, uuid);
+						insertStmt.setString(parameterPlaceHolder++, name);
+						insertStmt.setDate(parameterPlaceHolder++,
+								(java.sql.Date) currentDate);
+						insertStmt.setString(parameterPlaceHolder++, id);
+						log.info(" Trend insert query " + insertStmt.toString());
+						insertStmt.executeUpdate();
+
 					}
 
 				} else {
@@ -117,6 +135,8 @@ public class GetTrends {
 				}
 				break;
 			}
+			//always close the connection object
+			conn.close();
 		}
 
 		// return trends;
@@ -129,4 +149,13 @@ public class GetTrends {
 	 * = searchUrl.replaceAll("http", "https"); searchUrl = searchUrl +
 	 * "&lang=en"; System.out.println(searchUrl)
 	 */
+	public static Date getDate() throws ParseException {
+
+		long millis = System.currentTimeMillis();
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+		Date currentDate = cal.getTime();
+		currentDate = formatter.parse(formatter.format(currentDate));
+		return currentDate;
+	}
 }

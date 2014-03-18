@@ -34,17 +34,21 @@ public class ExampleTrials {
 			GetTrends trendsObj = new GetTrends();
 			trendsObj.retrieveTrends(consumerObj);
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IOException | JSONException | ParseException
-				 | SQLException e) {
+				| OAuthCommunicationException | IOException | JSONException
+				| ParseException | SQLException e) {
 			e.printStackTrace();
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (HttpException e){
-			if(e.equals("429")){
-				
+		} catch (HttpException e) {
+			if (e.equals("429")) {
 			}
 		}
+
+		/*
+		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
+		 * e.printStackTrace(); }
+		 */
 	}
 
 	public static void getSystemTime() {

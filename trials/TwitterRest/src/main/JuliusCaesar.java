@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
@@ -15,6 +16,7 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -33,7 +35,7 @@ public class JuliusCaesar {
 		try {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 
-			BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool 
+			BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
 					.buildConsumerPool();
 			String logPath = PropertyHandler.getProperty("logPath");
 
@@ -43,27 +45,28 @@ public class JuliusCaesar {
 
 			// Adding executors
 
-			int NumberOfThreads = 2 * consumerPool.size();
+			int NumberOfThreads = 80; 
 			ExecutorService executor = Executors
 					.newFixedThreadPool(NumberOfThreads);
 			log.info("Executor class has been initialized");
 			while (true) {
-
 				int timeToGetTrends = getSystemTime();
 				if (timeToGetTrends == Integer.parseInt(PropertyHandler
 						.getProperty("trendsTime"))) {
-					//peeking to see if a consumer object is free
+					// peeking to see if a consumer object is free
 					OAuthConsumer consumerObj = consumerPool.peek();
-					//if its null you need to wait to pick up the object
-					if(consumerObj!=null){
-				MrRunnable trendsRunnable = new MrRunnable()	
+					// if its null you need to wait to pick up the object
+					if (consumerObj != null) {
+						// No need to spawn thread , just let the trends do its job
+						GetTrends.retrieveTrends(consumerObj);
+						log.info("Trends for the day has been added to the database");
 					}
 				}
 				/*
 				 * based on the number of retrieved trends set time gaps so that
 				 * we do not let them exceed rate limit
 				 */
-
+				log.info("Creating a job stack of the search urls");
 			}
 		} catch (FileNotFoundException e) {
 			log.error("Cant set properties file" + e.getMessage());
@@ -86,9 +89,12 @@ public class JuliusCaesar {
 			log.info(e.getMessage());
 		} catch (SQLException e) {
 			log.info(e.getMessage());
-		} catch (InterruptedException e) {
+		} 
+		 catch (OAuthCommunicationException e) {
 			log.info(e.getMessage());
-		} catch (OAuthCommunicationException e) {
+		} catch (HttpException e) {
+			log.info(e.getMessage());
+		} catch (ParseException e) {
 			log.info(e.getMessage());
 		}
 	}

@@ -1,6 +1,7 @@
 package twitter;
 
 import helpers.MrPostgres;
+import helpers.Utilities;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,13 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
-import java.util.UUID;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -44,7 +41,7 @@ public class GetTrends {
 
 	}
 
-	public void retrieveTrends(OAuthConsumer consumer)
+	public static void retrieveTrends(OAuthConsumer consumer)
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, ClientProtocolException,
 			IOException, JSONException, SQLException,
@@ -111,29 +108,25 @@ public class GetTrends {
 					for (int i = 0; i < jsonArrayTrends.length(); i++) {
 						JSONObject jsonObjTrend = jsonArrayTrends
 								.getJSONObject(i);
-						System.out.println(jsonObjTrend); // String searchUrl =
 						String name = jsonObjTrend.getString("name");
-						name = name.replaceAll("#", "%23");
-						UUID uuid = UUID.randomUUID();
-						Date currentDate = getDate();
-						String insertQuery = "INSERT INTO trends(id,trend,date,locationId) values(?,?,?,?)";
+						Date currentDate = Utilities.getDate();
+						java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
+						String insertQuery = "INSERT INTO trends(trend,date,locationId) values(?,?,?)";
 						PreparedStatement insertStmt = conn
 								.prepareStatement(insertQuery);
 						int parameterPlaceHolder = 1;
-						insertStmt.setObject(parameterPlaceHolder++, uuid);
 						insertStmt.setString(parameterPlaceHolder++, name);
 						insertStmt.setDate(parameterPlaceHolder++,
-								(java.sql.Date) currentDate);
+								sqlDate);
 						insertStmt.setString(parameterPlaceHolder++, id);
 						log.info(" Trend insert query " + insertStmt.toString());
 						insertStmt.executeUpdate();
-
 					}
 
 				} else {
 					throw new HttpException(Integer.toString(statusCode));
 				}
-				break;
+//				break;
 			}
 			//always close the connection object
 			conn.close();
@@ -149,13 +142,4 @@ public class GetTrends {
 	 * = searchUrl.replaceAll("http", "https"); searchUrl = searchUrl +
 	 * "&lang=en"; System.out.println(searchUrl)
 	 */
-	public static Date getDate() throws ParseException {
-
-		long millis = System.currentTimeMillis();
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-		Date currentDate = cal.getTime();
-		currentDate = formatter.parse(formatter.format(currentDate));
-		return currentDate;
-	}
 }

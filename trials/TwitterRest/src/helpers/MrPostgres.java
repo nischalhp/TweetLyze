@@ -1,8 +1,12 @@
 package helpers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -17,7 +21,8 @@ public class MrPostgres {
 		Connection conn = null;
 		Logger log = null;
 		try {
-			PropertyHandler.setConfigPath(propertiesMain);
+			Properties PropertyHandler = new Properties();
+			PropertyHandler.load(new FileInputStream(propertiesMain));
 			String hostName = PropertyHandler.getProperty("hostName");
 			String port = PropertyHandler.getProperty("port");
 			String dbName = PropertyHandler.getProperty("dbName");
@@ -37,6 +42,10 @@ public class MrPostgres {
 			}
 		} catch (SQLException e) {
 			log.error("Something went wrong whille opening the connection to postgres " +e.getMessage() );
+		} catch (FileNotFoundException e) {
+			log.error("Properties file missing " +e.getMessage());
+		} catch (IOException e) {
+			log.error(e.getMessage());
 		}
 		return conn;
 

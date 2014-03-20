@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Utilities {
-	public static Date getDate() throws ParseException {
+	public static Date getCurrentDate() throws ParseException {
 
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

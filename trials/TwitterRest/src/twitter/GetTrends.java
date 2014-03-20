@@ -109,26 +109,27 @@ public class GetTrends {
 						JSONObject jsonObjTrend = jsonArrayTrends
 								.getJSONObject(i);
 						String name = jsonObjTrend.getString("name");
-						Date currentDate = Utilities.getDate();
-						java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
+						Date currentDate = Utilities.getCurrentDate();
+						java.sql.Date sqlDate = new java.sql.Date(
+								currentDate.getTime());
 						String insertQuery = "INSERT INTO trends(trend,date,locationId) values(?,?,?)";
 						PreparedStatement insertStmt = conn
 								.prepareStatement(insertQuery);
 						int parameterPlaceHolder = 1;
 						insertStmt.setString(parameterPlaceHolder++, name);
-						insertStmt.setDate(parameterPlaceHolder++,
-								sqlDate);
+						insertStmt.setDate(parameterPlaceHolder++, sqlDate);
 						insertStmt.setString(parameterPlaceHolder++, id);
 						log.info(" Trend insert query " + insertStmt.toString());
 						insertStmt.executeUpdate();
 					}
 
 				} else {
+					log.error("Something went wrong while retrieving trends,perform further operations based on the status code");
 					throw new HttpException(Integer.toString(statusCode));
 				}
-//				break;
+				// break;
 			}
-			//always close the connection object
+			// always close the connection object
 			conn.close();
 		}
 

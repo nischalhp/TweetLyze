@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
 import main.ConsumerPool;
@@ -29,7 +30,7 @@ public class ExampleTrials {
 		BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
 				.buildConsumerPool();
 
-		try {
+/*		try {
 			OAuthConsumer consumerObj = consumerPool.take();
 			GetTrends trendsObj = new GetTrends();
 			trendsObj.retrieveTrends(consumerObj);
@@ -44,11 +45,15 @@ public class ExampleTrials {
 			if (e.equals("429")) {
 			}
 		}
-
+*/
 		/*
 		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
 		 * e.printStackTrace(); }
 		 */
+		
+		MrMestri mestriSir = new MrMestri();
+		Stack<String> jobs = mestriSir.buildJobs();
+		
 	}
 
 	public static void getSystemTime() {

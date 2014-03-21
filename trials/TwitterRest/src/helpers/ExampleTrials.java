@@ -1,6 +1,7 @@
 package helpers;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,7 +31,7 @@ public class ExampleTrials {
 		BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
 				.buildConsumerPool();
 
-/*		try {
+		try {
 			OAuthConsumer consumerObj = consumerPool.take();
 			GetTrends trendsObj = new GetTrends();
 			trendsObj.retrieveTrends(consumerObj);
@@ -45,14 +46,16 @@ public class ExampleTrials {
 			if (e.equals("429")) {
 			}
 		}
-*/
+
 		/*
 		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
 		 * e.printStackTrace(); }
 		 */
 		
-		MrMestri mestriSir = new MrMestri();
-		Stack<String> jobs = mestriSir.buildJobs();
+		Stack<URL> jobs = MrMestri.buildJobs();
+		for(int i=0;i<jobs.size();i++){
+			System.out.println(jobs.pop());
+		}
 		
 	}
 

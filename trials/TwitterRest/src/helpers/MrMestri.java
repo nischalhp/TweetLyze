@@ -3,7 +3,6 @@ package helpers;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.util.Properties;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
-import org.apache.http.client.utils.URLEncodedUtils;
 
 /*
  This class will help in building the job stack 
@@ -27,9 +25,9 @@ import org.apache.http.client.utils.URLEncodedUtils;
 public class MrMestri {
 	private static String propertiesMain = "properties/property.properties";
 
-	public static Stack<String> buildJobs() {
+	public static Stack<URL> buildJobs() {
 
-		Stack<String> jobStack = new Stack<String>();
+		Stack<URL> jobStack = new Stack<URL>();
 		Logger log = null;
 
 		try {
@@ -49,30 +47,51 @@ public class MrMestri {
 			} else {
 				log.info("Connection object to postgres created successfully");
 			}
+			/*
+			 * This is the logic that builds the jobs based on the number of
+			 * authorized apps
+			 */
+			int numberOfSearchQueries = Integer.parseInt(PropertyHandler
+					.getProperty("numberOfAccoutns"));
 
-			String selectTrends = "SELECT trend,date from "
-					+ dbTablesPropertyHandler.getProperty("trends")
-					+ " where date = '" + Utilities.getCurrentDate() + "'";
+			int totalSearchQueries = numberOfSearchQueries
+					* Integer.parseInt(PropertyHandler
+							.getProperty("numberOfSearchQueries"));
 
-			log.info(selectTrends);
+			int perTrendCalls = (totalSearchQueries
+					/ Integer.parseInt(PropertyHandler
+							.getProperty("totalTrends")))
+			for (int jobPerTrends = 0; jobPerTrends < Integer
+					.parseInt(PropertyHandler.getProperty("totalTrends"))
+					* perTrendCalls; jobPerTrends++) {
 
-			PreparedStatement stmt = postgresConn
-					.prepareStatement(selectTrends);
+				String selectTrends = "SELECT trend,date from "
+						+ dbTablesPropertyHandler.getProperty("trends")
+						+ " where date = '" + Utilities.getCurrentDate() + "'";
 
-			ResultSet rs = stmt.executeQuery();
-			if (rs == null) {
-				log.error("Was unable to fetch trends for the date"
-						+ Utilities.getCurrentDate()
-						+ " , something has gone wrong ");
-			} else {
-				log.info("Building the stack of jobs");
-				while (rs.next()) {
-					String trend = rs.getString(1);
-					String searchUrl = PropertyHandler.getProperty("searchUrl");
-					trend = URLEncoder.encode(trend, "ISO-8859-1");
-					searchUrl = searchUrl + trend + "&lang=en";
+				log.info(selectTrends);
 
-					URL searchURI = new URL(searchUrl);
+				PreparedStatement stmt = postgresConn
+						.prepareStatement(selectTrends);
+
+				ResultSet rs = stmt.executeQuery();
+
+				if (rs == null) {
+					log.error("Was unable to fetch trends for the date"
+							+ Utilities.getCurrentDate()
+							+ " , something has gone wrong ");
+				} else {
+					log.info("Building the stack of jobs");
+					while (rs.next()) {
+						String trend = rs.getString(1);
+						String searchUrl = PropertyHandler
+								.getProperty("searchUrl");
+						trend = URLEncoder.encode(trend, "ISO-8859-1");
+						searchUrl = searchUrl + trend + "&lang=en";
+						URL searchURI = new URL(searchUrl);
+						jobStack.push(searchURI);
+
+					}
 
 				}
 

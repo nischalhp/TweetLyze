@@ -95,8 +95,10 @@ public class GetTrends {
 				 * getting status code based on status code continue the process
 				 */
 				int statusCode = response.getStatusLine().getStatusCode();
-				System.out.println(response.getStatusLine().getReasonPhrase()
-						+ " , status code " + statusCode);
+				/*
+				 * System.out.println(response.getStatusLine().getReasonPhrase()
+				 * + " , status code " + statusCode);
+				 */
 				System.out.println(response);
 				if (statusCode == 200) {
 					StringWriter writer = new StringWriter();

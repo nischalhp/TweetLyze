@@ -31,32 +31,37 @@ public class ExampleTrials {
 		BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
 				.buildConsumerPool();
 
-		try {
-			OAuthConsumer consumerObj = consumerPool.take();
-			GetTrends trendsObj = new GetTrends();
-			trendsObj.retrieveTrends(consumerObj);
-		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IOException | JSONException
-				| ParseException | SQLException e) {
-			e.printStackTrace();
-
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (HttpException e) {
-			if (e.equals("429")) {
-			}
-		}
-
 		/*
-		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
-		 * e.printStackTrace(); }
-		 */
-		
+		 * OAuthConsumer consumerObj = null; try { consumerObj =
+		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
+		 * (OAuthMessageSignerException | OAuthExpectationFailedException |
+		 * OAuthCommunicationException | IOException | JSONException |
+		 * ParseException | SQLException e) { e.printStackTrace();
+		 * 
+		 * } catch (InterruptedException e) { e.printStackTrace(); } catch
+		 * (HttpException e) { String[] splitException =
+		 * e.toString().split(":"); String statusCode =
+		 * splitException[1].trim(); if (e.equals(statusCode)) {
+		 * System.out.println("Too many requests"); try { OAuthConsumer
+		 * consumerObj2 = consumerPool.take(); consumerPool.put(consumerObj);
+		 * GetTrends.retrieveTrends(consumerObj); } catch (InterruptedException
+		 * e1) { e1.printStackTrace(); } catch (OAuthMessageSignerException |
+		 * OAuthExpectationFailedException | OAuthCommunicationException |
+		 * IOException | JSONException | ParseException | HttpException |
+		 * SQLException e2) { e2.printStackTrace();
+		 * 
+		 * } } }
+		 *//*
+			 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
+			 * e.printStackTrace(); }
+			 */
+
 		Stack<URL> jobs = MrMestri.buildJobs();
-		for(int i=0;i<jobs.size();i++){
-			System.out.println(jobs.pop());
+		System.out.println(jobs.size());
+		for (int i = 0; i < jobs.size(); i++) {
+			//System.out.println(jobs.pop());
 		}
-		
+
 	}
 
 	public static void getSystemTime() {

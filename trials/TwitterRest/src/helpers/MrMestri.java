@@ -52,24 +52,26 @@ public class MrMestri {
 			 * authorized apps
 			 */
 			int numberOfSearchQueries = Integer.parseInt(PropertyHandler
-					.getProperty("numberOfAccoutns"));
+					.getProperty("numberOfAccounts"));
 
+			System.out.println(numberOfSearchQueries);
 			int totalSearchQueries = numberOfSearchQueries
 					* Integer.parseInt(PropertyHandler
 							.getProperty("numberOfSearchQueries"));
 
-			int perTrendCalls = (totalSearchQueries
-					/ Integer.parseInt(PropertyHandler
-							.getProperty("totalTrends")))
-			for (int jobPerTrends = 0; jobPerTrends < Integer
-					.parseInt(PropertyHandler.getProperty("totalTrends"))
-					* perTrendCalls; jobPerTrends++) {
+			System.out.println(totalSearchQueries);
+
+			int perTrendCalls = (int) (totalSearchQueries / Integer
+					.parseInt(PropertyHandler.getProperty("totalTrends")));
+
+			log.info("Building the stack of jobs");
+			
+			
+			for (int jobPerTrends = 0; jobPerTrends < perTrendCalls; jobPerTrends++) {
 
 				String selectTrends = "SELECT trend,date from "
 						+ dbTablesPropertyHandler.getProperty("trends")
 						+ " where date = '" + Utilities.getCurrentDate() + "'";
-
-				log.info(selectTrends);
 
 				PreparedStatement stmt = postgresConn
 						.prepareStatement(selectTrends);
@@ -81,7 +83,6 @@ public class MrMestri {
 							+ Utilities.getCurrentDate()
 							+ " , something has gone wrong ");
 				} else {
-					log.info("Building the stack of jobs");
 					while (rs.next()) {
 						String trend = rs.getString(1);
 						String searchUrl = PropertyHandler
@@ -105,9 +106,10 @@ public class MrMestri {
 			log.error("Error while parsing the date");
 		} catch (SQLException e) {
 			log.error(e.getMessage());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 
 		return jobStack;
 	}
-
 }

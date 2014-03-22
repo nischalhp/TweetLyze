@@ -98,8 +98,8 @@ public class GetTrends {
 				/*
 				 * System.out.println(response.getStatusLine().getReasonPhrase()
 				 * + " , status code " + statusCode);
-				 */
 				System.out.println(response);
+				*/
 				if (statusCode == 200) {
 					StringWriter writer = new StringWriter();
 					IOUtils.copy(response.getEntity().getContent(), writer);
@@ -126,7 +126,7 @@ public class GetTrends {
 					}
 
 				} else {
-					log.error("Something went wrong while retrieving trends,perform further operations based on the status code");
+					log.error("Something went wrong while retrieving trends,perform further operations based on the status code" +statusCode);
 					throw new HttpException(Integer.toString(statusCode));
 				}
 				// break;

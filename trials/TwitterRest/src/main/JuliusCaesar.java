@@ -89,6 +89,7 @@ public class JuliusCaesar {
 										.getProperty("totalTrends")) == 0) {
 							log.info("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
 									+ jobToken);
+							executor.shutdown();
 							Thread.sleep(milliseconds);
 						}
 						MrRunnable worker = new MrRunnable(jobStack.pop());

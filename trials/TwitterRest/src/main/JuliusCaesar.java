@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.Stack;
@@ -99,6 +100,8 @@ public class JuliusCaesar {
 		} catch (FileNotFoundException e) {
 			log.error(e);
 		} catch (InterruptedException e) {
+			log.error(e);
+		} catch (IOException e) {
 			log.error(e);
 		}
 	}

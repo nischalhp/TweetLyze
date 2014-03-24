@@ -15,4 +15,12 @@ public class Utilities {
 		return currentDate;
 	}
 
+	public static int getSystemTime() {
+
+		long millis = System.currentTimeMillis();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(millis);
+		return (cal.getTime().getHours());
+
+	}
 }

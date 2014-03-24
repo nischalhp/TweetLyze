@@ -70,7 +70,19 @@ public class ConsumerPool {
 				OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
 						consumerKey, consumerSecret);
 				consumer.setTokenWithSecret(accessToken, tokenSecret);
-				consumerObjectsQueue.put(consumer);
+
+				/*
+				 * Creating a pool of consumer objects of the same app so that i
+				 * can make as many as 80 calls using different apps in a second
+				 */
+
+				for (int numberOfConsumerObjects = 0; numberOfConsumerObjects < (Integer) (Integer
+						.parseInt(PropertyHandler
+								.getProperty("totalConsumerObjects")) / Integer
+						.parseInt(PropertyHandler
+								.getProperty("numberOfAccounts"))); numberOfConsumerObjects++) {
+					consumerObjectsQueue.put(consumer);
+				}
 				log.info("added the consumer object to que pool");
 
 			}

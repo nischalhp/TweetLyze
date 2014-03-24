@@ -28,9 +28,14 @@ public class ExampleTrials {
 
 		getSystemTime();
 		// connectToPostgresServer();
-		BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
+		
+		 BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
 				.buildConsumerPool();
 
+		System.out.println(consumerPool.size());
+		
+		
+		
 		/*
 		 * OAuthConsumer consumerObj = null; try { consumerObj =
 		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
@@ -55,13 +60,11 @@ public class ExampleTrials {
 			 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
 			 * e.printStackTrace(); }
 			 */
-
-		Stack<URL> jobs = MrMestri.buildJobs();
-		System.out.println(jobs.size());
-		for (int i = 0; i < jobs.size(); i++) {
-			//System.out.println(jobs.pop());
-		}
-
+		/*
+		 * Stack<URL> jobs = MrMestri.buildJobs();
+		 * System.out.println(jobs.size()); for (int i = 0; i < jobs.size();
+		 * i++) { System.out.println(jobs.pop()); }
+		 */
 	}
 
 	public static void getSystemTime() {
@@ -69,7 +72,7 @@ public class ExampleTrials {
 		long millis = System.currentTimeMillis();
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(millis);
-		System.out.println(cal.getTime().getHours());
+		System.out.println(cal.getTime());
 
 	}
 

@@ -1,41 +1,31 @@
 package helpers;
 
-import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
 import main.ConsumerPool;
+import main.MrTimer;
 import oauth.signpost.OAuthConsumer;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-
-import org.apache.http.HttpException;
-import org.json.JSONException;
-
-import twitter.GetTrends;
 
 public class ExampleTrials {
-
+	
+	public static BlockingQueue<OAuthConsumer> consumerPool = null;
 	public static void main(String args[]) {
 
 		getSystemTime();
 		// connectToPostgresServer();
-		
-		 BlockingQueue<OAuthConsumer> consumerPool = ConsumerPool
+
+		 consumerPool = ConsumerPool
 				.buildConsumerPool();
 
 		System.out.println(consumerPool.size());
-		
-		
-		
+
+		MrTimer.startTask();
+
 		/*
 		 * OAuthConsumer consumerObj = null; try { consumerObj =
 		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
@@ -99,5 +89,14 @@ public class ExampleTrials {
 			System.out.println("Failed, FUCK OFF");
 		}
 		conn.close();
+	}
+
+	public static synchronized OAuthConsumer getConsumerObject() {
+		return consumerPool.peek();
+	}
+
+	public static synchronized void putConsumerObject(OAuthConsumer obj)
+			throws InterruptedException {
+		consumerPool.put(obj);
 	}
 }

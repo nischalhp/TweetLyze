@@ -1,7 +1,8 @@
 package main;
 
+import helpers.ExampleTrials;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -25,15 +26,16 @@ import twitter.GetTrends;
 public class MrTimer extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
-	private final static int time = 22;
-	private final static int minutes = 15;
+	private final static int time = 17;
+	private final static int minutes = 28;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 
 	public void run() {
 		long currentTime = System.currentTimeMillis();
-		OAuthConsumer consumerObj = JuliusCaesar.getConsumerObject();
+		OAuthConsumer consumerObj = ExampleTrials.getConsumerObject();
 		try {
+			System.out.println("Entered run");
 			GetTrends.retrieveTrends(consumerObj);
 			log.info("Trends for the day has been added to the database");
 			JuliusCaesar.putConsumerObject(consumerObj);
@@ -61,13 +63,16 @@ public class MrTimer extends TimerTask {
 	public static void startTask() {
 		try {
 			Properties propertyHandler = new Properties();
+			propertyHandler.load(new FileInputStream(propertiesMain));
 			String logPath = propertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
 			log = Logger.getLogger(MrTimer.class.getName());
+
+			System.out.println("Starting the job now");
 			MrTimer task = new MrTimer();
 			Timer timer = new Timer();
 			timer.schedule(task, getTommorowTime(), oncePerDay);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			log.error("Properties file not found " + e);
 		}
 	}

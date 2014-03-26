@@ -1,31 +1,43 @@
 package helpers;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
 import main.ConsumerPool;
-import main.MrTimer;
+import main.MrMestri;
+import main.MrUrl;
 import oauth.signpost.OAuthConsumer;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+
+import org.json.JSONException;
+
+import twitter.SearchTrends;
 
 public class ExampleTrials {
-	
+
 	public static BlockingQueue<OAuthConsumer> consumerPool = null;
+
 	public static void main(String args[]) {
 
 		getSystemTime();
 		// connectToPostgresServer();
 
-		 consumerPool = ConsumerPool
-				.buildConsumerPool();
+		consumerPool = ConsumerPool.buildConsumerPool();
 
-		System.out.println(consumerPool.size());
-
-		MrTimer.startTask();
-
+		/*
+		 * System.out.println(consumerPool.size());
+		 * 
+		 * MrTimer.startTask();
+		 */
 		/*
 		 * OAuthConsumer consumerObj = null; try { consumerObj =
 		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
@@ -50,11 +62,23 @@ public class ExampleTrials {
 			 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
 			 * e.printStackTrace(); }
 			 */
+		Stack<MrUrl> jobs = MrMestri.buildJobs();
+		System.out.println(jobs.size());
+
 		/*
-		 * Stack<URL> jobs = MrMestri.buildJobs();
-		 * System.out.println(jobs.size()); for (int i = 0; i < jobs.size();
-		 * i++) { System.out.println(jobs.pop()); }
+		 * for (int i = 0; i < jobs.size(); i++) {
+		 * System.out.println(jobs.pop()); }
 		 */
+
+		try {
+			SearchTrends.getTweets(consumerPool.take(), jobs.pop());
+		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
+				| OAuthCommunicationException | IllegalStateException
+				| IOException | JSONException | URISyntaxException
+				| InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void getSystemTime() {

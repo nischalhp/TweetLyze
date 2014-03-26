@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Properties;
 import java.util.Stack;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -28,9 +29,9 @@ import org.apache.log4j.Logger;
 public class MrMestri {
 	private static String propertiesMain = "properties/property.properties";
 
-	public static Stack<URL> buildJobs() {
+	public static Stack<MrUrl> buildJobs() {
 
-		Stack<URL> jobStack = new Stack<URL>();
+		Stack<MrUrl> jobStack = new Stack<MrUrl>();
 		Logger log = null;
 
 		try {
@@ -68,7 +69,7 @@ public class MrMestri {
 
 			for (int jobPerTrends = 0; jobPerTrends < perTrendCalls; jobPerTrends++) {
 
-				String selectTrends = "SELECT trend,date from "
+				String selectTrends = "SELECT id,trend,date from "
 						+ dbTablesPropertyHandler.getProperty("trends")
 						+ " where date = '" + Utilities.getCurrentDate() + "'";
 
@@ -83,13 +84,18 @@ public class MrMestri {
 							+ " , something has gone wrong ");
 				} else {
 					while (rs.next()) {
-						String trend = rs.getString(1);
+						/*
+						 * type casting the object to UUID bad programming
+						 */
+						UUID id = (UUID) rs.getObject(1);
+						String trend = rs.getString(2);
 						String searchUrl = PropertyHandler
 								.getProperty("searchUrl");
 						trend = URLEncoder.encode(trend, "ISO-8859-1");
 						searchUrl = searchUrl + trend + "&lang=en";
-						URL searchURI = new URL(searchUrl);
-						jobStack.push(searchURI);
+						URL searchURL = new URL(searchUrl);
+						MrUrl urlObj = new MrUrl(searchURL, id);
+						jobStack.push(urlObj);
 
 					}
 

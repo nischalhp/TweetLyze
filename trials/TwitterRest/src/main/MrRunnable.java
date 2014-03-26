@@ -3,20 +3,28 @@ package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.JSONException;
+
+import twitter.SearchTrends;
 
 public class MrRunnable implements Runnable {
 
 	private static String propertiesMain = "properties/property.properties";
-	private URL toFireUrl;
+	private MrUrl urlObj;
 
-	MrRunnable(URL url) {
+	MrRunnable(MrUrl urlObj) {
 
-		this.toFireUrl = url;
+		this.urlObj = urlObj;
 	}
 
 	@Override
@@ -24,18 +32,32 @@ public class MrRunnable implements Runnable {
 
 		Logger log = null;
 		Properties propertyHandler = new Properties();
-		try{
-		propertyHandler.load(new FileInputStream(propertiesMain));
-		String logPath = propertyHandler.getProperty("logPath");
-		PropertyConfigurator.configure(new FileInputStream(logPath));
-		log = Logger.getLogger(MrRunnable.class.getName());
-		
-		
-		}catch(FileNotFoundException e){
+		try {
+			propertyHandler.load(new FileInputStream(propertiesMain));
+			String logPath = propertyHandler.getProperty("logPath");
+			PropertyConfigurator.configure(new FileInputStream(logPath));
+			log = Logger.getLogger(MrRunnable.class.getName());
+			log.info("Logger has been set , now firing call to get tweets");
+			SearchTrends.getTweets(JuliusCaesar.getConsumerObject(), urlObj);
+
+		} catch (FileNotFoundException e) {
 			log.error(e);
-		}catch(IOException e){
+		} catch (IOException e) {
+			log.error(e);
+		} catch (OAuthMessageSignerException e) {
+			log.error(e);
+		} catch (OAuthExpectationFailedException e) {
+			log.error(e);
+		} catch (OAuthCommunicationException e) {
+			log.error(e);
+		} catch (IllegalStateException e) {
+			log.error(e);
+		} catch (JSONException e) {
+			log.error(e);
+		} catch (URISyntaxException e) {
 			log.error(e);
 		}
+
 	}
 
 }

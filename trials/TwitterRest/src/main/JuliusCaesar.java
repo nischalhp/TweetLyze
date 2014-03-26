@@ -34,7 +34,7 @@ public class JuliusCaesar {
 			log = Logger.getLogger(JuliusCaesar.class.getName());
 			log.info("consumer pool created");
 
-			Stack<URL> jobStack = null;
+			Stack<MrUrl> jobStack = null;
 
 			/*
 			 * Per trend how many calls per hour and waiting time after each

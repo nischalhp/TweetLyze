@@ -26,8 +26,9 @@ import twitter.GetTrends;
 public class MrTimer extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
-	private final static int time = 17;
-	private final static int minutes = 28;
+	private final static int time = 21;
+
+	private final static int minutes = 45;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 
@@ -35,7 +36,6 @@ public class MrTimer extends TimerTask {
 		long currentTime = System.currentTimeMillis();
 		OAuthConsumer consumerObj = ExampleTrials.getConsumerObject();
 		try {
-			System.out.println("Entered run");
 			GetTrends.retrieveTrends(consumerObj);
 			log.info("Trends for the day has been added to the database");
 			JuliusCaesar.putConsumerObject(consumerObj);
@@ -68,7 +68,6 @@ public class MrTimer extends TimerTask {
 			PropertyConfigurator.configure(new FileInputStream(logPath));
 			log = Logger.getLogger(MrTimer.class.getName());
 
-			System.out.println("Starting the job now");
 			MrTimer task = new MrTimer();
 			Timer timer = new Timer();
 			timer.schedule(task, getTommorowTime(), oncePerDay);

@@ -18,6 +18,7 @@ import java.util.Stack;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /*
  This class will help in building the job stack 
@@ -38,6 +39,7 @@ public class MrMestri {
 			Properties PropertyHandler = new Properties();
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 			String logPath = PropertyHandler.getProperty("logPath");
+			PropertyConfigurator.configure(new FileInputStream(logPath));
 			log = Logger.getLogger(MrMestri.class.getName());
 			Connection postgresConn = MrPostgres.getPostGresConnection();
 

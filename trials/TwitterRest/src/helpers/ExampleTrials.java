@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
@@ -18,8 +20,10 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpException;
 import org.json.JSONException;
 
+import twitter.GetTrends;
 import twitter.SearchTrends;
 
 public class ExampleTrials {
@@ -38,36 +42,48 @@ public class ExampleTrials {
 		 * 
 		 * MrTimer.startTask();
 		 */
-		/*
-		 * OAuthConsumer consumerObj = null; try { consumerObj =
-		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
-		 * (OAuthMessageSignerException | OAuthExpectationFailedException |
-		 * OAuthCommunicationException | IOException | JSONException |
-		 * ParseException | SQLException e) { e.printStackTrace();
-		 * 
-		 * } catch (InterruptedException e) { e.printStackTrace(); } catch
-		 * (HttpException e) { String[] splitException =
-		 * e.toString().split(":"); String statusCode =
-		 * splitException[1].trim(); if (e.equals(statusCode)) {
-		 * System.out.println("Too many requests"); try { OAuthConsumer
-		 * consumerObj2 = consumerPool.take(); consumerPool.put(consumerObj);
-		 * GetTrends.retrieveTrends(consumerObj); } catch (InterruptedException
-		 * e1) { e1.printStackTrace(); } catch (OAuthMessageSignerException |
-		 * OAuthExpectationFailedException | OAuthCommunicationException |
-		 * IOException | JSONException | ParseException | HttpException |
-		 * SQLException e2) { e2.printStackTrace();
-		 * 
-		 * } } }
-		 *//*
-			 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
-			 * e.printStackTrace(); }
-			 */
+
+		/*OAuthConsumer consumerObj = null;
+		try {
+			consumerObj = consumerPool.take();
+			GetTrends.retrieveTrends(consumerObj);
+		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
+				| OAuthCommunicationException | IOException | JSONException
+				| ParseException | SQLException e) {
+			e.printStackTrace();
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (HttpException e) {
+			String[] splitException = e.toString().split(":");
+			String statusCode = splitException[1].trim();
+			if (e.equals(statusCode)) {
+				System.out.println("Too many requests");
+				try {
+					OAuthConsumer consumerObj2 = consumerPool.take();
+					consumerPool.put(consumerObj);
+					GetTrends.retrieveTrends(consumerObj);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				} catch (OAuthMessageSignerException
+						| OAuthExpectationFailedException
+						| OAuthCommunicationException | IOException
+						| JSONException | ParseException | HttpException
+						| SQLException e2) {
+					e2.printStackTrace();
+
+				}
+			}
+		}
+		
+		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
+		 * e.printStackTrace(); }
+		 */
 		Stack<MrUrl> jobs = MrMestri.buildJobs();
-		System.out.println(jobs.size());
+		//System.out.println(jobs.size());
 
 		/*
 		 * for (int i = 0; i < jobs.size(); i++) {
-		 * System.out.println(jobs.pop()); }
 		 */
 
 		try {
@@ -75,7 +91,7 @@ public class ExampleTrials {
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
 				| OAuthCommunicationException | IllegalStateException
 				| IOException | JSONException | URISyntaxException
-				| InterruptedException e) {
+				| InterruptedException | SQLException | HttpException e) {
 			e.printStackTrace();
 		}
 

@@ -43,7 +43,7 @@ public class ExampleTrials {
 		 * MrTimer.startTask();
 		 */
 
-		/*OAuthConsumer consumerObj = null;
+		OAuthConsumer consumerObj = null;
 		try {
 			consumerObj = consumerPool.take();
 			GetTrends.retrieveTrends(consumerObj);
@@ -76,9 +76,6 @@ public class ExampleTrials {
 			}
 		}
 		
-		 * try { Date d = GetTrends.getDate(); } catch (ParseException e) {
-		 * e.printStackTrace(); }
-		 */
 		Stack<MrUrl> jobs = MrMestri.buildJobs();
 		//System.out.println(jobs.size());
 

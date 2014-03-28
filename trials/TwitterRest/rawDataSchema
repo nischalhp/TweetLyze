@@ -1,0 +1,680 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2014-03-28 21:38:20 IST
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION PASSWORD 'md5cda9364620a05426387c272e85514c4a';
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+REVOKE ALL ON DATABASE template1 FROM PUBLIC;
+REVOKE ALL ON DATABASE template1 FROM postgres;
+GRANT ALL ON DATABASE template1 TO postgres;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+CREATE DATABASE tweetyfox WITH TEMPLATE = template0 OWNER = postgres;
+
+
+\connect postgres
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.3
+-- Dumped by pg_dump version 9.3.3
+-- Started on 2014-03-28 21:38:20 IST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1977 (class 1262 OID 12070)
+-- Dependencies: 1976
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- TOC entry 172 (class 3079 OID 11791)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1980 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 171 (class 3079 OID 16384)
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1981 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 170 (class 1259 OID 16393)
+-- Name: location; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE location (
+    id character varying(40) NOT NULL,
+    city character varying(60)
+);
+
+
+ALTER TABLE public.location OWNER TO postgres;
+
+--
+-- TOC entry 1982 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: COLUMN location.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN location.id IS 'Location Id for a city by yahoo.';
+
+
+--
+-- TOC entry 1971 (class 0 OID 16393)
+-- Dependencies: 170
+-- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY location (id, city) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1863 (class 2606 OID 16397)
+-- Name: location_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY location
+    ADD CONSTRAINT location_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1979 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2014-03-28 21:38:21 IST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.3
+-- Dumped by pg_dump version 9.3.3
+-- Started on 2014-03-28 21:38:21 IST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1969 (class 1262 OID 1)
+-- Dependencies: 1968
+-- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- TOC entry 170 (class 3079 OID 11791)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1972 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 1971 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2014-03-28 21:38:21 IST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect tweetyfox
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.3
+-- Dumped by pg_dump version 9.3.3
+-- Started on 2014-03-28 21:38:21 IST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 173 (class 3079 OID 11791)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2010 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 174 (class 3079 OID 16421)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 2011 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 170 (class 1259 OID 16399)
+-- Name: location; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE location (
+    id character varying(40) NOT NULL,
+    city character varying(60)
+);
+
+
+ALTER TABLE public.location OWNER TO postgres;
+
+--
+-- TOC entry 2012 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: COLUMN location.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN location.id IS 'Location Id for a city by yahoo.';
+
+
+--
+-- TOC entry 171 (class 1259 OID 16407)
+-- Name: trends; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE trends (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    trend character varying,
+    date date,
+    locationid character varying(40)
+);
+
+
+ALTER TABLE public.trends OWNER TO postgres;
+
+--
+-- TOC entry 2013 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: TABLE trends; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE trends IS 'Holdes the trends for a location wrt to time';
+
+
+--
+-- TOC entry 2014 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: COLUMN trends.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN trends.id IS 'uuid , can be used to shard later';
+
+
+--
+-- TOC entry 172 (class 1259 OID 16433)
+-- Name: tweets; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tweets (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    trendid uuid,
+    tweets json
+);
+
+
+ALTER TABLE public.tweets OWNER TO postgres;
+
+--
+-- TOC entry 2000 (class 0 OID 16399)
+-- Dependencies: 170
+-- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY location (id, city) FROM stdin;
+2295420	bangalore
+2487956	san fransico
+2442047	los angeles
+44418	london
+23424948	singapore
+2450022	miami
+2357024	atlanta
+28743736	new delhi
+1235	BANGALORE
+\.
+
+
+--
+-- TOC entry 2001 (class 0 OID 16407)
+-- Dependencies: 171
+-- Data for Name: trends; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY trends (id, trend, date, locationid) FROM stdin;
+461e5a9c-559c-4874-a809-f504b8981ded	#MH370	2014-03-25	2295420
+b5f77771-b95e-48d1-b65d-8d13b4b475a8	Varanasi	2014-03-25	2295420
+68503e59-baad-4898-9b07-bee7efc818ce	Rahul Gandhi	2014-03-25	2295420
+6419e660-c317-443a-b849-777f589e871c	West Indies	2014-03-25	2295420
+e646f7ed-3923-446e-b815-5b38eb23b41d	Virat Kohli	2014-03-25	2295420
+4af2607c-972d-4657-905d-d8bc550407be	UPA	2014-03-25	2295420
+486b0ee8-15bf-4e84-8da5-bc38e4a3b2f4	Pakistan	2014-03-25	2295420
+99312098-6477-413b-b2a6-752837fd74ed	#KejriwalinVaranasi	2014-03-25	2295420
+ba7c55d6-0732-4083-a880-538f2d4f01a4	#MakesMeWow	2014-03-25	2295420
+ff840488-31c1-4845-be19-82bb89a647b8	#GharGharModi	2014-03-25	2295420
+edba8b40-74eb-4a52-a4e9-9d6246ec75dc	#MH370	2014-03-25	2487956
+59607465-afd2-4a9f-bb51-0b9b619d1b04	#RuinAChildrensBook	2014-03-25	2487956
+dfc8ef92-0029-4dc5-93db-da574f3dc5e2	#TeenWolf	2014-03-25	2487956
+f1f7166b-a545-46f3-ba5a-5bf890677994	#TheFosters	2014-03-25	2487956
+adb128ef-0e74-40fc-8a70-a7ad3c878112	#sjsharks	2014-03-25	2487956
+62e190f1-1d94-445e-981b-cea186ae9e7c	Tyler	2014-03-25	2487956
+e9e64bbb-3045-49c6-860c-01efc33d3280	Lolla	2014-03-25	2487956
+42c39607-1a80-4df1-8533-5c9fbed74a26	Hobby Lobby	2014-03-25	2487956
+12b451c4-1ad1-4b0e-9562-13e2a634b91e	Hercules	2014-03-25	2487956
+bcdf0ba8-4fb5-456a-be72-15ebe313d796	Easter	2014-03-25	2487956
+2c1a93f1-a034-48ba-8385-b3668544a225	Chicago	2014-03-25	2442047
+580d8142-dbef-4e64-979a-0e02feb4f267	#RuinAChildrensBook	2014-03-25	2442047
+89fbf7f4-be5f-4cf2-8d51-4e731fb3ea34	#skatepark4logan	2014-03-25	2442047
+0cce009e-f236-4fae-8615-f1d340b4d5d1	#TeenWolfFinale	2014-03-25	2442047
+fe6a352e-8019-4319-9186-26d1b3fc87c1	#THEFOSTERS	2014-03-25	2442047
+704c5c47-5a7d-45a1-81a4-a490e283581f	#DWTS	2014-03-25	2442047
+341bb7f4-aa78-4f5b-a489-bf1374680534	Lolla	2014-03-25	2442047
+f966fe99-6cde-43b1-b7d8-e2f56448cf32	Supreme Court	2014-03-25	2442047
+dbcd7208-c463-45f5-a606-0e4375ecf2af	Mother Nature	2014-03-25	2442047
+730e3b7d-e2ae-44cc-8f52-b0077822bc99	Cali	2014-03-25	2442047
+97ec88a0-7c84-44bb-aef9-67c92c67d52d	#MH370	2014-03-25	44418
+15a212ec-821b-4197-ab8d-d49642512ffd	#JCatsGetHyped	2014-03-25	44418
+4d0a2951-b78c-4a7b-bc2f-871f6b735004	#RockTalk	2014-03-25	44418
+c7a1b6fb-2df2-4131-b749-e6b3045819f1	London	2014-03-25	44418
+08fa9f1d-dc5c-45a0-9ca0-e6880cdbd09b	#RAW	2014-03-25	44418
+d4833860-fda8-4cf7-8568-1a4bf101a53a	#MUFC	2014-03-25	44418
+00992cfd-88d4-4479-afde-15cf1de97f36	England	2014-03-25	44418
+713609c8-b019-43e9-b5d8-2523e91cf0fc	HTC One	2014-03-25	44418
+01c9dee0-c0e4-4ace-93f5-a1953b169833	Manchester	2014-03-25	44418
+07fbe302-d5a0-4f45-b2a0-7929827e6faf	Jeremy Kyle	2014-03-25	44418
+920e1008-6006-4018-88f7-080875740ad2	#MH370	2014-03-25	23424948
+af1febcd-6f30-47a0-b458-1da749fffa32	#HappyXiuminDay	2014-03-25	23424948
+f3474016-7244-4abb-a6ff-efb5df2dbf52	Singapore	2014-03-25	23424948
+f6c5460c-a833-47d3-be30-9ad8e38b44d3	Indian Ocean	2014-03-25	23424948
+cf5e1af8-0e55-4975-8d43-7aabb1b11ff2	#GGMU	2014-03-25	23424948
+7523dce6-89cb-40c6-8f87-9d94ee0b1a54	Starbucks	2014-03-25	23424948
+287af467-ed00-497d-9e7c-35be12c5f1ef	Taiwan	2014-03-25	23424948
+95757224-311e-4fca-ba39-0f1322f1c59e	#PrayForMH370	2014-03-25	23424948
+b214dc8e-04fb-492e-83fc-f7a14f8ab3cb	#31FLAVOURSOF박봄	2014-03-25	23424948
+cca3decd-5e35-4927-bba9-597c2b58ce2b	WAH	2014-03-25	23424948
+30cc22f7-3bf0-48bd-aac7-14bbd2158185	#MH370	2014-03-25	2450022
+56334ff3-edb5-4840-ab5c-76746f9b3e44	#honestyhour	2014-03-25	2450022
+435e70e0-7853-449f-bae0-edb0ca24cc1e	#BBWLA	2014-03-25	2450022
+4a0ff0c4-97b8-4a5e-9a07-bc4a8334e096	Miami	2014-03-25	2450022
+60cc6741-60e9-48f2-a69d-ce8b21bd560a	#TeenWolf	2014-03-25	2450022
+6ba03640-5b7b-4ad3-93d2-305f27e07669	#TheFosters	2014-03-25	2450022
+a022e18a-8a1b-425c-b54f-96c800cbda70	Ultra	2014-03-25	2450022
+258d49ea-6329-47c4-95d7-8de7e8d1e101	Venezuela	2014-03-25	2450022
+17188458-aff8-4d94-a460-29c56dbd8026	Washington	2014-03-25	2450022
+a75afbb8-2480-4a4c-8eee-cd1b5fc4f82e	Heat	2014-03-25	2450022
+aae82d8e-e143-4225-917e-45d498f6767b	#MH370	2014-03-25	2357024
+75c056c4-a788-458d-88ca-4ca809f0db9c	#RuinAChildrensBook	2014-03-25	2357024
+b2ae8773-02f4-4d4b-8db3-5adbcc19d53c	#TeenWolfFinale	2014-03-25	2357024
+e57f6780-061c-47fd-a5ee-1dc9796dfbcc	#BBWLA	2014-03-25	2357024
+ddd00298-5e3c-48d8-b193-f2428feb919d	#TheFosters	2014-03-25	2357024
+d7667c43-b3ea-4ad2-bba7-3874bfa58f7f	Draya	2014-03-25	2357024
+5f7dad3e-b540-4ba6-a56c-a5cddc4a5479	Sundy	2014-03-25	2357024
+970681d4-58bd-471c-afb5-e7067a1bf0d0	Washington	2014-03-25	2357024
+16dc152a-fa04-4241-a04a-3fbbf29c7aa1	Lolla	2014-03-25	2357024
+1dd6f20f-0c67-4932-86ed-c31b8cb056d2	Hobby Lobby	2014-03-25	2357024
+1cc73b77-315d-4d3a-ad9c-ac9c96ed23aa	#WhyPMModi	2014-03-27	2295420
+78b57263-51d9-4397-b610-148ba8f7b56a	#AK49	2014-03-27	2295420
+0a9ef18f-05ec-4545-a049-3b651948cb15	#PoynterIndia	2014-03-27	2295420
+1a5bc726-0701-4c87-8482-8c16e7f0d0d7	Rakhi Sawant	2014-03-27	2295420
+05b4d2d2-c759-4e7d-abf4-56ccdd4cb2c2	#3EngagingWords	2014-03-27	2295420
+5bd52553-a42e-4d21-9e96-76f9c44cd017	#WeSupportVKSingh	2014-03-27	2295420
+764dda69-aae4-488a-b10f-359fbf90ac89	Nick Bilton	2014-03-27	2295420
+459d078d-aa1a-4c37-9c92-a35021f4fed3	American Airlines	2014-03-27	2295420
+01647ce2-8a18-44de-85ab-3bfa0bc38845	Jack Dorsey	2014-03-27	2295420
+4a870e09-e50a-42f9-acde-f381bd4a1488	Chris Messina	2014-03-27	2295420
+f4dcc5e8-69a9-4d7a-bfd7-1ac2d5769a47	#SchlongSongs	2014-03-27	2487956
+5e9577e6-2beb-4a3f-b559-42c6da47edb8	#psychOUT	2014-03-27	2487956
+76e33d54-f3f2-4ffe-91ed-f7cc67df9065	#jox	2014-03-27	2487956
+1d9862a9-13dc-41ba-b69b-1c7e3f0f1e3d	#wcw	2014-03-27	2487956
+b9ba5f4a-a3ba-45b4-8dda-51a7643bcade	#PsychAllNight	2014-03-27	2487956
+56a5d33b-c247-419d-9f2a-0d8590afc596	Taco Bell	2014-03-27	2487956
+67a0fdd8-1b4d-45f3-aa73-cb03325aa1f8	Theo James	2014-03-27	2487956
+b60e2540-8b17-4a01-a572-4c22b3e24117	Thot	2014-03-27	2487956
+69d760d7-5a37-40dc-be1d-b6d074a3208b	Starbucks	2014-03-27	2487956
+7abf26b4-4702-4389-953e-4969f28781eb	Bill Cosby	2014-03-27	2487956
+2783e55b-a5e5-4108-a257-ff45621d34f8	#SchlongSongs	2014-03-27	2442047
+9fb27b45-686a-4b11-962d-5a7de2884edd	#HighSchoolTaughtMe	2014-03-27	2442047
+324a9b1b-6796-418a-899a-33f312c969e9	#Psychfinale	2014-03-27	2442047
+59dea235-4753-4ab5-a8e7-abe42359bcf7	#HowToAskAGirlToProm	2014-03-27	2442047
+eaa18da9-5c24-41d4-adbe-44a212e4e8cb	#wcw	2014-03-27	2442047
+7810c10d-17b2-4674-9c80-a99b98333428	Bill Cosby	2014-03-27	2442047
+1e1d2a78-b4a4-4b9a-ba07-2bbe6efe7dbc	Netflix	2014-03-27	2442047
+2fd78da2-94e9-45e2-a19f-9b1d5257b3cc	Taco Bell	2014-03-27	2442047
+01458eb9-0a3d-4986-83d9-c5f6f34c937b	Disneyland	2014-03-27	2442047
+62745277-0913-4d54-aea0-b423e2f6fb1e	FaceTime	2014-03-27	2442047
+9fd4dee0-af72-4111-bd97-c18379f134db	Nations League	2014-03-27	44418
+8a0caf9a-8bfa-4338-bb56-c2330ea3cdfc	London	2014-03-27	44418
+dee1bad5-832f-478e-9771-819365b85232	West Ham	2014-03-27	44418
+192f5cf1-407b-4950-880f-f95bef2130a7	#HappyBirthdayJessieJ	2014-03-27	44418
+e5fdf572-bf72-47b3-bbdb-9806e38e5322	#Mr2KaySouthSouthInvasion	2014-03-27	44418
+b0f31028-7ac5-494e-bf4c-c3ea8c808691	#MrBomba_IslandGirl	2014-03-27	44418
+28922b82-3feb-4c31-9d2e-8fd76667fa4d	#QnA	2014-03-27	44418
+d3eb0b50-8446-4b56-89e1-d66d0381b465	#throwbackthursday	2014-03-27	44418
+e61f8b15-571c-44b3-9fb0-848378c3f8cd	South Africa	2014-03-27	44418
+3fb046a5-7387-48bf-8495-1d9cb574553b	Hun	2014-03-27	44418
+2fe8bd7c-865f-49bd-94cf-8b7f3b9eadac	Singapore	2014-03-27	23424948
+30d95c8f-1a65-46e8-ac06-59ec6787efb5	Taiwan	2014-03-27	23424948
+9faac8b1-842a-4b49-8de7-9e4df6ca2cc2	#소녀시대미스터미스터	2014-03-27	23424948
+9091169a-3368-49eb-9456-366baa098f12	Starbucks	2014-03-27	23424948
+7b330adb-ba0e-492a-af5a-d946c01921a6	Wah	2014-03-27	23424948
+15b1eaff-a742-4f1f-8974-c4a9d75ac624	#ask5SOS	2014-03-27	23424948
+19cedf81-c958-42fb-96bf-aceb247a41cc	#2NE1	2014-03-27	23424948
+80766ef4-0612-4d3f-963d-ff426f4bebd2	#ynwa	2014-03-27	23424948
+2d12e919-4ed4-4b1f-b1a2-728c6b586849	#COMEBACKHOME	2014-03-27	23424948
+9cb2c71d-eb77-4def-af90-bdc1a7dd5d47	World Cup	2014-03-27	23424948
+1e726071-6c91-4f7b-ada1-aaf1aa3fc427	Taco Bell	2014-03-27	2450022
+c62c34dc-709b-4dda-a44c-91abb507d899	Miami	2014-03-27	2450022
+21e559b0-8791-47c8-a179-9553e32282f6	Thot	2014-03-27	2450022
+c1ba3978-c78b-4788-8393-933f3ea9f9fb	Ultra	2014-03-27	2450022
+7325d3a9-b316-4e60-88cf-fbc43738f24a	#SchlongSongs	2014-03-27	2450022
+d55c76b8-af6d-46bc-955c-bc92ce8750cf	#HighSchoolTaughtMe	2014-03-27	2450022
+081c411d-8397-4abf-9df9-652c684c8411	#BestLieEver	2014-03-27	2450022
+de9e09f4-6194-4b2e-860d-bce4a0515f81	#wheniwasanewborn	2014-03-27	2450022
+5c0eec69-eade-4d0a-b60d-957537653971	#SeeYouTheType	2014-03-27	2450022
+0c6d78a3-a9e8-45fb-ad40-62af1ce92e44	Bill Cosby	2014-03-27	2450022
+0ec54ca1-cb52-4e6c-aee6-9ffa92ec3b76	Taco Bell	2014-03-27	2357024
+b0ac0e23-04bd-496c-827d-f10be876ba59	Waffle House	2014-03-27	2357024
+04e90d83-2a02-4ba4-ac43-33bcdec74af5	Tryna	2014-03-27	2357024
+03fa654e-c0b1-4494-aa79-6f093522858b	Taylor	2014-03-27	2357024
+9321367a-ec39-4b66-8b1c-45cf10bd9564	#SchlongSongs	2014-03-27	2357024
+7f24a212-cf2a-4d8e-b1b3-3faf1b393282	#HighSchoolTaughtMe	2014-03-27	2357024
+faf44bfd-456e-4b62-92a0-d7f6d3cab7e0	#BestLieEver	2014-03-27	2357024
+3ff5aade-35ee-4a6d-91cf-c0a5f42a7f29	#wheniwasanewborn	2014-03-27	2357024
+9d617420-a0be-4e05-bbed-5cd135a5d866	#SeeYouTheType	2014-03-27	2357024
+15bd0fbd-8924-4f6a-a76b-0c73439198c5	Bill Cosby	2014-03-27	2357024
+3eacfaae-dc21-4389-bab3-2e000e65947b	#AUSvWI	2014-03-28	2295420
+ea03527b-5533-449b-9e27-a2c226c77a4d	Sunil Gavaskar	2014-03-28	2295420
+69a6802c-e777-48b1-8748-c7aff554d898	Smriti Irani	2014-03-28	2295420
+99e0bbcb-a433-4af6-9957-02d576e309d3	Varun Gandhi	2014-03-28	2295420
+4ae8a288-a0bc-45f9-8d1a-6396b5e9bd0f	Srini	2014-03-28	2295420
+2aa40b21-df09-4543-989c-76c34771ad4e	Supreme Court	2014-03-28	2295420
+f3ebcbce-0927-4c41-b307-4599cac9e71a	Rakhi Sawant	2014-03-28	2295420
+16d59ac0-3cb5-42c6-80d9-b559d318bee5	Sammy	2014-03-28	2295420
+4f7e4224-bab2-4253-813f-fe986f57a943	Sabir Ali	2014-03-28	2295420
+71897bf8-3f95-4604-bf1c-63e20d89d081	South Africa	2014-03-28	2295420
+fd383d63-5cb8-41da-9390-3f7a0f615bdd	#BadBooze	2014-03-28	2487956
+59d6ebaf-2558-4863-8eaf-dec0c597f6e8	#inforumsf	2014-03-28	2487956
+bc1e0afd-e0a8-4dfc-949d-40460e7c5c27	#tbt	2014-03-28	2487956
+c79df714-2b29-4265-bf45-3f0919b33182	#Scandal	2014-03-28	2487956
+49de8fcd-e038-497c-a724-9498421d8a27	Aaron Gordon	2014-03-28	2487956
+f0c26bdd-59dc-4ac7-97d8-985bbcf21abb	#SFGiants	2014-03-28	2487956
+9974be5f-5c0a-47f5-abbb-d749fa72dfdf	Olivia	2014-03-28	2487956
+e4aa60d7-ce8c-45d3-a5f1-9f46e74fcc16	UCLA	2014-03-28	2487956
+6dd3c1fd-b53a-4fd9-9442-12f044c890ad	Grady Sizemore	2014-03-28	2487956
+e6c49f20-8a44-4a34-a0d9-ed5b8e08a2a4	Miguel Cabrera	2014-03-28	2487956
+b8b003cb-5e7d-4bb0-b134-6ad18cbffe01	#CancelColbert	2014-03-28	2442047
+32102996-7b96-491a-a519-510cfdbb5c72	#HowOldAreYou	2014-03-28	2442047
+1ab88014-70d8-44f7-b0b2-6638cb998429	#BadBooze	2014-03-28	2442047
+cd9e0aaa-657d-47b1-bf6a-34ea5d41c462	#TGIF	2014-03-28	2442047
+8ecadd97-e666-4b4b-82ac-6f3309f28b84	#SMMW14	2014-03-28	2442047
+4e036526-ec63-4454-9209-5cecd0762c15	Starbucks	2014-03-28	2442047
+0538fd2f-c9cc-4957-9fe0-096af87aad6f	Ultra	2014-03-28	2442047
+6f16728a-5a30-4973-b2d7-35d75d371d60	Grady Sizemore	2014-03-28	2442047
+2af5cee5-71b0-4ae1-8e9b-19154d37b551	Miguel Cabrera	2014-03-28	2442047
+4b38451f-04ea-4ec5-b339-32987727574c	Colbert	2014-03-28	2442047
+a649ccb7-934b-47e5-980a-4770937475fc	Turkey	2014-03-28	44418
+93f019bf-f525-4b5c-892a-e1808d743366	#HowOldAreYou	2014-03-28	44418
+57749989-cc30-4af0-9f86-1a31f0713dff	#4musicjustin	2014-03-28	44418
+fdbbbda6-c76b-49b4-a8cc-9284c480fea6	#Polis14	2014-03-28	44418
+23d28cf4-73b4-4144-9c4e-395676e27b4b	Darren Sammy	2014-03-28	44418
+328171f3-f9f4-4bca-901d-e4a9c9e15acf	#AskTheCurator	2014-03-28	44418
+ad13bc51-7d7c-4f8b-86e7-d04de5ed8e64	Kate Bush	2014-03-28	44418
+07ec4834-af6d-441c-96ab-0248d2350bc7	Mother's Day	2014-03-28	44418
+f3b4eb37-b55a-43d4-b751-91c0200baec7	#HappyFriday	2014-03-28	44418
+329b2ac9-5729-4e51-b986-d28df216f553	Chris Gayle	2014-03-28	44418
+52467990-f2bd-410c-8aff-6a14c91bbb26	#IsayHOyousayYA	2014-03-28	23424948
+d035437d-9f6d-4970-952f-8f469651f59a	#vivaelektra	2014-03-28	23424948
+288e2b2a-6038-454b-978b-6b64e73d60b8	#WildandSexyJacksonDay	2014-03-28	23424948
+bbc19f22-ec78-4a4d-b79b-a0d90deb6cdb	#happyHOYAday	2014-03-28	23424948
+2f7b2c37-8c71-4b7e-b7d8-9e4673d8349f	#earthhoursg	2014-03-28	23424948
+0e7b82bb-6eb8-4857-bd3d-8525cf69873f	Mr Loh	2014-03-28	23424948
+cf146e64-a93b-4224-ac54-4849b1667cde	Spider-Man	2014-03-28	23424948
+fa3ebb9b-f7ec-4146-b02c-07c8b62fb760	Singapore	2014-03-28	23424948
+81c7c533-9523-4a4a-a61a-36d794c59731	Theo James	2014-03-28	23424948
+9c1ac4e8-dd42-4c7c-97f4-cffcab82e1c8	Starbucks	2014-03-28	23424948
+ceb1ef98-220d-4ee9-ad5d-2c96b3c6efde	Ultra	2014-03-28	2450022
+b17e0db9-71ec-4724-aaa4-f0197f8d08f4	Fitz	2014-03-28	2450022
+a7dc7655-bb12-49d7-b124-d183dab8ed5b	#Scandal	2014-03-28	2450022
+b9db7d05-6d8d-4425-be11-b297f0967e46	#TBT	2014-03-28	2450022
+cd4d1f7f-c6f9-4fab-8ce2-1b7318867e46	Taco Bell	2014-03-28	2450022
+e6149342-95de-48d9-84d4-7091a4337877	Mellie	2014-03-28	2450022
+5db943d5-3aaf-4e11-a8a3-981f39efa998	UCLA	2014-03-28	2450022
+b245d3e0-ec42-4a94-946f-1a7efa418369	Olivia	2014-03-28	2450022
+918b16b7-2674-401a-aba0-20a57b250aab	WMC	2014-03-28	2450022
+959fa8d8-6a89-41e5-af0d-80db61f10ef8	#FlaPanthers	2014-03-28	2450022
+110f5b61-3f98-44a0-95e4-cef5bc90c31f	#Elite8	2014-03-28	2357024
+6bef6eaf-0f73-458d-9f07-03a135e04a33	Fitz	2014-03-28	2357024
+7aa19613-2ee6-476b-b277-5eb3bf457066	#scandal	2014-03-28	2357024
+9c06e9d5-0d7e-413a-8f0a-d3b8cd51d76f	Mellie	2014-03-28	2357024
+235b12ae-a760-488a-a727-ddaaf6c0dfcd	Taco Bell	2014-03-28	2357024
+e17f9065-0074-4438-ba7f-7bb0cc433bcb	#tbt	2014-03-28	2357024
+0828c906-cb20-4079-9715-9afe6749291a	#GatorNation	2014-03-28	2357024
+7aaf6e42-6742-418a-9cbc-c2aec83833e6	UCLA	2014-03-28	2357024
+a51ac8fb-0a20-426b-840c-c452830321ac	Waffle House	2014-03-28	2357024
+685ca0f4-e77d-43ef-b7cd-e7087e62dedb	Liv	2014-03-28	2357024
+\.
+
+
+--
+-- TOC entry 2002 (class 0 OID 16433)
+-- Dependencies: 172
+-- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tweets (id, trendid, tweets) FROM stdin;
+c6b9cf32-2283-4cc2-9107-f2832d87ea9e	15bd0fbd-8924-4f6a-a76b-0c73439198c5	[{"retweeted_status":{"contributors":null,"text":"WHAT is bill cosby trying to say/accomplish?  It's just getting weirder!!!","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449038263043772416,"source":"<a href=\\"http://ubersocial.com\\" rel=\\"nofollow\\">UberSocial for Android<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":3,"created_at":"Thu Mar 27 04:20:39 +0000 2014","in_reply_to_user_id":null,"favorite_count":17,"id_str":"449038263043772416","place":null,"user":{"location":"nyc- of course!","default_profile":true,"profile_background_tile":false,"statuses_count":10108,"lang":"en","profile_link_color":"0084B4","id":128263500,"following":false,"protected":false,"favourites_count":6,"profile_text_color":"333333","description":"chef- food network personality- bon vivant- author of own your kitchen- perpetual optimist-spreader of sparkles and smiles","verified":true,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"anne burrell","profile_background_color":"C0DEED","created_at":"Wed Mar 31 16:18:41 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":118472,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000327284658/21930fe1e90fe8abdfdd04eed7d7b1a6_normal.png","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://www.anneburrell.com","indices":[0,22],"display_url":"anneburrell.com","url":"http://t.co/64k3jV27J1"}]}},"url":"http://t.co/64k3jV27J1","utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":203,"profile_sidebar_fill_color":"DDEEF6","screen_name":"chefanneburrell","id_str":"128263500","profile_image_url":"http://pbs.twimg.com/profile_images/378800000327284658/21930fe1e90fe8abdfdd04eed7d7b1a6_normal.png","listed_count":1910,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @chefanneburrell: WHAT is bill cosby trying to say/accomplish?  It's just getting weirder!!!","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":128263500,"name":"anne burrell","indices":[3,19],"screen_name":"chefanneburrell","id_str":"128263500"}]},"in_reply_to_status_id_str":null,"id":449094062847442944,"source":"<a href=\\"http://twitter.com/download/android\\" rel=\\"nofollow\\">Twitter for Android<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":3,"created_at":"Thu Mar 27 08:02:23 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449094062847442944","place":null,"user":{"location":"From the D. (MI) Clinton Twp.","default_profile":false,"profile_background_tile":true,"statuses_count":13422,"lang":"en","profile_link_color":"1D2EEB","profile_banner_url":"https://pbs.twimg.com/profile_banners/218236743/1390881970","id":218236743,"following":false,"protected":false,"favourites_count":4556,"profile_text_color":"3D1957","description":"ASK ME ANYTHIN!! 30years old! **I Love #shop/clubin/movies #NKOTB/Hawaii/Sarcoidosis/R5/Music** @OfficialR5 followed me 3/12/14* @DannyWood followed me 11/13*","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"000000","name":"IG; @Jess_Hawaii_R5","profile_background_color":"F016A4","created_at":"Sun Nov 21 20:08:45 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":340,"profile_image_url_https":"https://pbs.twimg.com/profile_images/433660052746952704/nw9LYYeH_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/433127282870206464/nWFmfmI6.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/433127282870206464/nWFmfmI6.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://www.Facebook.com/JessicaColasanti","indices":[0,22],"display_url":"Facebook.com/JessicaColasan\\u2026","url":"http://t.co/ytU53BBAM3"}]}},"url":"http://t.co/ytU53BBAM3","utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":887,"profile_sidebar_fill_color":"7AC3EE","screen_name":"AnnJJ2006","id_str":"218236743","profile_image_url":"http://pbs.twimg.com/profile_images/433660052746952704/nw9LYYeH_normal.jpeg","listed_count":2,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"Bill Cosby is the man","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449094047345295360,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 08:02:19 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449094047345295360","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":true,"statuses_count":6684,"lang":"en","profile_link_color":"EBA4C3","profile_banner_url":"https://pbs.twimg.com/profile_banners/18278176/1353210751","id":18278176,"following":false,"protected":false,"favourites_count":474,"profile_text_color":"73230F","description":"All aboard my train of thought.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Shannon ","profile_background_color":"EBEBD6","created_at":"Sun Dec 21 03:25:28 +0000 2008","is_translation_enabled":false,"default_profile_image":false,"followers_count":251,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000418902687/c385961c8408ff07d8b16546afcc90dc_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/714596706/d7e9623e2ff063777599645a46455d88.gif","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/714596706/d7e9623e2ff063777599645a46455d88.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":189,"profile_sidebar_fill_color":"FBF9CB","screen_name":"shannoncfarrell","id_str":"18278176","profile_image_url":"http://pbs.twimg.com/profile_images/378800000418902687/c385961c8408ff07d8b16546afcc90dc_normal.jpeg","listed_count":1,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"Bill Cosby is on The Tonight Show w/ Jimmy Fallon. I wish I could drink coffee with these guys and just pick their brains.","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449074866935721984,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Thu Mar 27 06:46:06 +0000 2014","in_reply_to_user_id":null,"favorite_count":1,"id_str":"449074866935721984","place":null,"user":{"location":"Bay Area, CA","default_profile":false,"profile_background_tile":false,"statuses_count":6642,"lang":"en","profile_link_color":"121059","profile_banner_url":"https://pbs.twimg.com/profile_banners/141409425/1393997641","id":141409425,"following":false,"protected":false,"favourites_count":4183,"profile_text_color":"72B9BF","description":"Pardoned","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"A0EEF5","name":"Bernard","profile_background_color":"FFFFFF","created_at":"Sat May 08 01:18:46 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":513,"profile_image_url_https":"https://pbs.twimg.com/profile_images/440684351412379648/fb86SGnz_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/247546634/x043bd3a7f101d321eb2ce7a6d18223e.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/247546634/x043bd3a7f101d321eb2ce7a6d18223e.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://TheoBernard.tumblr.com","indices":[0,22],"display_url":"TheoBernard.tumblr.com","url":"http://t.co/A4rqYdHS59"}]}},"url":"http://t.co/A4rqYdHS59","utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":300,"profile_sidebar_fill_color":"1A3F57","screen_name":"TheoBernados","id_str":"141409425","profile_image_url":"http://pbs.twimg.com/profile_images/440684351412379648/fb86SGnz_normal.jpeg","listed_count":5,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @TheoBernados: Bill Cosby is on The Tonight Show w/ Jimmy Fallon. I wish I could drink coffee with these guys and just pick their brains.","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":141409425,"name":"Bernard","indices":[3,16],"screen_name":"TheoBernados","id_str":"141409425"}]},"in_reply_to_status_id_str":null,"id":449093916998893569,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Thu Mar 27 08:01:48 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449093916998893569","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":true,"statuses_count":6684,"lang":"en","profile_link_color":"EBA4C3","profile_banner_url":"https://pbs.twimg.com/profile_banners/18278176/1353210751","id":18278176,"following":false,"protected":false,"favourites_count":474,"profile_text_color":"73230F","description":"All aboard my train of thought.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Shannon ","profile_background_color":"EBEBD6","created_at":"Sun Dec 21 03:25:28 +0000 2008","is_translation_enabled":false,"default_profile_image":false,"followers_count":251,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000418902687/c385961c8408ff07d8b16546afcc90dc_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/714596706/d7e9623e2ff063777599645a46455d88.gif","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/714596706/d7e9623e2ff063777599645a46455d88.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":189,"profile_sidebar_fill_color":"FBF9CB","screen_name":"shannoncfarrell","id_str":"18278176","profile_image_url":"http://pbs.twimg.com/profile_images/378800000418902687/c385961c8408ff07d8b16546afcc90dc_normal.jpeg","listed_count":1,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"#QOTD: \\u201cIn order to succeed, your desire for success should be greater than your fear of failure.\\u201d \\u2013 Bill Cosby #entrepreneur #life","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"QOTD","indices":[0,5]},{"text":"entrepreneur","indices":[112,125]},{"text":"life","indices":[126,131]}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449093891854438400,"source":"<a href=\\"http://www.hootsuite.com\\" rel=\\"nofollow\\">HootSuite<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 08:01:42 +0000 2014","in_reply_to_user_id":null,"favorite_count":1,"id_str":"449093891854438400","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":true,"statuses_count":796,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/1254487820/1392598385","id":1254487820,"following":false,"protected":false,"favourites_count":12,"profile_text_color":"333333","description":"","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Branding Main","profile_background_color":"C0DEED","created_at":"Sat Mar 09 14:18:08 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":23,"profile_image_url_https":"https://pbs.twimg.com/profile_images/435215142897197057/mhMhx2gQ_normal.png","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/435216166328352768/depvOe38.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/435216166328352768/depvOe38.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":15,"profile_sidebar_fill_color":"DDEEF6","screen_name":"BrandMainSt","id_str":"1254487820","profile_image_url":"http://pbs.twimg.com/profile_images/435215142897197057/mhMhx2gQ_normal.png","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"Bill Cosby, Jimmy Fallon Tightrope Walk on 'The Tonight Show' http://t.co/hX4JMGmoFO #Breitbart","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":true,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[{"expanded_url":"http://dlvr.it/5FPJyh","indices":[62,84],"display_url":"dlvr.it/5FPJyh","url":"http://t.co/hX4JMGmoFO"}],"hashtags":[{"text":"Breitbart","indices":[85,95]}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449093190901985280,"source":"<a href=\\"http://dlvr.it\\" rel=\\"nofollow\\">dlvr.it<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 07:58:55 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449093190901985280","place":null,"user":{"location":"Philadelphia, PA USA","default_profile":false,"profile_background_tile":true,"statuses_count":19677,"lang":"en","profile_link_color":"2FC2EF","id":614558902,"following":false,"protected":false,"favourites_count":5,"profile_text_color":"333333","description":"The political news wire where left, right, and center mix.  https://t.co/AbUT96bSst","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Politomix","profile_background_color":"1A1B1F","created_at":"Thu Jun 21 20:35:49 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":349,"profile_image_url_https":"https://pbs.twimg.com/profile_images/2425510646/os15v14stodidf3doy4x_normal.png","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/626149030/146braiv89s4bg1be3ez.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/626149030/146braiv89s4bg1be3ez.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[{"expanded_url":"https://www.facebook.com/politomixnews","indices":[60,83],"display_url":"facebook.com/politomixnews","url":"https://t.co/AbUT96bSst"}]},"url":{"urls":[{"expanded_url":"http://politomix.com","indices":[0,22],"display_url":"politomix.com","url":"http://t.co/VU6fuwgEYl"}]}},"url":"http://t.co/VU6fuwgEYl","utc_offset":-10800,"time_zone":"Atlantic Time (Canada)","notifications":false,"profile_use_background_image":true,"friends_count":225,"profile_sidebar_fill_color":"DDEEF6","screen_name":"PolitomixNews","id_str":"614558902","profile_image_url":"http://pbs.twimg.com/profile_images/2425510646/os15v14stodidf3doy4x_normal.png","listed_count":23,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"\\"I don\\u2019t know the key to success, but the key to failure is trying to please everybody.\\"\\n- Bill Cosby","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":440962138903826432,"source":"<a href=\\"http://bufferapp.com\\" rel=\\"nofollow\\">Buffer<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":739,"created_at":"Tue Mar 04 21:29:01 +0000 2014","in_reply_to_user_id":null,"favorite_count":567,"id_str":"440962138903826432","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":false,"statuses_count":149,"lang":"en","profile_link_color":"0099B9","profile_banner_url":"https://pbs.twimg.com/profile_banners/2341180152/1392265679","id":2341180152,"following":false,"protected":false,"favourites_count":7,"profile_text_color":"3C3940","description":"Sharing the best wisdom quotes that will brighten your day and put a smile on your face.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Stellar Quotes","profile_background_color":"0099B9","created_at":"Thu Feb 13 01:22:03 +0000 2014","is_translation_enabled":false,"default_profile_image":false,"followers_count":37631,"profile_image_url_https":"https://pbs.twimg.com/profile_images/433819620198191104/7glkd7I9_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme4/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme4/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":0,"profile_sidebar_fill_color":"95E8EC","screen_name":"StellarQuotes","id_str":"2341180152","profile_image_url":"http://pbs.twimg.com/profile_images/433819620198191104/7glkd7I9_normal.jpeg","listed_count":51,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @StellarQuotes: \\"I don\\u2019t know the key to success, but the key to failure is trying to please everybody.\\"\\n- Bill Cosby","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":2341180152,"name":"Stellar Quotes","indices":[3,17],"screen_name":"StellarQuotes","id_str":"2341180152"}]},"in_reply_to_status_id_str":null,"id":449092851826442241,"source":"web","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":739,"created_at":"Thu Mar 27 07:57:34 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449092851826442241","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":17905,"lang":"en","profile_link_color":"0084B4","id":995499156,"following":false,"protected":false,"favourites_count":6014,"profile_text_color":"333333","description":"I don't care if you think I am insane, strange or crazy, life is too short to be normal. \\r\\nhttp://t.co/8FO2bWbiOe","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Ruru","profile_background_color":"C0DEED","created_at":"Fri Dec 07 17:30:52 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":1033,"profile_image_url_https":"https://pbs.twimg.com/profile_images/3587362822/73c017dc8b3eb0952cfa5c6979b29a52_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[{"expanded_url":"http://ask.fm/rurugreen","indices":[91,113],"display_url":"ask.fm/rurugreen","url":"http://t.co/8FO2bWbiOe"}]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":1284,"profile_sidebar_fill_color":"DDEEF6","screen_name":"GreenEyesRuru","id_str":"995499156","profile_image_url":"http://pbs.twimg.com/profile_images/3587362822/73c017dc8b3eb0952cfa5c6979b29a52_normal.jpeg","listed_count":13,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"Bill Cosby Tightropes Studio 6B http://t.co/ZwnGEPF47k","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[{"expanded_url":"http://stg.do/t4ig","indices":[32,54],"display_url":"stg.do/t4ig","url":"http://t.co/ZwnGEPF47k"}],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449092583453519872,"source":"<a href=\\"http://www.staged.com\\" rel=\\"nofollow\\">Staged Tweeter<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 07:56:30 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449092583453519872","place":null,"user":{"location":"Canada","default_profile":false,"profile_background_tile":false,"statuses_count":1161,"lang":"en","profile_link_color":"BA721A","profile_banner_url":"https://pbs.twimg.com/profile_banners/2214939355/1395013691","id":2214939355,"following":false,"protected":false,"favourites_count":3,"profile_text_color":"C9B27B","description":"Mother of 2 wonderful boys. I enjoy a good laugh. Love network marketing and helping people succeed.  Oh and I love Coffee!!!","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Robin Jamieson","profile_background_color":"270303","created_at":"Tue Nov 26 01:35:19 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":1131,"profile_image_url_https":"https://pbs.twimg.com/profile_images/427625269277384704/sl9jNROU_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/445345207236562944/FqsHBOeM.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/445345207236562944/FqsHBOeM.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://cavalier.myorganogold.com/","indices":[0,22],"display_url":"cavalier.myorganogold.com","url":"http://t.co/ZEPgWbgV3P"}]}},"url":"http://t.co/ZEPgWbgV3P","utc_offset":-10800,"time_zone":"Atlantic Time (Canada)","notifications":false,"profile_use_background_image":true,"friends_count":1867,"profile_sidebar_fill_color":"EF3333","screen_name":"ginger75_rj","id_str":"2214939355","profile_image_url":"http://pbs.twimg.com/profile_images/427625269277384704/sl9jNROU_normal.jpeg","listed_count":3,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"BILL COSBY IS STILL FUNNY","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449092455111999488,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 07:55:59 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449092455111999488","place":null,"user":{"location":"The i n t e r n e t","default_profile":false,"profile_background_tile":true,"statuses_count":4131,"lang":"en","profile_link_color":"00C8FA","profile_banner_url":"https://pbs.twimg.com/profile_banners/1391275016/1393393808","id":1391275016,"following":false,"protected":false,"favourites_count":697,"profile_text_color":"333333","description":"what i'm 15 what more do you want from me","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"000000","name":"Alibaba","profile_background_color":"131516","created_at":"Tue Apr 30 05:53:46 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":47,"profile_image_url_https":"https://pbs.twimg.com/profile_images/435294135197507586/LYC25X6Z_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/378800000152767270/PmupEs9f.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/378800000152767270/PmupEs9f.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Arizona","notifications":false,"profile_use_background_image":true,"friends_count":423,"profile_sidebar_fill_color":"DDEEF6","screen_name":"WeirdxAl","id_str":"1391275016","profile_image_url":"http://pbs.twimg.com/profile_images/435294135197507586/LYC25X6Z_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"\\"A word to the wise ain't necessary, it's the stupid ones who need advice.\\" \\n- Bill Cosby","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449092093890138112,"source":"<a href=\\"https://twitter.com/download/android\\" rel=\\"nofollow\\">Twitter for  Android<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Thu Mar 27 07:54:33 +0000 2014","in_reply_to_user_id":null,"favorite_count":1,"id_str":"449092093890138112","place":null,"user":{"location":"India, M.P., Indore","default_profile":true,"profile_background_tile":false,"statuses_count":884,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/123198713/1395574393","id":123198713,"following":false,"protected":false,"favourites_count":413,"profile_text_color":"333333","description":"apoorva: means never been bfore (unique)","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"ApooRva","profile_background_color":"C0DEED","created_at":"Mon Mar 15 09:30:44 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":241,"profile_image_url_https":"https://pbs.twimg.com/profile_images/431036316705234945/jhl_hKZ5_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":19800,"time_zone":"New Delhi","notifications":false,"profile_use_background_image":true,"friends_count":1060,"profile_sidebar_fill_color":"DDEEF6","screen_name":"i_meA19","id_str":"123198713","profile_image_url":"http://pbs.twimg.com/profile_images/431036316705234945/jhl_hKZ5_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"\\"Parents are not interested in justice, they're interested in peace and quiet.\\"\\n~ Bill Cosby #peace #quotes","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"peace","indices":[93,99]},{"text":"quotes","indices":[100,107]}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449090461127278593,"source":"<a href=\\"http://todolist.x10.mx\\" rel=\\"nofollow\\">Greatest Minds<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":2,"created_at":"Thu Mar 27 07:48:04 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449090461127278593","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":15067,"lang":"en","profile_link_color":"0084B4","id":1417728643,"following":false,"protected":false,"favourites_count":0,"profile_text_color":"333333","description":"Greatest Minds Quotes","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Greatest Minds","profile_background_color":"C0DEED","created_at":"Fri May 10 10:08:44 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":870,"profile_image_url_https":"https://pbs.twimg.com/profile_images/3639450238/2402a2f9a65ef614bc5b9e1c4cb77b81_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":7200,"time_zone":"Athens","notifications":false,"profile_use_background_image":true,"friends_count":5,"profile_sidebar_fill_color":"DDEEF6","screen_name":"Greatest__Minds","id_str":"1417728643","profile_image_url":"http://pbs.twimg.com/profile_images/3639450238/2402a2f9a65ef614bc5b9e1c4cb77b81_normal.jpeg","listed_count":12,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @Greatest__Minds: \\"Parents are not interested in justice, they're interested in peace and quiet.\\"\\n~ Bill Cosby #peace #quotes","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"peace","indices":[114,120]},{"text":"quotes","indices":[121,128]}],"user_mentions":[{"id":1417728643,"name":"Greatest Minds","indices":[3,19],"screen_name":"Greatest__Minds","id_str":"1417728643"}]},"in_reply_to_status_id_str":null,"id":449092015524155392,"source":"<a href=\\"https://roundteam.co\\" rel=\\"nofollow\\">RoundTeam<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":2,"created_at":"Thu Mar 27 07:54:14 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449092015524155392","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":2726,"lang":"en","profile_link_color":"0084B4","id":400798827,"following":false,"protected":false,"favourites_count":0,"profile_text_color":"333333","description":"","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"peacerocks","profile_background_color":"C0DEED","created_at":"Sat Oct 29 15:56:46 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":5869,"profile_image_url_https":"https://pbs.twimg.com/profile_images/1801890249/rocks_normal.jpg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":6965,"profile_sidebar_fill_color":"DDEEF6","screen_name":"peacerocks2011","id_str":"400798827","profile_image_url":"http://pbs.twimg.com/profile_images/1801890249/rocks_normal.jpg","listed_count":17,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"Bitch look like bill Cosby","geo":{"type":"Point","coordinates":[43.09469572,-83.72063949]},"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449091791619227648,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Thu Mar 27 07:53:21 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449091791619227648","place":{"id":"8d5dfd9dd04ba8a7","bounding_box":{"type":"Polygon","coordinates":[[[-83.73395,43.075092],[-83.674217,43.075092],[-83.674217,43.105056],[-83.73395,43.105056]]]},"place_type":"city","contained_within":[],"name":"Beecher","attributes":{},"country_code":"US","url":"https://api.twitter.com/1.1/geo/id/8d5dfd9dd04ba8a7.json","country":"United States","full_name":"Beecher, MI"},"user":{"location":"BEECHER TILL THE WORLD BLOW","default_profile":true,"profile_background_tile":false,"statuses_count":111218,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/235820062/1395794059","id":235820062,"following":false,"protected":false,"favourites_count":1950,"profile_text_color":"333333","description":"Well mannered nigga wit some devilish ways #FREEDNICK #BIPVEETOE","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"GET RICH THE MISSION","profile_background_color":"C0DEED","created_at":"Sun Jan 09 04:29:25 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":2120,"profile_image_url_https":"https://pbs.twimg.com/profile_images/448934537947385856/K3esSlzD_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":2070,"profile_sidebar_fill_color":"DDEEF6","screen_name":"SelfMade__5","id_str":"235820062","profile_image_url":"http://pbs.twimg.com/profile_images/448934537947385856/K3esSlzD_normal.jpeg","listed_count":2,"is_translator":false},"coordinates":{"type":"Point","coordinates":[-83.72063949,43.09469572]},"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @SelfMade__5: Bitch look like bill Cosby","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":235820062,"name":"GET RICH THE MISSION","indices":[3,15],"screen_name":"SelfMade__5","id_str":"235820062"}]},"in_reply_to_status_id_str":null,"id":449091929624838144,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Thu Mar 27 07:53:54 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449091929624838144","place":null,"user":{"location":"at the crib dog","default_profile":false,"profile_background_tile":true,"statuses_count":9671,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/754791074/1395813476","id":754791074,"following":false,"protected":false,"favourites_count":398,"profile_text_color":"333333","description":"","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Sean.","profile_background_color":"C0DEED","created_at":"Mon Aug 13 09:20:26 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":1530,"profile_image_url_https":"https://pbs.twimg.com/profile_images/436248949167767552/vqzdPmwg_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/631919953/qxngt73emt86knkafajt.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/631919953/qxngt73emt86knkafajt.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":1569,"profile_sidebar_fill_color":"DDEEF6","screen_name":"Sean_Jr7","id_str":"754791074","profile_image_url":"http://pbs.twimg.com/profile_images/436248949167767552/vqzdPmwg_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"Bitch look like bill Cosby","geo":{"type":"Point","coordinates":[43.09469572,-83.72063949]},"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449091791619227648,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Thu Mar 27 07:53:21 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449091791619227648","place":{"id":"8d5dfd9dd04ba8a7","bounding_box":{"type":"Polygon","coordinates":[[[-83.73395,43.075092],[-83.674217,43.075092],[-83.674217,43.105056],[-83.73395,43.105056]]]},"place_type":"city","contained_within":[],"name":"Beecher","attributes":{},"country_code":"US","url":"https://api.twitter.com/1.1/geo/id/8d5dfd9dd04ba8a7.json","country":"United States","full_name":"Beecher, MI"},"user":{"location":"BEECHER TILL THE WORLD BLOW","default_profile":true,"profile_background_tile":false,"statuses_count":111218,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/235820062/1395794059","id":235820062,"following":false,"protected":false,"favourites_count":1950,"profile_text_color":"333333","description":"Well mannered nigga wit some devilish ways #FREEDNICK #BIPVEETOE","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"GET RICH THE MISSION","profile_background_color":"C0DEED","created_at":"Sun Jan 09 04:29:25 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":2120,"profile_image_url_https":"https://pbs.twimg.com/profile_images/448934537947385856/K3esSlzD_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":2070,"profile_sidebar_fill_color":"DDEEF6","screen_name":"SelfMade__5","id_str":"235820062","profile_image_url":"http://pbs.twimg.com/profile_images/448934537947385856/K3esSlzD_normal.jpeg","listed_count":2,"is_translator":false},"coordinates":{"type":"Point","coordinates":[-83.72063949,43.09469572]},"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","in_reply_to_status_id_str":null,"id":449091391717900288,"in_reply_to_user_id_str":null,"in_reply_to_status_id":null,"created_at":"Thu Mar 27 07:51:46 +0000 2014","favorite_count":0,"place":null,"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"},"text":"RT @udithaumesh: Bill Cosby, 76 years old but still got it xD #ROFL  - Tightropes Studio 6B: http://t.co/VtXyxPNsJO via @YouTube","contributors":null,"retweeted_status":{"contributors":null,"text":"Bill Cosby, 76 years old but still got it xD #ROFL  - Tightropes Studio 6B: http://t.co/VtXyxPNsJO via @YouTube","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[{"expanded_url":"http://youtu.be/4VrvPZwqUwU","indices":[76,98],"display_url":"youtu.be/4VrvPZwqUwU","url":"http://t.co/VtXyxPNsJO"}],"hashtags":[{"text":"ROFL","indices":[45,50]}],"user_mentions":[{"id":10228272,"name":"YouTube","indices":[103,111],"screen_name":"YouTube","id_str":"10228272"}]},"in_reply_to_status_id_str":null,"id":449080283875143681,"source":"<a href=\\"http://twitter.com/tweetbutton\\" rel=\\"nofollow\\">Tweet Button<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":2,"created_at":"Thu Mar 27 07:07:37 +0000 2014","in_reply_to_user_id":null,"favorite_count":2,"id_str":"449080283875143681","place":null,"user":{"location":"Sri Lanka","default_profile":false,"profile_background_tile":false,"statuses_count":73478,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/22932028/1368451677","id":22932028,"following":false,"protected":false,"favourites_count":82,"profile_text_color":"333333","description":"i am not a bot...","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Umesh","profile_background_color":"EAEBC1","created_at":"Thu Mar 05 15:32:52 +0000 2009","is_translation_enabled":false,"default_profile_image":false,"followers_count":3067,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000133498664/bb81748fe29ab40863a439a007a2c202_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/425390773/calvin__hobbes-wallpaper-480x800.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/425390773/calvin__hobbes-wallpaper-480x800.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://www.flickr.com/photos/udithaumesh/","indices":[0,22],"display_url":"flickr.com/photos/udithau\\u2026","url":"http://t.co/0VDHY2JFnr"}]}},"url":"http://t.co/0VDHY2JFnr","utc_offset":19800,"time_zone":"Sri Jayawardenepura","notifications":false,"profile_use_background_image":true,"friends_count":664,"profile_sidebar_fill_color":"DDEEF6","screen_name":"udithaumesh","id_str":"22932028","profile_image_url":"http://pbs.twimg.com/profile_images/378800000133498664/bb81748fe29ab40863a439a007a2c202_normal.jpeg","listed_count":43,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"geo":null,"entities":{"symbols":[],"urls":[{"expanded_url":"http://youtu.be/4VrvPZwqUwU","indices":[93,115],"display_url":"youtu.be/4VrvPZwqUwU","url":"http://t.co/VtXyxPNsJO"}],"hashtags":[{"text":"ROFL","indices":[62,67]}],"user_mentions":[{"id":22932028,"name":"Umesh","indices":[3,15],"screen_name":"udithaumesh","id_str":"22932028"},{"id":10228272,"name":"YouTube","indices":[120,128],"screen_name":"YouTube","id_str":"10228272"}]},"source":"<a href=\\"http://twitter.com/#!/download/ipad\\" rel=\\"nofollow\\">Twitter for iPad<\\/a>","favorited":false,"in_reply_to_user_id":null,"retweet_count":2,"id_str":"449091391717900288","user":{"location":"Manhattan","default_profile":false,"profile_background_tile":true,"statuses_count":34756,"lang":"en","profile_link_color":"C75741","profile_banner_url":"https://pbs.twimg.com/profile_banners/118953812/1379951717","id":118953812,"following":false,"protected":false,"favourites_count":1202,"profile_text_color":"977C61","description":"regressives=PP/Corps/Universities/MSM/Racebaiters/Wall St/ \\n\\nΜΟΛΩΝ ΛΑΒΕ","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"D4B494","name":"RegressivesRUS","profile_background_color":"FFFDF3","created_at":"Tue Mar 02 06:16:06 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":4317,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000498217412/7970b8f2f5758ff534e80b1b177a0b4f_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/170603808/gothic-girl.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/170603808/gothic-girl.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":4216,"profile_sidebar_fill_color":"EFDCC5","screen_name":"regressivesRUs","id_str":"118953812","profile_image_url":"http://pbs.twimg.com/profile_images/378800000498217412/7970b8f2f5758ff534e80b1b177a0b4f_normal.jpeg","listed_count":81,"is_translator":false}},{"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","in_reply_to_status_id_str":null,"id":449091367826767872,"in_reply_to_user_id_str":null,"in_reply_to_status_id":null,"created_at":"Thu Mar 27 07:51:40 +0000 2014","favorite_count":0,"place":null,"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"},"text":"RT @veganforareason: Bill Cosby, serial rapist: 15 women (and counting) say he drugged and sexually assaulted them http://t.co/CFKKCcVR0v h\\u2026","contributors":null,"retweeted_status":{"contributors":null,"text":"Bill Cosby, serial rapist: 15 women (and counting) say he drugged and sexually assaulted them http://t.co/CFKKCcVR0v http://t.co/SCAeg795HW","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[{"expanded_url":"http://www.newsweek.com/another-woman-accuses-bill-cosby-sexual-abuse-228837","indices":[94,116],"display_url":"newsweek.com/another-woman-\\u2026","url":"http://t.co/CFKKCcVR0v"}],"hashtags":[],"media":[{"sizes":{"thumb":{"w":150,"resize":"crop","h":150},"small":{"w":340,"resize":"fit","h":199},"large":{"w":945,"resize":"fit","h":552},"medium":{"w":600,"resize":"fit","h":350}},"id":445900222787362816,"media_url_https":"https://pbs.twimg.com/media/BjAn4-CCIAAHuFo.jpg","media_url":"http://pbs.twimg.com/media/BjAn4-CCIAAHuFo.jpg","expanded_url":"http://twitter.com/_truthtopower_/status/445900222783168512/photo/1","source_status_id_str":"445900222783168512","indices":[117,139],"source_status_id":445900222783168512,"id_str":"445900222787362816","type":"photo","display_url":"pic.twitter.com/SCAeg795HW","url":"http://t.co/SCAeg795HW"}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449059142515191808,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":13,"created_at":"Thu Mar 27 05:43:37 +0000 2014","in_reply_to_user_id":null,"favorite_count":4,"id_str":"449059142515191808","place":null,"user":{"location":"Vancouver, BC","default_profile":false,"profile_background_tile":false,"statuses_count":22541,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/566021395/1348255381","id":566021395,"following":false,"protected":false,"favourites_count":17251,"profile_text_color":"333333","description":"Kale loving urbanista, with a passion for great vegan food, sharing the company of great people, art in all it's myriad forms, and practicing extreme kindness.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Debra Murphy","profile_background_color":"9AE4E8","created_at":"Sun Apr 29 05:49:09 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":1786,"profile_image_url_https":"https://pbs.twimg.com/profile_images/443895428304494592/36nnrnh3_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/563871296/w999.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/563871296/w999.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":783,"profile_sidebar_fill_color":"EADEAA","screen_name":"veganforareason","id_str":"566021395","profile_image_url":"http://pbs.twimg.com/profile_images/443895428304494592/36nnrnh3_normal.jpeg","listed_count":59,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"geo":null,"entities":{"symbols":[],"urls":[{"expanded_url":"http://www.newsweek.com/another-woman-accuses-bill-cosby-sexual-abuse-228837","indices":[115,137],"display_url":"newsweek.com/another-woman-\\u2026","url":"http://t.co/CFKKCcVR0v"}],"hashtags":[],"media":[{"sizes":{"thumb":{"w":150,"resize":"crop","h":150},"small":{"w":340,"resize":"fit","h":199},"large":{"w":945,"resize":"fit","h":552},"medium":{"w":600,"resize":"fit","h":350}},"id":445900222787362816,"media_url_https":"https://pbs.twimg.com/media/BjAn4-CCIAAHuFo.jpg","media_url":"http://pbs.twimg.com/media/BjAn4-CCIAAHuFo.jpg","expanded_url":"http://twitter.com/_truthtopower_/status/445900222783168512/photo/1","source_status_id_str":"445900222783168512","indices":[139,140],"source_status_id":445900222783168512,"id_str":"445900222787362816","type":"photo","display_url":"pic.twitter.com/SCAeg795HW","url":"http://t.co/SCAeg795HW"}],"user_mentions":[{"id":566021395,"name":"Debra Murphy","indices":[3,19],"screen_name":"veganforareason","id_str":"566021395"}]},"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","favorited":false,"in_reply_to_user_id":null,"retweet_count":13,"id_str":"449091367826767872","user":{"location":"In an illuminati informational","default_profile":false,"profile_background_tile":true,"statuses_count":86197,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/23272077/1390457164","id":23272077,"following":false,"protected":false,"favourites_count":1157,"profile_text_color":"333333","description":"#FVF... Food Stamp Salesman\\u2026 Phi Beta Sigma Fall '07 #AceClub #Napoleon #NuLine #NuRevolution","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"UncleGrandpa","profile_background_color":"C0DEED","created_at":"Sun Mar 08 03:40:24 +0000 2009","is_translation_enabled":false,"default_profile_image":false,"followers_count":968,"profile_image_url_https":"https://pbs.twimg.com/profile_images/447165806229475328/YNel7pxz_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/137954202/BuffaloPlayers.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/137954202/BuffaloPlayers.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":false,"friends_count":1175,"profile_sidebar_fill_color":"DDEEF6","screen_name":"_DuncanOnEm","id_str":"23272077","profile_image_url":"http://pbs.twimg.com/profile_images/447165806229475328/YNel7pxz_normal.jpeg","listed_count":14,"is_translator":false}},{"retweeted_status":{"contributors":null,"text":"\\"Parents are not interested in justice, they're interested in peace and quiet.\\"\\n~ Bill Cosby #peace #quotes","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"peace","indices":[93,99]},{"text":"quotes","indices":[100,107]}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449090461127278593,"source":"<a href=\\"http://todolist.x10.mx\\" rel=\\"nofollow\\">Greatest Minds<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":2,"created_at":"Thu Mar 27 07:48:04 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449090461127278593","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":15067,"lang":"en","profile_link_color":"0084B4","id":1417728643,"following":false,"protected":false,"favourites_count":0,"profile_text_color":"333333","description":"Greatest Minds Quotes","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Greatest Minds","profile_background_color":"C0DEED","created_at":"Fri May 10 10:08:44 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":870,"profile_image_url_https":"https://pbs.twimg.com/profile_images/3639450238/2402a2f9a65ef614bc5b9e1c4cb77b81_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":7200,"time_zone":"Athens","notifications":false,"profile_use_background_image":true,"friends_count":5,"profile_sidebar_fill_color":"DDEEF6","screen_name":"Greatest__Minds","id_str":"1417728643","profile_image_url":"http://pbs.twimg.com/profile_images/3639450238/2402a2f9a65ef614bc5b9e1c4cb77b81_normal.jpeg","listed_count":12,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @Greatest__Minds: \\"Parents are not interested in justice, they're interested in peace and quiet.\\"\\n~ Bill Cosby #peace #quotes","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"peace","indices":[114,120]},{"text":"quotes","indices":[121,128]}],"user_mentions":[{"id":1417728643,"name":"Greatest Minds","indices":[3,19],"screen_name":"Greatest__Minds","id_str":"1417728643"}]},"in_reply_to_status_id_str":null,"id":449091274763952128,"source":"<a href=\\"https://roundteam.co\\" rel=\\"nofollow\\">RoundTeam<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":2,"created_at":"Thu Mar 27 07:51:18 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449091274763952128","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":4728,"lang":"en","profile_link_color":"0084B4","id":439665187,"following":false,"protected":false,"favourites_count":0,"profile_text_color":"333333","description":"Don't forget to Follow @Follow4Hope\\r\\n Thx. \\r\\n#F4F","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Peace Lover","profile_background_color":"C0DEED","created_at":"Sun Dec 18 02:11:26 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":8218,"profile_image_url_https":"https://pbs.twimg.com/profile_images/1801883995/peace_normal.jpg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-14400,"time_zone":"Eastern Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":9460,"profile_sidebar_fill_color":"DDEEF6","screen_name":"Peacelover45","id_str":"439665187","profile_image_url":"http://pbs.twimg.com/profile_images/1801883995/peace_normal.jpg","listed_count":18,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}}]
+a4c3c9b6-b0d8-4700-84f8-6e9727ed27d8	685ca0f4-e77d-43ef-b7cd-e7087e62dedb	[{"contributors":null,"text":"@Liv_Tweets I've noticed..","geo":null,"retweeted":false,"in_reply_to_screen_name":"Liv_Tweets","truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":584763279,"name":"Olivia Roberts","indices":[0,11],"screen_name":"Liv_Tweets","id_str":"584763279"}]},"in_reply_to_status_id_str":"449503717973577728","id":449578297685323777,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":"584763279","favorited":false,"in_reply_to_status_id":449503717973577728,"retweet_count":0,"created_at":"Fri Mar 28 16:06:33 +0000 2014","in_reply_to_user_id":584763279,"favorite_count":0,"id_str":"449578297685323777","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":1289,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/1616202614/1374616945","id":1616202614,"following":false,"protected":false,"favourites_count":4856,"profile_text_color":"333333","description":"Singing. Show Choir. Boy Bands. Joshkmusic. XFaxtor. Organized Chaos. Finding Myself. *work in progress* Dreaming. Loving. Being Me.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"It's Rissa. ✌","profile_background_color":"C0DEED","created_at":"Tue Jul 23 22:01:00 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":487,"profile_image_url_https":"https://pbs.twimg.com/profile_images/448636771820388352/7yTr2OTW_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":731,"profile_sidebar_fill_color":"DDEEF6","screen_name":"clarissa_burt","id_str":"1616202614","profile_image_url":"http://pbs.twimg.com/profile_images/448636771820388352/7yTr2OTW_normal.jpeg","listed_count":4,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"Mansion tonight, ultra tomarrow, liv tomarrow night, pool party Sunday 👄💊👾🔊🎶🌀","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449578249325404161,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Fri Mar 28 16:06:22 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578249325404161","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":false,"statuses_count":2557,"lang":"en","profile_link_color":"0099B9","profile_banner_url":"https://pbs.twimg.com/profile_banners/545358540/1395805560","id":545358540,"following":false,"protected":false,"favourites_count":187,"profile_text_color":"3C3940","description":"","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"5ED4DC","name":"RH ","profile_background_color":"0099B9","created_at":"Wed Apr 04 16:54:14 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":129,"profile_image_url_https":"https://pbs.twimg.com/profile_images/438098791041093632/cTsURhz8_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme4/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme4/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-10800,"time_zone":"Atlantic Time (Canada)","notifications":false,"profile_use_background_image":true,"friends_count":127,"profile_sidebar_fill_color":"95E8EC","screen_name":"rachelhermiston","id_str":"545358540","profile_image_url":"http://pbs.twimg.com/profile_images/438098791041093632/cTsURhz8_normal.jpeg","listed_count":1,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"Need more clothes 😩","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449577770193256448,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:04:27 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449577770193256448","place":null,"user":{"location":"","default_profile":true,"profile_background_tile":false,"statuses_count":8433,"lang":"en","profile_link_color":"0084B4","id":976237645,"following":false,"protected":false,"favourites_count":2634,"profile_text_color":"333333","description":"Instagram: @apesprice","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"apes","profile_background_color":"C0DEED","created_at":"Wed Nov 28 14:24:22 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":291,"profile_image_url_https":"https://pbs.twimg.com/profile_images/446029316909178880/Y4_blNCu_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":3600,"time_zone":"Amsterdam","notifications":false,"profile_use_background_image":true,"friends_count":211,"profile_sidebar_fill_color":"DDEEF6","screen_name":"apes_price","id_str":"976237645","profile_image_url":"http://pbs.twimg.com/profile_images/446029316909178880/Y4_blNCu_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @apes_price: Need more clothes 😩","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":976237645,"name":"apes","indices":[3,14],"screen_name":"apes_price","id_str":"976237645"}]},"in_reply_to_status_id_str":null,"id":449578245328228352,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:06:21 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578245328228352","place":null,"user":{"location":"BRISTOL","default_profile":false,"profile_background_tile":false,"statuses_count":3275,"lang":"en","profile_link_color":"F58EF5","profile_banner_url":"https://pbs.twimg.com/profile_banners/349574213/1395940133","id":349574213,"following":false,"protected":false,"favourites_count":216,"profile_text_color":"333333","description":"","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"000000","name":"Olivia","profile_background_color":"FAF5FA","created_at":"Sat Aug 06 09:39:58 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":300,"profile_image_url_https":"https://pbs.twimg.com/profile_images/442736602117582848/wzxEYCLM_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme17/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme17/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-25200,"time_zone":"Pacific Time (US & Canada)","notifications":false,"profile_use_background_image":false,"friends_count":117,"profile_sidebar_fill_color":"E6F6F9","screen_name":"liv_hallett","id_str":"349574213","profile_image_url":"http://pbs.twimg.com/profile_images/442736602117582848/wzxEYCLM_normal.jpeg","listed_count":1,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"@Nicole80017 Extremely. Felt same when Liv was scolding Andrew. TBH I'm over the show. Jumped the shark in many ways.","geo":null,"retweeted":false,"in_reply_to_screen_name":"Nicole80017","truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":48504823,"name":"Nicole ","indices":[0,12],"screen_name":"Nicole80017","id_str":"48504823"}]},"in_reply_to_status_id_str":"449576916043833344","id":449578234691469312,"source":"web","in_reply_to_user_id_str":"48504823","favorited":false,"in_reply_to_status_id":449576916043833344,"retweet_count":0,"created_at":"Fri Mar 28 16:06:18 +0000 2014","in_reply_to_user_id":48504823,"favorite_count":0,"id_str":"449578234691469312","place":null,"user":{"location":"Chicago","default_profile":false,"profile_background_tile":false,"statuses_count":37720,"lang":"en","profile_link_color":"D02B55","id":251455562,"following":false,"protected":false,"favourites_count":58,"profile_text_color":"3E4415","description":"Mother Wife Daughter&Sister.Sonny&Brenda FanFirst.Maurice Benard &Vanessa Marcil Fan First.Medical Professional.","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"829D5E","name":"Pinky","profile_background_color":"352726","created_at":"Sun Feb 13 04:59:34 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":279,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000143499761/fd15e81876367dd2eaebaa99530910b8_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme5/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme5/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":313,"profile_sidebar_fill_color":"99CC33","screen_name":"twinks0216","id_str":"251455562","profile_image_url":"http://pbs.twimg.com/profile_images/378800000143499761/fd15e81876367dd2eaebaa99530910b8_normal.jpeg","listed_count":5,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"@ibelievepeg shit, yeah idk. I hope he doesn't love her still haha. I love fitz and liv together! #teamolivia","geo":null,"retweeted":false,"in_reply_to_screen_name":"ibelievepeg","truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[{"text":"teamolivia","indices":[98,109]}],"user_mentions":[{"id":1439601428,"name":"Peggy Smith","indices":[0,12],"screen_name":"ibelievepeg","id_str":"1439601428"}]},"in_reply_to_status_id_str":"449571770803453952","id":449578234376908800,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":"1439601428","favorited":false,"in_reply_to_status_id":449571770803453952,"retweet_count":0,"created_at":"Fri Mar 28 16:06:18 +0000 2014","in_reply_to_user_id":1439601428,"favorite_count":0,"id_str":"449578234376908800","place":null,"user":{"location":"Boone, NC","default_profile":false,"profile_background_tile":false,"statuses_count":5782,"lang":"en","profile_link_color":"FF3300","profile_banner_url":"https://pbs.twimg.com/profile_banners/349440604/1395200918","id":349440604,"following":false,"protected":false,"favourites_count":2441,"profile_text_color":"333333","description":"Appalachian State University","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"86A4A6","name":"Lauren Simmons","profile_background_color":"709397","created_at":"Sat Aug 06 03:13:54 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":313,"profile_image_url_https":"https://pbs.twimg.com/profile_images/418042948555919361/o_0MP0DP_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme6/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme6/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":260,"profile_sidebar_fill_color":"A0C5C7","screen_name":"laurennn_x0","id_str":"349440604","profile_image_url":"http://pbs.twimg.com/profile_images/418042948555919361/o_0MP0DP_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"We r sitting here doing nothing in algebra 2 I could be home right now","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449578225484591104,"source":"<a href=\\"http://twitter.com/download/android\\" rel=\\"nofollow\\">Twitter for Android<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Fri Mar 28 16:06:16 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578225484591104","place":null,"user":{"location":"michigan","default_profile":false,"profile_background_tile":false,"statuses_count":2542,"lang":"en","profile_link_color":"69F0AA","profile_banner_url":"https://pbs.twimg.com/profile_banners/1616716303/1391548044","id":1616716303,"following":false,"protected":false,"favourites_count":1486,"profile_text_color":"333333","description":"do what makes you happy, think later - jack barakat | hmk","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"olivia","profile_background_color":"ACDED6","created_at":"Wed Jul 24 03:14:47 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":155,"profile_image_url_https":"https://pbs.twimg.com/profile_images/441996022055591936/W20xzpGE_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme18/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme18/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":137,"profile_sidebar_fill_color":"DDEEF6","screen_name":"liv_patterson","id_str":"1616716303","profile_image_url":"http://pbs.twimg.com/profile_images/441996022055591936/W20xzpGE_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"My BlockList getting bigger &amp; bigger","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449578076771340290,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:05:40 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578076771340290","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":true,"statuses_count":24702,"lang":"en","profile_link_color":"3362F0","profile_banner_url":"https://pbs.twimg.com/profile_banners/714906432/1368016642","id":714906432,"following":false,"protected":false,"favourites_count":2627,"profile_text_color":"333333","description":"18. Outspoken. Living.  | AAMU | IG: booma_ | R.I.P Kelow","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"Booma has NO CHILL","profile_background_color":"131516","created_at":"Tue Jul 24 20:48:55 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":1421,"profile_image_url_https":"https://pbs.twimg.com/profile_images/438019376474624000/aSx-la7__normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/707984418/33bb8c44fff39cffc0e9631e66f78bcb.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/707984418/33bb8c44fff39cffc0e9631e66f78bcb.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":902,"profile_sidebar_fill_color":"DDEEF6","screen_name":"iRealizeThings","id_str":"714906432","profile_image_url":"http://pbs.twimg.com/profile_images/438019376474624000/aSx-la7__normal.jpeg","listed_count":2,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @iRealizeThings: My BlockList getting bigger &amp; bigger","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":714906432,"name":"Booma has NO CHILL","indices":[3,18],"screen_name":"iRealizeThings","id_str":"714906432"}]},"in_reply_to_status_id_str":null,"id":449578221286080512,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:06:15 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578221286080512","place":null,"user":{"location":"In Your Heart:)","default_profile":false,"profile_background_tile":true,"statuses_count":38289,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/298085510/1390080490","id":298085510,"following":false,"protected":false,"favourites_count":5087,"profile_text_color":"333333","description":"~8/17/2011~ Nothing Without Motivation:) #AAMU17 follow me on IG: gabi_babiii","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"GabiSimoné","profile_background_color":"FA038F","created_at":"Fri May 13 16:49:49 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":1297,"profile_image_url_https":"https://pbs.twimg.com/profile_images/447974149588148224/xxKrSUFZ_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/359665304/the_gab__2_.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/359665304/the_gab__2_.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":1059,"profile_sidebar_fill_color":"DDEEF6","screen_name":"Liv_Laugh_Lov25","id_str":"298085510","profile_image_url":"http://pbs.twimg.com/profile_images/447974149588148224/xxKrSUFZ_normal.jpeg","listed_count":4,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"@cjkeys23 @Sp8DaGr8 lol lol...real. Liv is still my cousin though!","geo":null,"retweeted":false,"in_reply_to_screen_name":"cjkeys23","truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":117560120,"name":"Charles James","indices":[0,9],"screen_name":"cjkeys23","id_str":"117560120"},{"id":96162385,"name":"Crazy Joe","indices":[10,19],"screen_name":"Sp8DaGr8","id_str":"96162385"}]},"in_reply_to_status_id_str":"449561445550669825","id":449578196443619328,"source":"<a href=\\"http://tweetlogix.com\\" rel=\\"nofollow\\">Tweetlogix<\\/a>","in_reply_to_user_id_str":"117560120","favorited":false,"in_reply_to_status_id":449561445550669825,"retweet_count":0,"created_at":"Fri Mar 28 16:06:09 +0000 2014","in_reply_to_user_id":117560120,"favorite_count":0,"id_str":"449578196443619328","place":null,"user":{"location":"NOLA","default_profile":false,"profile_background_tile":true,"statuses_count":31801,"lang":"en","profile_link_color":"0099CC","id":107217670,"following":false,"protected":false,"favourites_count":21,"profile_text_color":"333333","description":"When you LOVE what you have, you have EVERYTHING you need. Be happy!","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFF8AD","name":"Krys","profile_background_color":"4FF9FF","created_at":"Thu Jan 21 21:49:24 +0000 2010","is_translation_enabled":false,"default_profile_image":false,"followers_count":243,"profile_image_url_https":"https://pbs.twimg.com/profile_images/378800000859551776/jX5Y4ziI_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/81861919/red_rose.jpg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/81861919/red_rose.jpg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":132,"profile_sidebar_fill_color":"FFD1D3","screen_name":"_PrettyKrys","id_str":"107217670","profile_image_url":"http://pbs.twimg.com/profile_images/378800000859551776/jX5Y4ziI_normal.jpeg","listed_count":3,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"Ian feeling it today 😒","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449577443993477121,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:03:10 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449577443993477121","place":null,"user":{"location":"","default_profile":false,"profile_background_tile":true,"statuses_count":19764,"lang":"en","profile_link_color":"CF2153","profile_banner_url":"https://pbs.twimg.com/profile_banners/323055767/1385005641","id":323055767,"following":false,"protected":false,"favourites_count":356,"profile_text_color":"1A9DD9","description":"welcome to my world , follow me ♥","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"KB.","profile_background_color":"27BCD6","created_at":"Fri Jun 24 05:24:17 +0000 2011","is_translation_enabled":false,"default_profile_image":false,"followers_count":1148,"profile_image_url_https":"https://pbs.twimg.com/profile_images/449049657855840256/dDYcGYkI_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/874101956/8deee5b96ec2eff0e61f692bb8cba66c.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/874101956/8deee5b96ec2eff0e61f692bb8cba66c.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Quito","notifications":false,"profile_use_background_image":true,"friends_count":765,"profile_sidebar_fill_color":"6841B0","screen_name":"swisssherSWEET_","id_str":"323055767","profile_image_url":"http://pbs.twimg.com/profile_images/449049657855840256/dDYcGYkI_normal.jpeg","listed_count":1,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @swisssherSWEET_: Ian feeling it today 😒","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":323055767,"name":"KB.","indices":[3,19],"screen_name":"swisssherSWEET_","id_str":"323055767"}]},"in_reply_to_status_id_str":null,"id":449578187140628480,"source":"<a href=\\"http://twitter.com/download/android\\" rel=\\"nofollow\\">Twitter for Android<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:06:07 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578187140628480","place":null,"user":{"location":"MEMPHIS TO ATL ","default_profile":false,"profile_background_tile":true,"statuses_count":20023,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/487788693/1394128732","id":487788693,"following":false,"protected":false,"favourites_count":1344,"profile_text_color":"333333","description":"Snapchat: Keepcalm_liv 《;..\\nF O L L O W - M E - iF O L L O W  B A C K ! !》》DANCE IS MY LIFE《《 #FlawlessRoyalty","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"❤B_A_B❤","profile_background_color":"C0DEED","created_at":"Thu Feb 09 18:57:55 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":2298,"profile_image_url_https":"https://pbs.twimg.com/profile_images/439971339773161472/YdPzP_fx_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/788466587/023a76b18b41ca7525dc0dea52e5b782.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/788466587/023a76b18b41ca7525dc0dea52e5b782.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://ask.fm/xBOSSBelleLIVI","indices":[0,22],"display_url":"ask.fm/xBOSSBelleLIVI","url":"http://t.co/mTGZmVxFkV"}]}},"url":"http://t.co/mTGZmVxFkV","utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":1840,"profile_sidebar_fill_color":"DDEEF6","screen_name":"KeepCalm_LIV","id_str":"487788693","profile_image_url":"http://pbs.twimg.com/profile_images/439971339773161472/YdPzP_fx_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted_status":{"contributors":null,"text":"\\u201c@joordan_: LIV WHY DID YOU SPRAY ME IN DA FACE W PERFUME\\u201d bc u like it","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":538491631,"name":"jhar♕","indices":[1,10],"screen_name":"joordan_","id_str":"538491631"}]},"in_reply_to_status_id_str":null,"id":449578020328570882,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:05:27 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578020328570882","place":null,"user":{"location":"fiev won three","default_profile":false,"profile_background_tile":false,"statuses_count":11627,"lang":"en","profile_link_color":"0099CC","profile_banner_url":"https://pbs.twimg.com/profile_banners/495621210/1394084989","id":495621210,"following":false,"protected":false,"favourites_count":7694,"profile_text_color":"333333","description":"@DHollywood27 1.12.14-5eva","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFF8AD","name":"↱Livyoncé↲","profile_background_color":"FFF04D","created_at":"Sat Feb 18 04:40:38 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":526,"profile_image_url_https":"https://pbs.twimg.com/profile_images/443504616798298112/Tz8rEXkc_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme19/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme19/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://thebomb.com","indices":[0,22],"display_url":"thebomb.com","url":"http://t.co/AxlkA4ibNg"}]}},"url":"http://t.co/AxlkA4ibNg","utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":293,"profile_sidebar_fill_color":"F6FFD1","screen_name":"oliviarainey_","id_str":"495621210","profile_image_url":"http://pbs.twimg.com/profile_images/443504616798298112/Tz8rEXkc_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"contributors":null,"text":"RT @oliviarainey_: \\u201c@joordan_: LIV WHY DID YOU SPRAY ME IN DA FACE W PERFUME\\u201d bc u like it","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":495621210,"name":"↱Livyoncé↲","indices":[3,17],"screen_name":"oliviarainey_","id_str":"495621210"},{"id":538491631,"name":"jhar♕","indices":[20,29],"screen_name":"joordan_","id_str":"538491631"}]},"in_reply_to_status_id_str":null,"id":449578111902838784,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:05:49 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578111902838784","place":null,"user":{"location":"oak hills","default_profile":false,"profile_background_tile":true,"statuses_count":23226,"lang":"en","profile_link_color":"1527EB","profile_banner_url":"https://pbs.twimg.com/profile_banners/538491631/1393356939","id":538491631,"following":false,"protected":false,"favourites_count":7696,"profile_text_color":"333333","description":"kbump is bae","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"000000","name":"jhar♕","profile_background_color":"C0DEED","created_at":"Tue Mar 27 21:22:18 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":711,"profile_image_url_https":"https://pbs.twimg.com/profile_images/448916057969799168/IYArIz4R_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/378800000151462117/BWMriWsS.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/378800000151462117/BWMriWsS.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://jharrrrrr.tumblr.com/","indices":[0,22],"display_url":"jharrrrrr.tumblr.com","url":"http://t.co/08uxRs08Lq"}]}},"url":"http://t.co/08uxRs08Lq","utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":307,"profile_sidebar_fill_color":"DDEEF6","screen_name":"joordan_","id_str":"538491631","profile_image_url":"http://pbs.twimg.com/profile_images/448916057969799168/IYArIz4R_normal.jpeg","listed_count":3,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"@CaitlinAnn29 @AshleyBelke away &amp; then pimped him out so they could be in the White House. Lest we forget she implored Liv to keep him happy","geo":null,"retweeted":false,"in_reply_to_screen_name":"CaitlinAnn29","truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":135251945,"name":"Caitlin","indices":[0,13],"screen_name":"CaitlinAnn29","id_str":"135251945"},{"id":28488478,"name":"Ashley Belke","indices":[14,26],"screen_name":"AshleyBelke","id_str":"28488478"}]},"in_reply_to_status_id_str":"449577032310358017","id":449578104491474944,"source":"<a href=\\"http://www.echofon.com/\\" rel=\\"nofollow\\">Echofon<\\/a>","in_reply_to_user_id_str":"135251945","favorited":false,"in_reply_to_status_id":449577032310358017,"retweet_count":0,"created_at":"Fri Mar 28 16:05:47 +0000 2014","in_reply_to_user_id":135251945,"favorite_count":0,"id_str":"449578104491474944","place":null,"user":{"location":"Los Angeles","default_profile":false,"profile_background_tile":true,"statuses_count":47455,"lang":"en","profile_link_color":"9E2958","id":27546849,"following":false,"protected":false,"favourites_count":719,"profile_text_color":"994E4D","description":"Never a Dull Moment!","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C99347","name":"Nakitha","profile_background_color":"593841","created_at":"Mon Mar 30 00:54:57 +0000 2009","is_translation_enabled":false,"default_profile_image":false,"followers_count":688,"profile_image_url_https":"https://pbs.twimg.com/profile_images/439955064967282688/4uE7e4Tw_normal.jpeg","geo_enabled":true,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/648968194/xb5556006499808b6ba1e55cdf7a1a24.png","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/648968194/xb5556006499808b6ba1e55cdf7a1a24.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-28800,"time_zone":"Alaska","notifications":false,"profile_use_background_image":true,"friends_count":548,"profile_sidebar_fill_color":"A1835C","screen_name":"LuvTLC","id_str":"27546849","profile_image_url":"http://pbs.twimg.com/profile_images/439955064967282688/4uE7e4Tw_normal.jpeg","listed_count":13,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":true,"truncated":false,"lang":"en","in_reply_to_status_id_str":null,"id":449578089899888640,"in_reply_to_user_id_str":null,"in_reply_to_status_id":null,"created_at":"Fri Mar 28 16:05:44 +0000 2014","favorite_count":0,"place":null,"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"},"text":"RT @KardashianReact: Guy: \\u201cwyd?\\u201d Me: \\u201claying down\\u201d guy: \\u201cwithout me?\\u201d http://t.co/zXRndKmjuO","contributors":null,"retweeted_status":{"contributors":null,"text":"Guy: \\u201cwyd?\\u201d Me: \\u201claying down\\u201d guy: \\u201cwithout me?\\u201d http://t.co/zXRndKmjuO","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":false,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"media":[{"sizes":{"thumb":{"w":150,"resize":"crop","h":150},"small":{"w":340,"resize":"fit","h":338},"medium":{"w":360,"resize":"fit","h":358},"large":{"w":360,"resize":"fit","h":358}},"id":448900401559924736,"media_url_https":"https://pbs.twimg.com/media/BjrQiW6CcAAEj4T.jpg","media_url":"http://pbs.twimg.com/media/BjrQiW6CcAAEj4T.jpg","expanded_url":"http://twitter.com/KardashianReact/status/448900401648005120/photo/1","indices":[49,71],"id_str":"448900401559924736","type":"photo","display_url":"pic.twitter.com/zXRndKmjuO","url":"http://t.co/zXRndKmjuO"}],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":448900401648005120,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":4665,"created_at":"Wed Mar 26 19:12:50 +0000 2014","in_reply_to_user_id":null,"favorite_count":4638,"id_str":"448900401648005120","place":null,"user":{"location":"YEEZUS","default_profile":true,"profile_background_tile":false,"statuses_count":48,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/1901273544/1395768749","id":1901273544,"following":false,"protected":false,"favourites_count":0,"profile_text_color":"333333","description":"You're literally being so rude right now just follow me","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"C0DEED","name":"Kardashian Reactions","profile_background_color":"C0DEED","created_at":"Tue Sep 24 18:05:52 +0000 2013","is_translation_enabled":false,"default_profile_image":false,"followers_count":83171,"profile_image_url_https":"https://pbs.twimg.com/profile_images/448507951041376256/Or_GJUYO_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme1/bg.png","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme1/bg.png","follow_request_sent":false,"entities":{"description":{"urls":[]}},"url":null,"utc_offset":-18000,"time_zone":"Central Time (US & Canada)","notifications":false,"profile_use_background_image":true,"friends_count":5,"profile_sidebar_fill_color":"DDEEF6","screen_name":"KardashianReact","id_str":"1901273544","profile_image_url":"http://pbs.twimg.com/profile_images/448507951041376256/Or_GJUYO_normal.jpeg","listed_count":19,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},"geo":null,"entities":{"symbols":[],"urls":[],"hashtags":[],"media":[{"sizes":{"thumb":{"w":150,"resize":"crop","h":150},"small":{"w":340,"resize":"fit","h":338},"medium":{"w":360,"resize":"fit","h":358},"large":{"w":360,"resize":"fit","h":358}},"id":448900401559924736,"media_url_https":"https://pbs.twimg.com/media/BjrQiW6CcAAEj4T.jpg","media_url":"http://pbs.twimg.com/media/BjrQiW6CcAAEj4T.jpg","expanded_url":"http://twitter.com/KardashianReact/status/448900401648005120/photo/1","indices":[70,92],"id_str":"448900401559924736","type":"photo","display_url":"pic.twitter.com/zXRndKmjuO","url":"http://t.co/zXRndKmjuO"}],"user_mentions":[{"id":1901273544,"name":"Kardashian Reactions","indices":[3,19],"screen_name":"KardashianReact","id_str":"1901273544"}]},"source":"<a href=\\"http://twitter.com/download/android\\" rel=\\"nofollow\\">Twitter for Android<\\/a>","favorited":false,"in_reply_to_user_id":null,"retweet_count":4665,"id_str":"449578089899888640","user":{"location":"MEMPHIS TO ATL ","default_profile":false,"profile_background_tile":true,"statuses_count":20023,"lang":"en","profile_link_color":"0084B4","profile_banner_url":"https://pbs.twimg.com/profile_banners/487788693/1394128732","id":487788693,"following":false,"protected":false,"favourites_count":1344,"profile_text_color":"333333","description":"Snapchat: Keepcalm_liv 《;..\\nF O L L O W - M E - iF O L L O W  B A C K ! !》》DANCE IS MY LIFE《《 #FlawlessRoyalty","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFFFFF","name":"❤B_A_B❤","profile_background_color":"C0DEED","created_at":"Thu Feb 09 18:57:55 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":2298,"profile_image_url_https":"https://pbs.twimg.com/profile_images/439971339773161472/YdPzP_fx_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/788466587/023a76b18b41ca7525dc0dea52e5b782.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/788466587/023a76b18b41ca7525dc0dea52e5b782.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://ask.fm/xBOSSBelleLIVI","indices":[0,22],"display_url":"ask.fm/xBOSSBelleLIVI","url":"http://t.co/mTGZmVxFkV"}]}},"url":"http://t.co/mTGZmVxFkV","utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":1840,"profile_sidebar_fill_color":"DDEEF6","screen_name":"KeepCalm_LIV","id_str":"487788693","profile_image_url":"http://pbs.twimg.com/profile_images/439971339773161472/YdPzP_fx_normal.jpeg","listed_count":0,"is_translator":false}},{"contributors":null,"text":"SATURDAY - LIV -SUMMER 2014 COCKTAIL 23HS ROCK, POP, FUNNY &amp; HOUSE MUSIC Hombres free 1.30am/Mujeres free 2.30am http://t.co/wS7fefaXia","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"possibly_sensitive":true,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[{"expanded_url":"http://ow.ly/i/52e9C","indices":[117,139],"display_url":"ow.ly/i/52e9C","url":"http://t.co/wS7fefaXia"}],"hashtags":[],"user_mentions":[]},"in_reply_to_status_id_str":null,"id":449578060090994688,"source":"<a href=\\"http://www.hootsuite.com\\" rel=\\"nofollow\\">HootSuite<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":0,"created_at":"Fri Mar 28 16:05:36 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578060090994688","place":null,"user":{"location":"Recoleta","default_profile":false,"profile_background_tile":false,"statuses_count":6757,"lang":"es","profile_link_color":"17406C","profile_banner_url":"https://pbs.twimg.com/profile_banners/87554798/1389403649","id":87554798,"following":false,"protected":false,"favourites_count":7,"profile_text_color":"2280A9","description":"Rp en Asia de Cuba y Club de Golf -Palermo.\\nAnunciarse en la lista de Juanma.\\nCelu: 15.3516.2020 / Pin: 2B34FDDE\\nhttp://t.co/Kb0r3DxB8E","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"2280A9","name":"JMQ","profile_background_color":"020812","created_at":"Wed Nov 04 22:45:42 +0000 2009","is_translation_enabled":false,"default_profile_image":false,"followers_count":448,"profile_image_url_https":"https://pbs.twimg.com/profile_images/429574937754361856/otgaO-VD_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://pbs.twimg.com/profile_background_images/739108494/6e05a48d548fcc6a2ebda6658d7ea447.jpeg","profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/739108494/6e05a48d548fcc6a2ebda6658d7ea447.jpeg","follow_request_sent":false,"entities":{"description":{"urls":[{"expanded_url":"http://Facebook.com/juanmaqurp","indices":[113,135],"display_url":"Facebook.com/juanmaqurp","url":"http://t.co/Kb0r3DxB8E"}]},"url":{"urls":[{"expanded_url":"http://www.facebook.com/AsiadeCubaJuanma","indices":[0,22],"display_url":"facebook.com/AsiadeCubaJuan\\u2026","url":"http://t.co/bCNV0jHsAl"}]}},"url":"http://t.co/bCNV0jHsAl","utc_offset":-10800,"time_zone":"Buenos Aires","notifications":false,"profile_use_background_image":true,"friends_count":1989,"profile_sidebar_fill_color":"020812","screen_name":"jumarqu","id_str":"87554798","profile_image_url":"http://pbs.twimg.com/profile_images/429574937754361856/otgaO-VD_normal.jpeg","listed_count":4,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}},{"contributors":null,"text":"\\u201c@joordan_: LIV WHY DID YOU SPRAY ME IN DA FACE W PERFUME\\u201d bc u like it","geo":null,"retweeted":false,"in_reply_to_screen_name":null,"truncated":false,"lang":"en","entities":{"symbols":[],"urls":[],"hashtags":[],"user_mentions":[{"id":538491631,"name":"jhar♕","indices":[1,10],"screen_name":"joordan_","id_str":"538491631"}]},"in_reply_to_status_id_str":null,"id":449578020328570882,"source":"<a href=\\"http://twitter.com/download/iphone\\" rel=\\"nofollow\\">Twitter for iPhone<\\/a>","in_reply_to_user_id_str":null,"favorited":false,"in_reply_to_status_id":null,"retweet_count":1,"created_at":"Fri Mar 28 16:05:27 +0000 2014","in_reply_to_user_id":null,"favorite_count":0,"id_str":"449578020328570882","place":null,"user":{"location":"fiev won three","default_profile":false,"profile_background_tile":false,"statuses_count":11627,"lang":"en","profile_link_color":"0099CC","profile_banner_url":"https://pbs.twimg.com/profile_banners/495621210/1394084989","id":495621210,"following":false,"protected":false,"favourites_count":7694,"profile_text_color":"333333","description":"@DHollywood27 1.12.14-5eva","verified":false,"contributors_enabled":false,"profile_sidebar_border_color":"FFF8AD","name":"↱Livyoncé↲","profile_background_color":"FFF04D","created_at":"Sat Feb 18 04:40:38 +0000 2012","is_translation_enabled":false,"default_profile_image":false,"followers_count":526,"profile_image_url_https":"https://pbs.twimg.com/profile_images/443504616798298112/Tz8rEXkc_normal.jpeg","geo_enabled":false,"profile_background_image_url":"http://abs.twimg.com/images/themes/theme19/bg.gif","profile_background_image_url_https":"https://abs.twimg.com/images/themes/theme19/bg.gif","follow_request_sent":false,"entities":{"description":{"urls":[]},"url":{"urls":[{"expanded_url":"http://thebomb.com","indices":[0,22],"display_url":"thebomb.com","url":"http://t.co/AxlkA4ibNg"}]}},"url":"http://t.co/AxlkA4ibNg","utc_offset":null,"time_zone":null,"notifications":false,"profile_use_background_image":true,"friends_count":293,"profile_sidebar_fill_color":"F6FFD1","screen_name":"oliviarainey_","id_str":"495621210","profile_image_url":"http://pbs.twimg.com/profile_images/443504616798298112/Tz8rEXkc_normal.jpeg","listed_count":0,"is_translator":false},"coordinates":null,"metadata":{"result_type":"recent","iso_language_code":"en"}}]
+\.
+
+
+--
+-- TOC entry 1885 (class 2606 OID 16403)
+-- Name: location_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY location
+    ADD CONSTRAINT location_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1888 (class 2606 OID 16414)
+-- Name: trends_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY trends
+    ADD CONSTRAINT trends_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1890 (class 2606 OID 16440)
+-- Name: tweets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tweets
+    ADD CONSTRAINT tweets_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1886 (class 1259 OID 16420)
+-- Name: fki_locationFK; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "fki_locationFK" ON trends USING btree (locationid);
+
+
+--
+-- TOC entry 1891 (class 2606 OID 16415)
+-- Name: locationFK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY trends
+    ADD CONSTRAINT "locationFK" FOREIGN KEY (locationid) REFERENCES location(id);
+
+
+--
+-- TOC entry 1892 (class 2606 OID 16441)
+-- Name: tweets_trendid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tweets
+    ADD CONSTRAINT tweets_trendid_fkey FOREIGN KEY (trendid) REFERENCES trends(id);
+
+
+--
+-- TOC entry 2009 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2014-03-28 21:38:21 IST
+
+--
+-- PostgreSQL database dump complete
+--
+
+-- Completed on 2014-03-28 21:38:21 IST
+
+--
+-- PostgreSQL database cluster dump complete
+--
+

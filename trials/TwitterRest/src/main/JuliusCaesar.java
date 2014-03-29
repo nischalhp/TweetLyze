@@ -64,10 +64,9 @@ public class JuliusCaesar {
 					.newFixedThreadPool(NumberOfThreads);
 			log.info("Executor class has been initialized");
 
+			MrTimer.startTask();
+			log.info("Started the timer to insert trends");
 			while (true) {
-
-				MrTimer.startTask();
-				log.info("Started the timer to insert trends");
 
 				jobStack = MrMestri.buildJobs();
 				log.info("Creating a job stack of the search urls");

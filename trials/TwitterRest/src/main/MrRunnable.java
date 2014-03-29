@@ -5,12 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONException;
@@ -55,6 +57,10 @@ public class MrRunnable implements Runnable {
 		} catch (JSONException e) {
 			log.error(e);
 		} catch (URISyntaxException e) {
+			log.error(e);
+		} catch (SQLException e) {
+			log.error(e);
+		} catch (HttpException e) {
 			log.error(e);
 		}
 

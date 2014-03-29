@@ -26,15 +26,15 @@ import twitter.GetTrends;
 public class MrTimer extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
-	private final static int time = 21;
+	private final static int time = 22;
 
-	private final static int minutes = 45;
+	private final static int minutes = 48;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 
 	public void run() {
 		long currentTime = System.currentTimeMillis();
-		OAuthConsumer consumerObj = ExampleTrials.getConsumerObject();
+		OAuthConsumer consumerObj = JuliusCaesar.getConsumerObject();
 		try {
 			GetTrends.retrieveTrends(consumerObj);
 			log.info("Trends for the day has been added to the database");

@@ -3,7 +3,6 @@ package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
@@ -66,36 +65,50 @@ public class JuliusCaesar {
 
 			MrTimer.startTask();
 			log.info("Started the timer to insert trends");
+			/*
+			 * This is the main logic here
+			 * What happens is first it goes into the while loop
+			 * Then creates the job stack
+			 * Enters 2nd while 
+			 * If job stack is empty
+			 * it waits
+			 * then gets out of the loop
+			 * else
+			 * it takes a job
+			 * assigns it to the executor
+			 * this way i dont need to shutdown the executor at all
+			 * 
+			 */
 			while (true) {
-
 				jobStack = MrMestri.buildJobs();
 				log.info("Creating a job stack of the search urls");
-				if (jobStack.isEmpty()) {
-					log.info("No trends for the day , have to wait till trends get populated");
-					Thread.sleep(10000);
-				} else {
-					/*
-					 * Now that the job stack is there we need to pick 80 jobs
-					 * at a time and based on number of apps wait to run the
-					 * process again
-					 */
-					int jobToken = 0;
-					while (jobStack.size() > 0) {
+				int jobToken = 0;
+				while (true) {
+					if (jobStack.isEmpty()) {
+						log.info("No trends for the day , have to wait till trends get populated");
+						Thread.sleep(10000);
+						break;
+					} else {
+						/*
+						 * Now that the job stack is there we need to pick 80
+						 * jobs at a time and based on number of apps wait to
+						 * run the process again
+						 */
 						jobToken++;
 
 						MrRunnable worker = new MrRunnable(jobStack.pop());
 						executor.execute(worker);
+
 						if (jobToken
 								% Integer.parseInt(PropertyHandler
 										.getProperty("totalTrends")) == 0) {
 							log.info("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
 									+ jobToken);
-							executor.shutdown();
 							Thread.sleep(milliseconds);
 
+						}
 					}
 				}
-
 			}
 		} catch (FileNotFoundException e) {
 			log.error(e);

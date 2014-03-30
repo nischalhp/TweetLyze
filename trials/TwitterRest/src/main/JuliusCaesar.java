@@ -83,6 +83,8 @@ public class JuliusCaesar {
 					while (jobStack.size() > 0) {
 						jobToken++;
 
+						MrRunnable worker = new MrRunnable(jobStack.pop());
+						executor.execute(worker);
 						if (jobToken
 								% Integer.parseInt(PropertyHandler
 										.getProperty("totalTrends")) == 0) {
@@ -90,9 +92,7 @@ public class JuliusCaesar {
 									+ jobToken);
 							executor.shutdown();
 							Thread.sleep(milliseconds);
-						}
-						MrRunnable worker = new MrRunnable(jobStack.pop());
-						executor.execute(worker);
+
 					}
 				}
 

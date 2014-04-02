@@ -1,41 +1,50 @@
 package helpers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Stack;
+import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 
-import main.ConsumerPool;
-import main.MrMestri;
-import main.MrUrl;
 import oauth.signpost.OAuthConsumer;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-
-import org.apache.http.HttpException;
-import org.json.JSONException;
-
-import twitter.GetTrends;
-import twitter.SearchTrends;
 
 public class ExampleTrials {
 
 	public static BlockingQueue<OAuthConsumer> consumerPool = null;
+	private static String propertiesMain = "properties/property.properties";
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException, IOException {
 
-		getSystemTime();
+//		getSystemTime();
+		Properties PropertyHandler = new Properties();
+		PropertyHandler.load(new FileInputStream(propertiesMain));
+		int numberOfTrends = Integer.parseInt(PropertyHandler
+				.getProperty("totalTrends"));
+		int numberOfApps = Integer.parseInt(PropertyHandler
+				.getProperty("numberOfAccounts"));
+		int searchQueries = Integer.parseInt(PropertyHandler
+				.getProperty("numberOfSearchQueries"));
+
+		int totalSearchCalls = numberOfApps * searchQueries;
+		System.out.println(totalSearchCalls);
+		int perTrend = (int) totalSearchCalls / numberOfTrends;
+
+		System.out.println(perTrend);
+		double timeSpace = 60 / perTrend;
+		System.out.println(timeSpace);
+		double seconds = timeSpace * 60;
+		System.out.println(seconds);
+		int milliseconds = (int) seconds * 1000;
+
+		System.out.println(milliseconds);
 		// connectToPostgresServer();
 
-		consumerPool = ConsumerPool.buildConsumerPool();
+		// consumerPool = ConsumerPool.buildConsumerPool();
 
 		/*
 		 * System.out.println(consumerPool.size());
@@ -43,54 +52,40 @@ public class ExampleTrials {
 		 * MrTimer.startTask();
 		 */
 
-		OAuthConsumer consumerObj = null;
-		try {
-			consumerObj = consumerPool.take();
-			GetTrends.retrieveTrends(consumerObj);
-		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IOException | JSONException
-				| ParseException | SQLException e) {
-			e.printStackTrace();
-
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (HttpException e) {
-			String[] splitException = e.toString().split(":");
-			String statusCode = splitException[1].trim();
-			if (e.equals(statusCode)) {
-				System.out.println("Too many requests");
-				try {
-					OAuthConsumer consumerObj2 = consumerPool.take();
-					consumerPool.put(consumerObj);
-					GetTrends.retrieveTrends(consumerObj);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				} catch (OAuthMessageSignerException
-						| OAuthExpectationFailedException
-						| OAuthCommunicationException | IOException
-						| JSONException | ParseException | HttpException
-						| SQLException e2) {
-					e2.printStackTrace();
-
-				}
-			}
-		}
-		
-		Stack<MrUrl> jobs = MrMestri.buildJobs();
-		//System.out.println(jobs.size());
-
 		/*
-		 * for (int i = 0; i < jobs.size(); i++) {
+		 * OAuthConsumer consumerObj = null; try { consumerObj =
+		 * consumerPool.take(); GetTrends.retrieveTrends(consumerObj); } catch
+		 * (OAuthMessageSignerException | OAuthExpectationFailedException |
+		 * OAuthCommunicationException | IOException | JSONException |
+		 * ParseException | SQLException e) { e.printStackTrace();
+		 * 
+		 * } catch (InterruptedException e) { e.printStackTrace(); } catch
+		 * (HttpException e) { String[] splitException =
+		 * e.toString().split(":"); String statusCode =
+		 * splitException[1].trim(); if (e.equals(statusCode)) {
+		 * System.out.println("Too many requests"); try { OAuthConsumer
+		 * consumerObj2 = consumerPool.take(); consumerPool.put(consumerObj);
+		 * GetTrends.retrieveTrends(consumerObj); } catch (InterruptedException
+		 * e1) { e1.printStackTrace(); } catch (OAuthMessageSignerException |
+		 * OAuthExpectationFailedException | OAuthCommunicationException |
+		 * IOException | JSONException | ParseException | HttpException |
+		 * SQLException e2) { e2.printStackTrace();
+		 * 
+		 * } } }
+		 * 
+		 * Stack<MrUrl> jobs = MrMestri.buildJobs();
+		 * //System.out.println(jobs.size());
+		 * 
+		 * /* for (int i = 0; i < jobs.size(); i++) {
 		 */
 
-		try {
-			SearchTrends.getTweets(consumerPool.take(), jobs.pop());
-		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
-				| OAuthCommunicationException | IllegalStateException
-				| IOException | JSONException | URISyntaxException
-				| InterruptedException | SQLException | HttpException e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { SearchTrends.getTweets(consumerPool.take(), jobs.pop()); }
+		 * catch (OAuthMessageSignerException | OAuthExpectationFailedException
+		 * | OAuthCommunicationException | IllegalStateException | IOException |
+		 * JSONException | URISyntaxException | InterruptedException |
+		 * SQLException | HttpException e) { e.printStackTrace(); }
+		 */
 
 	}
 

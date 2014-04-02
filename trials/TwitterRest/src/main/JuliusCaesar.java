@@ -52,7 +52,7 @@ public class JuliusCaesar {
 
 			double timeSpace = 60 / perTrend;
 			double seconds = timeSpace * 60;
-			int milliseconds = (int) seconds * 100;
+			int milliseconds = (int) seconds * 1000;
 
 			// Adding executors
 

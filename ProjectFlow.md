@@ -20,5 +20,31 @@ These are the following things i do in the above class:
 
 ### Runnable Class : <code>MrRunnable</code>
 
-This class contains the run method for the threads.
+* This class contains the run method for the threads.
+* This run method calls getTweets of SearchTrends class.
+
+### Get Trends class : <code>Trends
+
+* This class get trends per different locations , uses jost 1 app as this is called per day.
+
+### Search Trends Class : <code>SearchTrends</code>
+
+* This class contains the getTweets method that is used to return tweets by making API call using the search API.
+* The search api returns a json and this is directly stored in the postgres table
+
+### Consumer Pool Class: <code>ConsumerPool</code>
+
+* This class creates the consumer objects provided the credentials.
+* Per twitter app i have created 80 objects so that 80 threads can be fired at once.
+* Returns a BlockingQueue so that the objects are picked up to do the job and added back to pool after that job is completed
+
+### MrTimer class : <code>MrTimer</code>
+
+* Schedules a task at particular time and then runs that task after the provided interval.
+* Has a run method that runs at a particular time
+
+### MrMestriClass : <code>MrMestri</code>
+
+* This class builds a stack of jobs for a given day that is refreshed everyhour. 
+* The number of jobs put to the stack depends on the number of apps and the number of search calls that  can be made per hour.
 

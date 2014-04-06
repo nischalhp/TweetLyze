@@ -18,6 +18,12 @@ public class JuliusCaesar {
 
 	private static String propertiesMain = "properties/property.properties";
 	public static BlockingQueue<OAuthConsumer> consumerPool;
+	/*
+	 * Adding a consumer Holder The reason being , usage of OAuth objects across
+	 * all APPs spread equally
+	 */
+	public static BlockingQueue<OAuthConsumer> consumerPoolHolder;
+	public static int sizeOfConsumerPool;
 
 	public static void main(String args[]) {
 
@@ -27,6 +33,7 @@ public class JuliusCaesar {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 
 			consumerPool = ConsumerPool.buildConsumerPool();
+			sizeOfConsumerPool = consumerPool.size();
 			String logPath = PropertyHandler.getProperty("logPath");
 
 			PropertyConfigurator.configure(logPath);
@@ -66,18 +73,11 @@ public class JuliusCaesar {
 			MrTimer.startTask();
 			log.info("Started the timer to insert trends");
 			/*
-			 * This is the main logic here
-			 * What happens is first it goes into the while loop
-			 * Then creates the job stack
-			 * Enters 2nd while 
-			 * If job stack is empty
-			 * it waits
-			 * then gets out of the loop
-			 * else
-			 * it takes a job
-			 * assigns it to the executor
-			 * this way i dont need to shutdown the executor at all
-			 * 
+			 * This is the main logic here What happens is first it goes into
+			 * the while loop Then creates the job stack Enters 2nd while If job
+			 * stack is empty it waits then gets out of the loop else it takes a
+			 * job assigns it to the executor this way i dont need to shutdown
+			 * the executor at all
 			 */
 			while (true) {
 				jobStack = MrMestri.buildJobs();
@@ -120,11 +120,26 @@ public class JuliusCaesar {
 	}
 
 	public static synchronized OAuthConsumer getConsumerObject() {
-		return consumerPool.peek();
+		/*
+		 * Checks if the pool has objects
+		 * then returns it else
+		 * the holder pool has objects
+		 * so it gets copied to 
+		 * consumerPool again
+		 * 
+		 */
+		OAuthConsumer consumerObj;
+		if (consumerPool.size() > 0) {
+			consumerObj = consumerPool.peek();
+		} else {
+			consumerPool = consumerPoolHolder;
+			consumerObj = consumerPool.peek();
+		}
+		return consumerObj;
 	}
 
 	public static synchronized void putConsumerObject(OAuthConsumer obj)
 			throws InterruptedException {
-		consumerPool.put(obj);
+		consumerPoolHolder.put(obj);
 	}
 }

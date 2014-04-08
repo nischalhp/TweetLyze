@@ -22,7 +22,6 @@ public class JuliusCaesar {
 	 * Adding a consumer Holder The reason being , usage of OAuth objects across
 	 * all APPs spread equally
 	 */
-	public static BlockingQueue<OAuthConsumer> consumerPoolHolder;
 	public static int sizeOfConsumerPool;
 
 	public static void main(String args[]) {
@@ -43,7 +42,7 @@ public class JuliusCaesar {
 			Stack<MrUrl> jobStack = null;
 
 			/*
-			 * Per trend how many calls per hour and waiting time after each
+			 * Per trend how many calls per 15 mins and waiting time after each
 			 * call
 			 */
 
@@ -57,7 +56,7 @@ public class JuliusCaesar {
 			int totalSearchCalls = numberOfApps * searchQueries;
 			int perTrend = (int) totalSearchCalls / numberOfTrends;
 
-			double timeSpace = 60 / perTrend;
+			double timeSpace = 15 / perTrend;
 			double seconds = timeSpace * 60;
 			int milliseconds = (int) seconds * 1000;
 
@@ -120,26 +119,14 @@ public class JuliusCaesar {
 	}
 
 	public static synchronized OAuthConsumer getConsumerObject() {
-		/*
-		 * Checks if the pool has objects
-		 * then returns it else
-		 * the holder pool has objects
-		 * so it gets copied to 
-		 * consumerPool again
-		 * 
-		 */
 		OAuthConsumer consumerObj;
-		if (consumerPool.size() > 0) {
-			consumerObj = consumerPool.peek();
-		} else {
-			consumerPool = consumerPoolHolder;
-			consumerObj = consumerPool.peek();
-		}
+		consumerObj = consumerPool.peek();
+
 		return consumerObj;
 	}
 
 	public static synchronized void putConsumerObject(OAuthConsumer obj)
 			throws InterruptedException {
-		consumerPoolHolder.put(obj);
+		consumerPool.put(obj);
 	}
 }

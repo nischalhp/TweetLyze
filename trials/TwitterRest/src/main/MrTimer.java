@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Timer;
@@ -28,7 +29,7 @@ public class MrTimer extends TimerTask {
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
 	private final static int time = 00;
 
-	private final static int minutes = 25;
+	private final static int minutes = 12;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 
@@ -51,13 +52,17 @@ public class MrTimer extends TimerTask {
 					e);
 		}
 	}
+	
+	/*public void run(){
+		System.out.println(Calendar.getInstance().getTime());
+	}*/
 
-	@SuppressWarnings("deprecation")
 	private static Date getTommorowTime() {
-		Date date12Am = new Date();
-		date12Am.setHours(time);
-		date12Am.setMinutes(minutes);
-		return date12Am;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 00);
+		cal.set(Calendar.MINUTE,8);
+		return cal.getTime();
 
 	}
 

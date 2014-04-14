@@ -13,8 +13,11 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
+import main.MrMestri;
+import main.MrTimer;
 import main.MrUrl;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -39,19 +42,18 @@ public class ExampleTrials {
 	public static void main(String args[]) throws FileNotFoundException,
 			IOException, SQLException {
 
+	//	MrTimer.startTask();
+		
 		// getSystemTime();
-		connectToPostgresServer();
+		//connectToPostgresServer();
 		
 		//waitingTimeTest();
-/*		consumerPool = ConsumerPool.buildConsumerPool();
-		
-		getTrends();
-		
-		System.out.println(consumerPool.size());
 
 		Stack<MrUrl> jobs = MrMestri.buildJobs();
 		
-		try {
+		System.out.println(jobs.pop().getUrl());
+		
+	/*	try {
 			searchTweets(consumerPool.take(), jobs.pop());
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
 				| OAuthCommunicationException | IllegalStateException
@@ -59,6 +61,13 @@ public class ExampleTrials {
 				| InterruptedException | SQLException | HttpException e) {
 			e.printStackTrace();
 		}
+		
+		
+	consumerPool = ConsumerPool.buildConsumerPool();
+		
+		getTrends();
+		
+		System.out.println(consumerPool.size());
 */
 	}
 

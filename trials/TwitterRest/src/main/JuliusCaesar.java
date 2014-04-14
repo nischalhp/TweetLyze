@@ -70,6 +70,7 @@ public class JuliusCaesar {
 			log.info("Executor class has been initialized");
 
 			MrTimer.startTask();
+			
 			log.info("Started the timer to insert trends");
 			/*
 			 * This is the main logic here What happens is first it goes into
@@ -79,8 +80,11 @@ public class JuliusCaesar {
 			 * the executor at all
 			 */
 			while (true) {
+				
 				jobStack = MrMestri.buildJobs();
+				
 				log.info("Creating a job stack of the search urls");
+				
 				int jobToken = 0;
 				while (true) {
 					if (jobStack.isEmpty()) {

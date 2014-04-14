@@ -7,16 +7,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Properties;
-import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
-import main.ConsumerPool;
-import main.MrMestri;
 import main.MrUrl;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -32,7 +30,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 
 import twitter.GetTrends;
-import twitter.SearchTrends;
 
 public class ExampleTrials {
 
@@ -40,12 +37,12 @@ public class ExampleTrials {
 	private static String propertiesMain = "properties/property.properties";
 
 	public static void main(String args[]) throws FileNotFoundException,
-			IOException {
+			IOException, SQLException {
 
 		// getSystemTime();
-		// connectToPostgresServer();
+		connectToPostgresServer();
 		
-		waitingTimeTest();
+		//waitingTimeTest();
 /*		consumerPool = ConsumerPool.buildConsumerPool();
 		
 		getTrends();
@@ -160,8 +157,8 @@ public class ExampleTrials {
 
 	public static void connectToPostgresServer() throws SQLException {
 		String hostName = "localhost";
-		String port = "5433";
-		String dbName = "tweetyfox";
+		String port = "5432";
+		String dbName = "tweetlyze";
 		String uname = "postgres";
 		String pwd = "tiger";
 
@@ -170,12 +167,15 @@ public class ExampleTrials {
 				+ ":" + port + "/" + dbName, uname, pwd);
 		if (conn != null) {
 			System.out.println("Connection is succesfull");
-			String q = "INSERT INTO location (id,city)"
-					+ "VALUES (1235,'BANGALORE')";
+			String q = "SELECT * FROM trends"
+					;
 			Statement stmt = conn.createStatement();
-			int i = stmt.executeUpdate(q);
-			if (i == 0) {
+			ResultSet rs = stmt.executeQuery(q);
+			if (rs == null) {
 				System.out.println("Error");
+			}
+			else{
+				System.out.println(rs.next());
 			}
 		} else {
 			System.out.println("Failed, FUCK OFF");

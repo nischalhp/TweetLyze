@@ -70,7 +70,7 @@ public class JuliusCaesar {
 			log.info("Executor class has been initialized");
 
 			MrTimer.startTask();
-			
+
 			log.info("Started the timer to insert trends");
 			/*
 			 * This is the main logic here What happens is first it goes into
@@ -80,38 +80,41 @@ public class JuliusCaesar {
 			 * the executor at all
 			 */
 			while (true) {
-				
+
 				jobStack = MrMestri.buildJobs();
-				
+
 				log.info("Creating a job stack of the search urls");
-				
+
 				int jobToken = 0;
-				while (true) {
-					if (jobStack.isEmpty()) {
-						log.info("No trends for the day , have to wait till trends get populated");
-						Thread.sleep(10000);
-						break;
-					} else {
-						/*
-						 * Now that the job stack is there we need to pick 80
-						 * jobs at a time and based on number of apps wait to
-						 * run the process again
-						 */
-						jobToken++;
 
-						MrRunnable worker = new MrRunnable(jobStack.pop());
-						executor.execute(worker);
+				if (jobStack.empty() == true) {
 
-						if (jobToken
-								% Integer.parseInt(PropertyHandler
-										.getProperty("totalTrends")) == 0) {
-							log.info("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
-									+ jobToken);
-							Thread.sleep(milliseconds);
+					log.info("No trends for the day , have to wait till trends get populated");
+					Thread.sleep(10000);
+				}
 
-						}
+				while (jobStack.empty() == false) {
+
+					/*
+					 * Now that the job stack is there we need to pick 80 jobs
+					 * at a time and based on number of apps wait to run the
+					 * process again
+					 */
+					jobToken++;
+
+					MrRunnable worker = new MrRunnable(jobStack.pop());
+					executor.execute(worker);
+
+					if (jobToken
+							% Integer.parseInt(PropertyHandler
+									.getProperty("totalTrends")) == 0) {
+						log.info("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
+								+ jobToken);
+						Thread.sleep(milliseconds);
+
 					}
 				}
+
 			}
 		} catch (FileNotFoundException e) {
 			log.error(e);
@@ -124,13 +127,12 @@ public class JuliusCaesar {
 
 	public static synchronized OAuthConsumer getConsumerObject() {
 		OAuthConsumer consumerObj;
-		consumerObj = consumerPool.peek();
-
+		consumerObj = consumerPool.remove();
 		return consumerObj;
 	}
 
 	public static synchronized void putConsumerObject(OAuthConsumer obj)
 			throws InterruptedException {
-		consumerPool.put(obj);
+		consumerPool.add(obj);
 	}
 }

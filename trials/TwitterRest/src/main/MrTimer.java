@@ -27,9 +27,9 @@ import twitter.GetTrends;
 public class MrTimer extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
-	private final static int time = 00;
+	private final static int time = 05;
 
-	private final static int minutes = 12;
+	private final static int minutes = 57;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 

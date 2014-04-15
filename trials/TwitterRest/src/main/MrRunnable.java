@@ -62,6 +62,8 @@ public class MrRunnable implements Runnable {
 			log.error(e);
 		} catch (HttpException e) {
 			log.error(e);
+		} catch (InterruptedException e){
+			log.error(e);
 		}
 
 	}

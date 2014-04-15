@@ -80,8 +80,8 @@ public class SearchTrends {
 			stmt.setObject(parameterPlaceHolder++, toInsertObjectJson);
 
 			boolean executeStatus = stmt.execute();
-			log.info("execution status of inserting tweets to the table "
-					+ executeStatus);
+			log.info("execution status of inserting tweets to the table for the trend "
+					+ url);
 			conn.close();
 		} else {
 			log.error("Something went wrong will getting tweets for the trend with id "

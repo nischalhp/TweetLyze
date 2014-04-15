@@ -24,10 +24,12 @@ public class JuliusCaesar {
 	 */
 	public static int sizeOfConsumerPool;
 
+	@SuppressWarnings("null")
 	public static void main(String args[]) {
 
 		Properties PropertyHandler = new Properties();
 		Logger log = null;
+		
 		try {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 
@@ -83,17 +85,15 @@ public class JuliusCaesar {
 
 				jobStack = MrMestri.buildJobs();
 
-				log.info("Creating a job stack of the search urls");
-
 				int jobToken = 0;
 
-				if (jobStack.empty() == true) {
+				if (jobStack.isEmpty()) {
 
 					log.info("No trends for the day , have to wait till trends get populated");
 					Thread.sleep(10000);
 				}
 
-				while (jobStack.empty() == false) {
+				while (!jobStack.isEmpty()) {
 
 					/*
 					 * Now that the job stack is there we need to pick 80 jobs
@@ -125,9 +125,9 @@ public class JuliusCaesar {
 		}
 	}
 
-	public static synchronized OAuthConsumer getConsumerObject() {
+	public static synchronized OAuthConsumer getConsumerObject() throws InterruptedException {
 		OAuthConsumer consumerObj;
-		consumerObj = consumerPool.remove();
+		consumerObj = consumerPool.take();
 		return consumerObj;
 	}
 

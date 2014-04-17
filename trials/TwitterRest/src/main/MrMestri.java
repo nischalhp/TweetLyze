@@ -57,10 +57,10 @@ public class MrMestri {
 			 * This is the logic that builds the jobs based on the number of
 			 * authorized apps
 			 */
-			int numberOfSearchQueries = Integer.parseInt(PropertyHandler
+			int numberOfAccounts= Integer.parseInt(PropertyHandler
 					.getProperty("numberOfAccounts"));
 
-			int totalSearchQueries = numberOfSearchQueries
+			int totalSearchQueries = numberOfAccounts 
 					* Integer.parseInt(PropertyHandler
 							.getProperty("numberOfSearchQueries"));
 

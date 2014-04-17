@@ -52,16 +52,24 @@ public class SearchTrends {
 
 		URL url = urlObj.getUrl();
 		HttpGet requestObj = new HttpGet(url.toURI());
+		//log.info("signing object using consumerObj " +consumer.getConsumerKey());
 		consumer.sign(requestObj);
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(requestObj);
-		System.out.println(response);
+//		System.out.println(response);
+		//log.info(response);
+		String res = response.toString();
+		String[] getLimit = res.split("x-rate-limit-remaining:");
+		String[] limit = getLimit[1].split(",");
+		log.info("limit for consumer Obj " +consumer.getConsumerKey() + " is " +limit[0]);
+		
 		int statusCode = response.getStatusLine().getStatusCode();
+		
 		if (statusCode == 200) {
 			JSONObject searchArray = new JSONObject(IOUtils.toString(response
 					.getEntity().getContent()));
 			JSONArray statusesJson = searchArray.getJSONArray("statuses");
-			System.out.println(statusesJson);
+			//System.out.println(statusesJson);
 
 			Connection conn = MrPostgres.getPostGresConnection();
 			String query = "INSERT INTO tweets(trendid,tweets) values(?,?)";
@@ -80,8 +88,8 @@ public class SearchTrends {
 			stmt.setObject(parameterPlaceHolder++, toInsertObjectJson);
 
 			boolean executeStatus = stmt.execute();
-			log.info("execution status of inserting tweets to the table for the trend "
-					+ url);
+			//log.info("execution status of inserting tweets to the table for the trend "
+				//	+ url);
 			conn.close();
 		} else {
 			log.error("Something went wrong will getting tweets for the trend with id "

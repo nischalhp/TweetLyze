@@ -3,6 +3,9 @@ package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
@@ -10,9 +13,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import oauth.signpost.OAuthConsumer;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.JSONException;
+
+import twitter.GetTrends;
 
 public class JuliusCaesar {
 
@@ -29,7 +39,7 @@ public class JuliusCaesar {
 
 		Properties PropertyHandler = new Properties();
 		Logger log = null;
-		
+
 		try {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 
@@ -40,8 +50,6 @@ public class JuliusCaesar {
 			PropertyConfigurator.configure(logPath);
 			log = Logger.getLogger(JuliusCaesar.class.getName());
 			log.info("consumer pool created");
-
-			Stack<MrUrl> jobStack = null;
 
 			/*
 			 * Per trend how many calls per 15 mins and waiting time after each
@@ -71,8 +79,6 @@ public class JuliusCaesar {
 					.newFixedThreadPool(NumberOfThreads);
 			log.info("Executor class has been initialized");
 
-			MrTimer.startTask();
-
 			log.info("Started the timer to insert trends");
 			/*
 			 * This is the main logic here What happens is first it goes into
@@ -83,7 +89,19 @@ public class JuliusCaesar {
 			 */
 			while (true) {
 
-				jobStack = MrMestri.buildJobs();
+				if (Calendar.getInstance().HOUR_OF_DAY == Integer
+						.parseInt(PropertyHandler.getProperty("hours"))
+						&& Calendar.getInstance().MINUTE == Integer
+								.parseInt(PropertyHandler
+										.getProperty("minutes"))) {
+					OAuthConsumer consumerObj = JuliusCaesar
+							.getConsumerObject();
+					GetTrends.retrieveTrends(consumerObj);
+					log.info("Trends for the day has been added to the database");
+					JuliusCaesar.putConsumerObject(consumerObj);
+				}
+
+				Stack<MrUrl> jobStack = MrMestri.buildJobs();
 
 				int jobToken = 0;
 
@@ -93,16 +111,17 @@ public class JuliusCaesar {
 					Thread.sleep(10000);
 				}
 
-				while (!jobStack.isEmpty()) {
+				while (jobStack.size() > 0) {
 
 					/*
 					 * Now that the job stack is there we need to pick 80 jobs
 					 * at a time and based on number of apps wait to run the
 					 * process again
 					 */
-					jobToken++;
 
 					MrRunnable worker = new MrRunnable(jobStack.pop());
+
+					jobToken++;
 					executor.execute(worker);
 
 					if (jobToken
@@ -110,9 +129,15 @@ public class JuliusCaesar {
 									.getProperty("totalTrends")) == 0) {
 						log.info("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
 								+ jobToken);
+						log.info("Job stack size" + jobStack.size());
 						Thread.sleep(milliseconds);
 
 					}
+				}
+				
+				if(jobStack.size() == 0){
+					log.info("Now waiting to re energize my apps ");
+					Thread.sleep(120000);
 				}
 
 			}
@@ -122,10 +147,32 @@ public class JuliusCaesar {
 			log.error(e);
 		} catch (IOException e) {
 			log.error(e);
+		} catch (OAuthMessageSignerException e) {
+			log.error(e);
+
+		} catch (OAuthExpectationFailedException e) {
+			log.error(e);
+
+		} catch (OAuthCommunicationException e) {
+			log.error(e);
+
+		} catch (JSONException e) {
+			log.error(e);
+
+		} catch (SQLException e) {
+			log.error(e);
+
+		} catch (HttpException e) {
+			log.error(e);
+
+		} catch (ParseException e) {
+			log.error(e);
+
 		}
 	}
 
-	public static synchronized OAuthConsumer getConsumerObject() throws InterruptedException {
+	public static synchronized OAuthConsumer getConsumerObject()
+			throws InterruptedException {
 		OAuthConsumer consumerObj;
 		consumerObj = consumerPool.take();
 		return consumerObj;
@@ -133,6 +180,6 @@ public class JuliusCaesar {
 
 	public static synchronized void putConsumerObject(OAuthConsumer obj)
 			throws InterruptedException {
-		consumerPool.add(obj);
+		consumerPool.put(obj);
 	}
 }

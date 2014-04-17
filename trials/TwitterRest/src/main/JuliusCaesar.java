@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
@@ -89,26 +91,26 @@ public class JuliusCaesar {
 			 */
 			while (true) {
 
-				if (Calendar.getInstance().HOUR_OF_DAY == Integer
-						.parseInt(PropertyHandler.getProperty("hours"))
-						&& Calendar.getInstance().MINUTE == Integer
-								.parseInt(PropertyHandler
-										.getProperty("minutes"))) {
+				Stack<MrUrl> jobStack = MrMestri.buildJobs();
+				int jobToken = 0;
+
+				/*
+				 * Removed all the complicate shit of timer
+				 * and other conditions
+				 * and finally figured out that all it needs is a basic if
+				 * to get trends
+				 * jobStack in this loop is empty if and only if there are no trends 
+				 * for the day
+				 * So when that happens
+				 * Boom ! You go and get trends
+				 * 
+				 */
+				if (jobStack.isEmpty()) {
 					OAuthConsumer consumerObj = JuliusCaesar
 							.getConsumerObject();
 					GetTrends.retrieveTrends(consumerObj);
 					log.info("Trends for the day has been added to the database");
 					JuliusCaesar.putConsumerObject(consumerObj);
-				}
-
-				Stack<MrUrl> jobStack = MrMestri.buildJobs();
-
-				int jobToken = 0;
-
-				if (jobStack.isEmpty()) {
-
-					log.info("No trends for the day , have to wait till trends get populated");
-					Thread.sleep(10000);
 				}
 
 				while (jobStack.size() > 0) {
@@ -134,8 +136,8 @@ public class JuliusCaesar {
 
 					}
 				}
-				
-				if(jobStack.size() == 0){
+
+				if (jobStack.size() == 0) {
 					log.info("Now waiting to re energize my apps ");
 					Thread.sleep(120000);
 				}

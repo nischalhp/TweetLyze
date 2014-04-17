@@ -11,12 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
-import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 
-import main.MrMestri;
 import main.MrUrl;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -47,62 +47,64 @@ public class ExampleTrials {
 		// connectToPostgresServer();
 
 		// waitingTimeTest();while (true)
-		/*Properties PropertyHandler = new Properties();
+		/*
+		 * Properties PropertyHandler = new Properties();
+		 * 
+		 * PropertyHandler.load(new FileInputStream(propertiesMain)); int
+		 * numberOfTrends = Integer.parseInt(PropertyHandler
+		 * .getProperty("totalTrends")); int numberOfApps =
+		 * Integer.parseInt(PropertyHandler .getProperty("numberOfAccounts"));
+		 * int searchQueries = Integer.parseInt(PropertyHandler
+		 * .getProperty("numberOfSearchQueries"));
+		 * 
+		 * int totalSearchCalls = numberOfApps * searchQueries; int perTrend =
+		 * (int) totalSearchCalls / numberOfTrends;
+		 * 
+		 * double timeSpace = 15 / perTrend; double seconds = timeSpace * 60;
+		 * int milliseconds = (int) seconds * 1000; Stack<MrUrl> jobs =
+		 * MrMestri.buildJobs(); while (true) {
+		 * System.out.println("Creating jobs"); jobs = MrMestri.buildJobs();
+		 * 
+		 * int jobToken = 0;
+		 * 
+		 * if (jobs.isEmpty()) {
+		 * 
+		 * System.out
+		 * .println("No trends for the day , have to wait till trends get populated"
+		 * ); Thread.sleep(10000); }
+		 * 
+		 * while (jobs.size() > 0) {
+		 * 
+		 * /* Now that the job stack is there we need to pick 80 jobs at a time
+		 * and based on number of apps wait to run the process again
+		 */
 
-		PropertyHandler.load(new FileInputStream(propertiesMain));
-		int numberOfTrends = Integer.parseInt(PropertyHandler
-				.getProperty("totalTrends"));
-		int numberOfApps = Integer.parseInt(PropertyHandler
-				.getProperty("numberOfAccounts"));
-		int searchQueries = Integer.parseInt(PropertyHandler
-				.getProperty("numberOfSearchQueries"));
+		/*
+		 * jobs.pop(); jobToken++;
+		 * 
+		 * if (jobToken % 70 == 0) { System.out .println(
+		 * "All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
+		 * + jobToken); System.out.println("Job stack size" + jobs.size());
+		 * Thread.sleep(100);
+		 * 
+		 * } } }
+		 */
 
-		int totalSearchCalls = numberOfApps * searchQueries;
-		int perTrend = (int) totalSearchCalls / numberOfTrends;
+		String q = "HTTP/1.1 200 OK [cache-control: no-cache, no-store, must-revalidate, pre-check=0, post-check=0, content-length: 38328, content-type: application/json;charset=utf-8, date: Thu, 17 Apr 2014 09:22:31 GMT, expires: Tue, 31 Mar 1981 05:00:00 GMT, last-modified: Thu, 17 Apr 2014 09:22:31 GMT, pragma: no-cache, server: tfe, set-cookie: guest_id=v1%3A139772655166947606; Domain=.twitter.com; Path=/; Expires=Sat, 16-Apr-2016 09:22:31 UTC, status: 200 OK, strict-transport-security: max-age=631138519, x-access-level: read, x-content-type-options: nosniff, x-frame-options: SAMEORIGIN, x-rate-limit-limit: 180, x-rate-limit-remaining: 142, x-rate-limit-reset: 1397727388, x-transaction: f62b84ce49c9cb84, x-xss-protection: 1; mode=block]";
+		String[] getLimit = q.split("x-rate-limit-remaining:");
+		String[] limit = getLimit[1].split(",");
+		System.out.println(limit[0]);
 
-		double timeSpace = 15 / perTrend;
-		double seconds = timeSpace * 60;
-		int milliseconds = (int) seconds * 1000;
-		Stack<MrUrl> jobs = MrMestri.buildJobs();
-		while (true) {
-			System.out.println("Creating jobs");
-			jobs = MrMestri.buildJobs();
-
-			int jobToken = 0;
-
-			if (jobs.isEmpty()) {
-
-				System.out
-						.println("No trends for the day , have to wait till trends get populated");
-				Thread.sleep(10000);
-			}
-
-			while (jobs.size() > 0) {
-
-				/*
-				 * Now that the job stack is there we need to pick 80 jobs at a
-				 * time and based on number of apps wait to run the process
-				 * again
-				 */
-
-				/*jobs.pop();
-				jobToken++;
-
-				if (jobToken % 70 == 0) {
-					System.out
-							.println("All jobs for the clock cycle complete , waiting for next clock cycle to start. Number of jobs completed "
-									+ jobToken);
-					System.out.println("Job stack size" + jobs.size());
-					Thread.sleep(100);
-
-				}
-			}
-		}*/
-		
-	String q = "HTTP/1.1 200 OK [cache-control: no-cache, no-store, must-revalidate, pre-check=0, post-check=0, content-length: 38328, content-type: application/json;charset=utf-8, date: Thu, 17 Apr 2014 09:22:31 GMT, expires: Tue, 31 Mar 1981 05:00:00 GMT, last-modified: Thu, 17 Apr 2014 09:22:31 GMT, pragma: no-cache, server: tfe, set-cookie: guest_id=v1%3A139772655166947606; Domain=.twitter.com; Path=/; Expires=Sat, 16-Apr-2016 09:22:31 UTC, status: 200 OK, strict-transport-security: max-age=631138519, x-access-level: read, x-content-type-options: nosniff, x-frame-options: SAMEORIGIN, x-rate-limit-limit: 180, x-rate-limit-remaining: 142, x-rate-limit-reset: 1397727388, x-transaction: f62b84ce49c9cb84, x-xss-protection: 1; mode=block]";
-	String[] getLimit = q.split("x-rate-limit-remaining:");
-	String[] limit = getLimit[1].split(",");
-	System.out.println(limit[0]);
+		Calendar cal = Calendar.getInstance();
+		Date d = cal.getTime();
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"HH");
+		String d1 = dateFormat.format(d);
+		System.out.println(d1);
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat(
+				"mm");
+		String d2 = dateFormat2.format(d);
+		System.out.println(d2);
 
 	}
 

@@ -61,7 +61,7 @@ public class SearchTrends {
 		String res = response.toString();
 		String[] getLimit = res.split("x-rate-limit-remaining:");
 		String[] limit = getLimit[1].split(",");
-		log.info("limit for consumer Obj " +consumer.getConsumerKey() + " is " +limit[0]);
+		//log.info("limit for consumer Obj " +consumer.getConsumerKey() + " is " +limit[0]);
 		
 		int statusCode = response.getStatusLine().getStatusCode();
 		
@@ -88,8 +88,8 @@ public class SearchTrends {
 			stmt.setObject(parameterPlaceHolder++, toInsertObjectJson);
 
 			boolean executeStatus = stmt.execute();
-			//log.info("execution status of inserting tweets to the table for the trend "
-				//	+ url);
+			log.info("execution status of inserting tweets to the table for the trend "
+					+ url);
 			conn.close();
 		} else {
 			log.error("Something went wrong will getting tweets for the trend with id "

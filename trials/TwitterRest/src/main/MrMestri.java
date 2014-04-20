@@ -94,7 +94,7 @@ public class MrMestri {
 						String searchUrl = PropertyHandler
 								.getProperty("searchUrl");
 						trend = URLEncoder.encode(trend, "ISO-8859-1");
-						searchUrl = searchUrl + trend + "&lang=en";
+						searchUrl = searchUrl + trend + "&lang=en&count=100&result_type=recent";
 						URL searchURL = new URL(searchUrl);
 						MrUrl urlObj = new MrUrl(searchURL, id);
 						jobStack.push(urlObj);

@@ -105,7 +105,7 @@ public class JuliusCaesar {
 				 * Boom ! You go and get trends
 				 * 
 				 */
-				if (jobStack.isEmpty()) {
+				if (jobStack.size() == 0){
 					OAuthConsumer consumerObj = JuliusCaesar
 							.getConsumerObject();
 					GetTrends.retrieveTrends(consumerObj);

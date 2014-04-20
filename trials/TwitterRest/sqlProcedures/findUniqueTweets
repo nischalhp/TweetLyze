@@ -1,0 +1,30 @@
+﻿CREATE FUNCTION traverse_json_objects()
+RETURNS void as $$
+
+DECLARE jsonObj json;
+BEGIN
+
+
+FOR jsonObj IN 
+
+select *
+from
+(SELECT  json_array_elements(t1.tweets) as array_elements
+FROM 
+(select tweets from tweets where trendId in(select id from trends where trend = '#IPL7' ))as t1) as t2
+where t2.array_elements->>'text' = '%'
+
+
+LOOP 
+	Select jsonObj;
+
+END LOOP;
+
+END;
+
+$$ LANGUAGE plpgsql;
+
+
+
+
+

@@ -35,6 +35,15 @@ from
 (select json(json_array_elements(t1.tweets)) as jsonElements from
 (select tweets from tweets where trendId in(select id from trends where trend = '#IPL7' ))as t1)as t2
 
+
+select count(distinct(json_extract_path_text(t2.jsonElements,'text')))
+from
+
+(select json(json_array_elements(t1.tweets)) as jsonElements from
+(select tweets from tweets where trendId in(select id from trends where trend = '#IPL7' ))as t1)as t2
+
+
+
 --select id,d from tweets where trendId in(select id from trends where trend = '#IPL7' )
 
 

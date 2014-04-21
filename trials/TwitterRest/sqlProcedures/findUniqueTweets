@@ -7,12 +7,13 @@ BEGIN
 
 FOR jsonObj IN 
 
-select *
+select count(*)
 from
 (SELECT  json_array_elements(t1.tweets) as array_elements
 FROM 
+
 (select tweets from tweets where trendId in(select id from trends where trend = '#IPL7' ))as t1) as t2
-where t2.array_elements->>'text' = '%'
+where t2.array_elements->>'text'<> ''
 
 
 LOOP 
@@ -24,6 +25,11 @@ END;
 
 $$ LANGUAGE plpgsql;
 
+
+select count(distinct(json_extract_path_text(t2.jsonElements,'id')))
+from
+(select json_array_elements(t1.tweets) as jsonElements from
+(select tweets from tweets)as t1)as t2
 
 
 

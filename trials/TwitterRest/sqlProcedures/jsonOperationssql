@@ -1,0 +1,9 @@
+﻿select json_object_keys(t2.s2) from
+(select json_object_keys(t1.s1) as s2 from (SELECT  json_array_elements(tweets) as s1 FROM tweets limit 1)as t1) as t2;
+
+
+(SELECT  json_array_elements(tweets) as s1 FROM tweets limit 1)
+
+
+
+

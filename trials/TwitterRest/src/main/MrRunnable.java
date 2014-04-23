@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import net.oauth.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
@@ -39,8 +40,10 @@ public class MrRunnable implements Runnable {
 			String logPath = propertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
 			log = Logger.getLogger(MrRunnable.class.getName());
-			log.info("Logger has been set , now firing call to get tweets");
-			SearchTrends.getTweets(JuliusCaesar.getConsumerObject(), urlObj);
+			//log.info("Logger has been set , now firing call to get tweets");
+			oauth.signpost.OAuthConsumer consumerObj= JuliusCaesar.getConsumerObject();
+			SearchTrends.getTweets(consumerObj, urlObj);
+			JuliusCaesar.putConsumerObject(consumerObj);
 
 		} catch (FileNotFoundException e) {
 			log.error(e);
@@ -61,6 +64,8 @@ public class MrRunnable implements Runnable {
 		} catch (SQLException e) {
 			log.error(e);
 		} catch (HttpException e) {
+			log.error(e);
+		} catch (InterruptedException e){
 			log.error(e);
 		}
 

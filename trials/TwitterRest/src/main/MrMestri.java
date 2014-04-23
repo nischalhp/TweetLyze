@@ -57,10 +57,10 @@ public class MrMestri {
 			 * This is the logic that builds the jobs based on the number of
 			 * authorized apps
 			 */
-			int numberOfSearchQueries = Integer.parseInt(PropertyHandler
+			int numberOfAccounts= Integer.parseInt(PropertyHandler
 					.getProperty("numberOfAccounts"));
 
-			int totalSearchQueries = numberOfSearchQueries
+			int totalSearchQueries = numberOfAccounts 
 					* Integer.parseInt(PropertyHandler
 							.getProperty("numberOfSearchQueries"));
 
@@ -94,7 +94,7 @@ public class MrMestri {
 						String searchUrl = PropertyHandler
 								.getProperty("searchUrl");
 						trend = URLEncoder.encode(trend, "ISO-8859-1");
-						searchUrl = searchUrl + trend + "&lang=en";
+						searchUrl = searchUrl + trend + "&lang=en&count=100&result_type=recent";
 						URL searchURL = new URL(searchUrl);
 						MrUrl urlObj = new MrUrl(searchURL, id);
 						jobStack.push(urlObj);

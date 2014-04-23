@@ -32,11 +32,11 @@ public class MrPostgres {
 
 			PropertyConfigurator.configure(logPath);
 			log = Logger.getLogger(MrPostgres.class.getName());
-			log.info(" Required credentials to connect to the postgres server is complete");
+			//log.info(" Required credentials to connect to the postgres server is complete");
 			conn = DriverManager.getConnection("jdbc:postgresql://" + hostName
 					+ ":" + port + "/" + dbName, uname, pwd);
 			if (conn != null) {
-				log.info("Connection to postgres is succesfull");
+				//log.info("Connection to postgres is succesfull");
 			} else {
 				log.error("Connection to postgres is unsuccesfull ");
 			}

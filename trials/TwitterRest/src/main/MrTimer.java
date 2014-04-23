@@ -1,11 +1,10 @@
 package main;
 
-import helpers.ExampleTrials;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Timer;
@@ -26,16 +25,16 @@ import twitter.GetTrends;
 public class MrTimer extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
-	private final static int time = 22;
+	private final static int time = 00;
 
-	private final static int minutes = 48;
+	private final static int minutes = 00;
 	private static Logger log = null;
 	private static String propertiesMain = "properties/property.properties";
 
 	public void run() {
-		long currentTime = System.currentTimeMillis();
-		OAuthConsumer consumerObj = JuliusCaesar.getConsumerObject();
 		try {
+			OAuthConsumer consumerObj = JuliusCaesar.getConsumerObject();
+
 			GetTrends.retrieveTrends(consumerObj);
 			log.info("Trends for the day has been added to the database");
 			JuliusCaesar.putConsumerObject(consumerObj);
@@ -46,17 +45,22 @@ public class MrTimer extends TimerTask {
 			log.error("Something went wrong while retrieving trends", e);
 		} catch (InterruptedException e) {
 			log.error(
-					"Something went wrong while writing the object to the pool ",
+					"Something went wrong while putting/retrieveing the consumer object to the pool ",
 					e);
 		}
 	}
 
-	@SuppressWarnings("deprecation")
+	/*
+	 * public void run(){ System.out.println(Calendar.getInstance().getTime());
+	 * }
+	 */
+
 	private static Date getTommorowTime() {
-		Date date12Am = new Date();
-		date12Am.setHours(time);
-		date12Am.setMinutes(minutes);
-		return date12Am;
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, time);
+		cal.set(Calendar.MINUTE, minutes);
+		return cal.getTime();
 
 	}
 

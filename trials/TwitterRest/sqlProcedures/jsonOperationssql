@@ -5,19 +5,5 @@
 (SELECT  json_array_elements(tweets) as s1 FROM tweets limit 1)
 
 
-CREATE FUNCTION traverse_json_objects()
-RETURNS void
-BEGIN
 
-FOR jsonObj IN 
-SELECT  json_array_elements(t1.tweets) as s1 
-FROM (select tweets from tweets limit 1)as t1
 
-LOOP 
-	Select jsonObj;
-
-END LOOP;
-
-END;
-
-$$ LANGUAGE plpgsql;

@@ -18,15 +18,15 @@
 
 ------------------------
 
-user table
-	* location
-	* statuses_count
-	* favourites_count
-	* description
-	* name
-	* created_at
-	* followers_count
-	* friends_count
-	* screen_name
-	* id_str
-	* listed_count
+## User table
+	location
+	statuses_count
+	favourites_count
+	description
+	name
+	created_at
+	followers_count
+	friends_count
+	screen_name
+	id_str
+	listed_count

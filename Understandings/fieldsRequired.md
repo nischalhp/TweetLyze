@@ -1,20 +1,20 @@
 ## Tweets table
 
-text
-geo
-retweeted
-in_reply_to_screen_name
-truncated - query for only the ones that are not truncated
-entities
-	* hashtags
-	* user_mentions
-source
-retweet_count
-created_at
-favorite_count
-id_str
-place
-user_id
+	text
+	geo
+	retweeted
+	in_reply_to_screen_name
+	truncated - query for only the ones that are not truncated
+	entities
+		* hashtags
+		* user_mentions
+	source
+	retweet_count
+	created_at
+	favorite_count
+	id_str
+	place
+	user_id
 
 ------------------------
 

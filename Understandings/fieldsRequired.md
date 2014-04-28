@@ -1,4 +1,3 @@
-
 ## Tweets table
 
 text

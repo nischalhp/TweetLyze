@@ -26,10 +26,16 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-(select distinct(json_extract_path_text(t2.jsonElements,'id_str'))
-from
-(select json_array_elements(t1.tweets) as jsonElements from
-(select tweets from tweets)as t1)as t2
+select json_extract_path_text(t3.json_elements,"text") as "text" , 
+json_extract_path_text(t3.json_elements,"geo") as "geo", 
+json_extract_path_text(t3.json_elements,"retweeted") as "retweeted"  , 
+json_extract_path_text(t3.json_elements,"in_reply_to_screen_name") as "in_reply_to_screen_name" ,
+json_
+    (select distinct(json_extract_path_text(t2.jsonElements,'id_str') as "id" , t2.jsonElements as "json_elements" )
+        from
+            (select json_array_elements(t1.tweets) as jsonElements 
+                from
+                    (select tweets from tweets)as t1)as t2) as t3)
 
 
 

@@ -26,23 +26,38 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-select json_extract_path_text(t2.jsonElements,'text') as "text", 
+select * from organizedTweets;
+
+insert into organizedTweets
+select 
+json_extract_path_text(t2.jsonElements,'id') as "id",
 json_extract_path_text(t2.jsonElements,'geo') as "geo", 
 json_extract_path_text(t2.jsonElements,'retweeted') as "retweeted"  , 
 json_extract_path_text(t2.jsonElements,'in_reply_to_screen_name') as "in_reply_to_screen_name",
+json_extract_path_text(t2.jsonElements,'truncated') as "truncated",
 json_extract_path_text(t2.jsonElements,'source') as "source",
 json_extract_path_text(t2.jsonElements,'retweet_count') as "retweet_count",
 json_extract_path_text(t2.jsonElements,'created_at') as "created_at",
 json_extract_path_text(t2.jsonElements,'favorite_count') as "favorite_count",
-json_extract_path_text(t2.jsonElements,'id') as "id",
 json_extract_path_text(t2.jsonElements,'place') as "place",
-json_extract_path_text(t2.jsonElements,'user')
+
+json_extract_path(json_extract_path(t2.jsonElements,'user'),'id') as "user_id",
+
+json_extract_path(json_extract_path(t2.jsonElements,'entities'),'hashtags') as "hashtags",
+json_extract_path(json_extract_path(t2.jsonElements,'entities'),'user_mentions') as "user_mentions",
+json_extract_path_text(t2.jsonElements,'text') as "text"
 from
             (select json_array_elements(t1.tweets) as jsonElements 
                 from
-                    (select tweets from tweets)as t1)as t2;
+                    (select tweets from tweets where trendId in (select id from trends where trend LIKE '%IPL%') limit 1 )as t1)as t2;
 
 
-select json_array_elements(t1.tweets) as jsonElements 
-			from
-			(select tweets from tweets limit 1)as t1;
+select 
+
+json_extract_path(json_extract_path(t2.jsonElements,'user'),'id')
+
+
+from
+            (select json_array_elements(t1.tweets) as jsonElements 
+                from
+                    (select tweets from tweets where trendId in (select id from trends where trend LIKE '%IPL%') limit 1 )as t1)as t2;

@@ -58,11 +58,11 @@ public class SearchTrends {
 		HttpResponse response = client.execute(requestObj);
 //		System.out.println(response);
 		//log.info(response);
-		String res = response.toString();
+		/*String res = response.toString();
 		String[] getLimit = res.split("x-rate-limit-remaining:");
 		String[] limit = getLimit[1].split(",");
 		//log.info("limit for consumer Obj " +consumer.getConsumerKey() + " is " +limit[0]);
-		
+		*/
 		int statusCode = response.getStatusLine().getStatusCode();
 		
 		if (statusCode == 200) {

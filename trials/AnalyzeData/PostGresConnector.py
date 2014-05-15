@@ -22,8 +22,8 @@ class PostgresConnector:
 
 
 
-Connector = PostgresConnector() 
-Connector.connect_to_postgres()
+#Connector = PostgresConnector() 
+#Connector.connect_to_postgres()
 
 
 

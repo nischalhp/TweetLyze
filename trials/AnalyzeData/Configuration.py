@@ -7,7 +7,7 @@ class configurator:
 	def read_configuration(self):
 		Config = ConfigParser.ConfigParser() 
 		workingDirectory = os.getcwd()
-		fileName = os.path.join(workingDirectory,"properties.ini")
+		fileName = os.path.join(workingDirectory,"properties/properties.ini")
 		Config.read(fileName)
 		return Config
 

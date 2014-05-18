@@ -22,9 +22,15 @@ class IdEntityIndexer:
 	# insert id , and hashtags into the table IdEntity
 	def insert_to_db(self,id,hashtag_list):
 		conn = PostgresConnector().get_connection()
+		conn.autocommit = True
 		cursor = conn.cursor()
 		for hashtag in hashtag_list:
-			cursor.execute('INSERT INTO "IdEntity" values(%s,%s)',id,hashtag)
+			query = "INSERT INTO \"IdEntity\" values(\'"+id+"\',\'"+hashtag+"\')"
+			try:
+				print "Executing query " + query
+				cursor.execute(query)
+			except:
+				print "Something went wrong while inserting" 
 
 
 

@@ -16,8 +16,16 @@ class IdEntityIndexer:
 			hashtag_array = row[entities_column]
 			hashtag_list = [hashtag['text'] for hashtag in hashtag_array]
 			id_entity_dict[tweet_id] = hashtag_list 
-
+			IdEntityIndexer().insert_to_db(tweet_id,hashtag_list)
 		print len(id_entity_dict)
+
+	# insert id , and hashtags into the table IdEntity
+	def insert_to_db(self,id,hashtag_list):
+		conn = PostgresConnector().get_connection()
+		cursor = conn.cursor()
+		for hashtag in hashtag_list:
+			cursor.execute('INSERT INTO "IdEntity" values(%s,%s)',id,hashtag)
+
 
 
 obj = IdEntityIndexer().build()

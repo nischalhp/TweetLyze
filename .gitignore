@@ -14,7 +14,7 @@ local.properties
 .settings/
 .loadpath
 log.*
-
+twitter.properties
 # External tool builders
 .externalToolBuilders/
 

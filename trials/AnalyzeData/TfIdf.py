@@ -16,12 +16,10 @@ class TfIdf:
 				tfidf = tf * idf 
 				tf_idf_list.extend((tf,idf,tfidf))
 				entity_tfidf_dict[key] = tf_idf_list
-#				print entity_tfidf_dict[key]
+		return entity_tfidf_dict
 
 			except:
-				idf_1 = total_doc_count/tf
-				print key,tf,idf,total_doc_count,math.log10(idf_1),math.log10(total_doc_count/tf)
-
+				print except
 
 
 

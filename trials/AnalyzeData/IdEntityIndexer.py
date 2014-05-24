@@ -6,14 +6,14 @@ from PostgresConnector import PostgresConnector
 
 class IdEntityIndexer:
 
-	def build(self):
-		conn = PostgresConnector().get_connection()
-		cursor = conn.cursor()
-		conn.autocommit = True
-		query = 'select id,hashtags from "organizedTweets" '
-		cursor.execute(query)
-		id_column = 0
-		entities_column = 1
+    def build(self):
+        conn = PostgresConnector().get_connection()
+        cursor = conn.cursor()
+        conn.autocommit = True
+        query = 'select id,hashtags from "organizedTweets" '
+        cursor.execute(query)
+        id_column = 0
+        entities_column = 1
 
         with open('copy_from.txt','w') as f:
             for row in cursor:
@@ -27,7 +27,7 @@ class IdEntityIndexer:
         with open('copy_from.txt') as f:
             cursor.copy_from(f, '"IdEntity"', columns=('id', 'entity'))
 
-		os.remove('copy_from.txt')
+        os.remove('copy_from.txt')
 
 IdEntityIndexer().build()
 

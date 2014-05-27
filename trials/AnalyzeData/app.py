@@ -1,13 +1,13 @@
-from flask import Flask
+from flask import Flask,send_file
 app = Flask(__name__,instance_relative_config=True)
 app.config.from_pyfile('config.py')
 
 
 @app.route('/')
 def hello_world():
-	return 'Hello World!'
+	return send_file('static/index.html')
 
 
 if __name__ == '__main__':
-	app.run(app.config["DEBUG"])
+	app.run(debug=app.config["DEBUG"])
 

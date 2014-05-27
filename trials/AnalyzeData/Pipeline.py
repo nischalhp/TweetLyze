@@ -27,24 +27,28 @@ class Pipeline:
 		return locations_list
 
 
-	def get_trends(self,locationId):
-		conn = PostgresConnector().get_connection()
-		cursor = conn.cursor()
-		query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = '+locationid+' group by trend) as t1 order by count desc'
-		cursor.execute(query)
-		trend_Column = 0
-		count_Column = 1
+	def get_trends(self,location_id):
 		trends_list = []	
-		for row in cursor:
-			trend_count = {}
-			trend_count["trend"] = row[trend_Column]
-			trend_count["count"] = row[count_Column]
-			trends_list.append(trend_count)
+		try:
+			conn = PostgresConnector().get_connection()
+			cursor = conn.cursor()
+			query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = \''+location_id+'\' group by trend) as t1 order by count desc'
+			cursor.execute(query)
+			trend_Column = 0
+			count_Column = 1
+			for row in cursor:
+				trend_count = {}
+				trend_count["trend"] = row[trend_Column]
+				trend_count["count"] = row[count_Column]
+				trends_list.append(trend_count)
+
+		except Exception as e:
+			print e 
 
 		return trends_list
 
 
-pipeLine = Pipeline()
-list = pipeLine.get_locations()
-print list
+#pipeLine = Pipeline()
+#list = pipeLine.get_locations()
+#print list
 

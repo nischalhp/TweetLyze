@@ -1,0 +1,82 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.4
+-- Dumped by pg_dump version 9.3.4
+-- Started on 2014-05-28 21:41:08 IST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 176 (class 1259 OID 214221)
+-- Name: id_entity; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE id_entity (
+    id character varying(1000),
+    entity character varying(1000)
+);
+
+
+ALTER TABLE public.id_entity OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 214205)
+-- Name: organized_tweets; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE organized_tweets (
+    id character varying(1000) NOT NULL,
+    geo character varying(300),
+    retweeted boolean,
+    in_reply_to_screen_name character varying(500),
+    truncated boolean,
+    source character varying(500),
+    created_at date,
+    place character varying(500),
+    user_id character varying(200),
+    text character varying(250),
+    entities text,
+    user_mentions text,
+    retweet_count integer,
+    favorite_count integer,
+    trend_id uuid
+);
+
+
+ALTER TABLE public.organized_tweets OWNER TO postgres;
+
+--
+-- TOC entry 1994 (class 1259 OID 222449)
+-- Name: idindex; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idindex ON id_entity USING btree (id);
+
+
+--
+-- TOC entry 1993 (class 1259 OID 238796)
+-- Name: organized_tweets_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX organized_tweets_index ON organized_tweets USING btree (id, geo, source, created_at, text, user_id, entities, trend_id);
+
+
+-- Completed on 2014-05-28 21:41:09 IST
+
+--
+-- PostgreSQL database dump complete
+--
+

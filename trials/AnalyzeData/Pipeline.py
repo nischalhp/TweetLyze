@@ -4,6 +4,7 @@
 # then to extract the required columns
 # then create the id,entity table
 from PostgresConnector import PostgresConnector
+import pp
 
 
 class Pipeline:
@@ -46,6 +47,27 @@ class Pipeline:
 			print e 
 
 		return trends_list
+
+	def update_organized_tweets(self):
+		trends_list = []	
+		try:
+			conn = PostgresConnector().get_connection()
+			cursor = conn.cursor()
+			query = 'select count(id) as "count",trend from "trends" group by trend'
+			cursor.execute(query)
+			trend_Column = 1
+			count_Column = 0
+			for row in cursor:
+				trend_count = {}
+				trend_count["trend"] = row[trend_Column]
+				trend_count["count"] = row[count_Column]
+				trends_list.append(trend_count)
+
+		except Exception as e:
+			print e 
+
+	    		
+
 
 
 #pipeLine = Pipeline()

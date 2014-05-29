@@ -21,6 +21,10 @@ $( function(){
 			},
 
 			getTrends : function(geoid){
+				$.ajax({
+					type: "GET",
+					
+				})
 
 			}
 

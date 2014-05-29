@@ -31,4 +31,7 @@ BEGIN
 					(select tweets,trendId from tweets where trendId = trend_id )as t1)as t2)as t3;
 
 END;
-$$ LANGUAGE plpgsql;           
+$$ LANGUAGE plpgsql;   
+
+
+--select disintegrate_tweets('45df9aed-4b77-4cb8-9351-aaceb69aa433');     

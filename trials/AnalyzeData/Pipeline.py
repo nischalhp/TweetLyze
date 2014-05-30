@@ -35,12 +35,12 @@ class Pipeline:
 			cursor = conn.cursor()
 			query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = \''+location_id+'\' group by trend) as t1 order by count desc'
 			cursor.execute(query)
-			trend_Column = 0
-			count_Column = 1
+			trend_column = 0
+			count_column = 1
 			for row in cursor:
 				trend_count = {}
-				trend_count["trend"] = row[trend_Column]
-				trend_count["count"] = row[count_Column]
+				trend_count["trend"] = row[trend_column]
+				trend_count["count"] = row[count_column]
 				trends_list.append(trend_count)
 
 		except Exception as e:
@@ -55,12 +55,12 @@ class Pipeline:
 			cursor = conn.cursor()
 			query = 'select count(id) as "count",trend from "trends" group by trend'
 			cursor.execute(query)
-			trend_Column = 1
-			count_Column = 0
+			trend_column = 1
+			count_column = 0
 			for row in cursor:
 				trend_count = {}
-				trend_count["trend"] = row[trend_Column]
-				trend_count["count"] = row[count_Column]
+				trend_count["trend"] = row[trend_column]
+				trend_count["count"] = row[count_column]
 				trends_list.append(trend_count)
 
 		except Exception as e:

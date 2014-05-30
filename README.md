@@ -5,29 +5,29 @@ MS project desertation
 
 Things Done : 
 
-Postgres connection.
+* Postgres connection.
 
-Consumer Pool.
+* Consumer Pool.
 
-Trends from 8 different locations stored in DB date-wise.
+* Trends from 8 different locations stored in DB date-wise.
 
-Search urls built.
+* Search urls built.
 
-Stack of jobs completed.
+* Stack of jobs completed.
 
-Exectuor based approach.
+* Exectuor based approach.
 
-Consumer Pool with 100 consumber objects instead of just app wise. This will help me fire threads.
+* Consumer Pool with 100 consumber objects instead of just app wise. This will help me fire threads.
 
-Procedures to disintegrate the tweets
+* Procedures to disintegrate the tweets
 
 
 To Do : 
 
 
-UI 
+* UI 
 
-Visualization
+* Visualization
 
-TFIDF computation
+* TFIDF computation
 

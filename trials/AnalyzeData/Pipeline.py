@@ -90,15 +90,15 @@ class Pipeline:
 								retweet_count = json['retweet_count']
 								favorite_count = json['favorite_count']
 
-								#print geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
-								f.write(str(id)+'\t'+str(geo.encode('utf-8'))+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place.encode('utf-8'))+'\t'+str(user_id)+'\t'+text+'\t'+str(entities)+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+trend_id+'\n')
+								#print id,geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
+								f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(entities)+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+trend_id+'\n')
 
 							else:
 								continue
 							# array of tweets json ends here
 
 						# total number of tweets rows for a given trend ends here
-						break
+						#break
 					# all trends finish here
 					break
 

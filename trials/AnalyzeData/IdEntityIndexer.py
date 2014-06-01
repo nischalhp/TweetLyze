@@ -9,7 +9,6 @@ class IdEntityIndexer:
     def build(self):
         conn = PostgresConnector().get_connection()
         cursor = conn.cursor()
-        conn.autocommit = True
         query = 'select id,hashtags from "organizedTweets" '
         cursor.execute(query)
         id_column = 0
@@ -26,6 +25,7 @@ class IdEntityIndexer:
 
         with open('copy_from.txt') as f:
             cursor.copy_from(f, '"IdEntity"', columns=('id', 'entity'))
+            conn.commit()
 
         os.remove('copy_from.txt')
 

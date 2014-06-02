@@ -8,6 +8,7 @@ import traceback
 import os
 import re
 import string
+import json
 
 class Pipeline:
 
@@ -72,37 +73,38 @@ class Pipeline:
 					for tweets_row in cursor_tweets:
 						tweets_json_array = tweets_row[tweets_column]
 
-						for json in tweets_json_array:
-							id = json['id']
+						for json_in in tweets_json_array:
+							id = json_in['id']
 							tweet_id_exists = tweet_id_dict.get(id)
 							if tweet_id_exists is None:
 								#print jsonIn
 								tweet_id_dict[id] = 1
-								geo =  'none' if json['geo'] is None else 'none' #json['geo']
-								retweeted = json['retweeted']
-								in_reply_to_screen_name = 'none' if json['in_reply_to_screen_name'] is None else json['in_reply_to_screen_name']
-								truncated = 'none' if json['truncated'] is None else json['truncated']
-								source = json['source']
-								created_at = json['created_at']
-								place = 'none' if json['place'] is None else 'none'#json['place']
-								user_id = json['user']['id']
-								text = json['text'].strip()
+								geo =  'none' if json_in['geo'] is None else 'none' #json['geo']
+								retweeted = json_in['retweeted']
+								in_reply_to_screen_name = 'none' if json_in['in_reply_to_screen_name'] is None else json_in['in_reply_to_screen_name']
+								truncated = 'none' if json_in['truncated'] is None else json_in['truncated']
+								source = json_in['source']
+								created_at = json_in['created_at']
+								place = 'none' if json_in['place'] is None else 'none'#json['place']
+								user_id = json_in['user']['id']
+								text = json_in['text'].strip()
 								#text = " ".join(str(text).split())
 								text = str(filter(lambda x: x in string.printable,text))
 								#text = text.encode('utf-16')
 								text = re.sub('\s+',' ',text)
 								text = text.replace('\\','')
-								entities = json['entities']['hashtags']
-								user_mentions = json['entities']['user_mentions']
+								entities = json_in['entities']['hashtags']
+								user_mentions = json_in['entities']['user_mentions']
 								user_mentions = [] 
-								retweet_count = json['retweet_count']
-								favorite_count = json['favorite_count']
-
+								retweet_count = json_in['retweet_count']
+								favorite_count = json_in['favorite_count']
+								entities_json_list = []
 
 								if len(entities) > 0:
 									for entity in entities:
 										for k,v in entity.items():
 											if k in 'text':
+												entity_list = {}
 												new_v = entity[k]
 												new_v = str(new_v.encode('utf-8'))
 												new_v = filter(lambda x: x in string.printable,new_v)
@@ -112,24 +114,15 @@ class Pipeline:
 												else:
 													entity[k] = ''
 
-								#print id,str(entities)
-
-								# if len(user_mentions) > 0:
-								# 	for k,v in user_mentions[0].items():
-								# 		if k in 'text' or k in 'screen_name' or k in 'name':
-								# 			new_v = user_mentions[0][k] 
-								# 			print chardet.detect(new_v),new_v
-								# 			#user_mentions[0][k] = new_v.decode('iso-8859-1').encode('utf-8')
-								# 			#print k,user_mentions[0][k]
 
 
-									
 								#print id,geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
-								f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(entities)+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_id)+'\n')
+								f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(json.dumps(entities))+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_id)+'\n')
 
 							else:
 								continue
 							# array of tweets json ends here
+							#break
 
 						# total number of tweets rows for a given trend ends here
 						#break

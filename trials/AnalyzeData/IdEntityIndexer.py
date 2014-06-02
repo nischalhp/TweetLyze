@@ -9,7 +9,7 @@ class IdEntityIndexer:
     def build(self):
         conn = PostgresConnector().get_connection()
         cursor = conn.cursor()
-        query = 'select id,hashtags from "organizedTweets" '
+        query = 'select id,entities from organized_tweets '
         cursor.execute(query)
         id_column = 0
         entities_column = 1

@@ -19,7 +19,6 @@ def get_locations():
 
 @app.route('/trends/<location_id>',methods=['GET'])
 def get_trends(location_id):
-	print type(location_id)
 	pipeline_obj = Pipeline()
 	trends_list = pipeline_obj.get_trends(location_id)
 	json_dict = {}

@@ -25,7 +25,7 @@ class Pipeline:
 		for row in cursor:
 			id_location = {}
 			id_location["geoid"] = row[id_column]
-			id_location["location"] = row[city_column]
+			id_location["city"] = row[city_column]
 			locations_list.append(id_location)
 
 		return locations_list
@@ -36,8 +36,8 @@ class Pipeline:
 		try:
 			conn = PostgresConnector().get_connection()
 			cursor = conn.cursor()
-			query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = \''+str(location_id)+'\' group by trend) as t1 order by count desc'
-			cursor.execute(query)
+			query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = %s group by trend) as t1 order by count desc'
+			cursor.execute(query,(location_id,))
 			trend_column = 0
 			count_column = 1
 			for row in cursor:
@@ -53,29 +53,37 @@ class Pipeline:
 
 	def update_organized_tweets(self):
 		tweet_id_dict = {} 
+
 		try:
 			conn = PostgresConnector().get_connection()
 			cursor = conn.cursor()
 			query = 'select id from "trends"'
 			cursor.execute(query)
 			trend_id_column = 0
+			trend_count = 0
 
-			with open('organized_data.txt','w') as f:
+			for row in cursor:
+				print row
+				trend_count = trend_count + 1
+				trend_id = row[trend_id_column]
+				print 'Processing for trend ' +trend_id+' , ' +str(trend_count)
+				query_tweets = 'select tweets from tweets where trendId = \''+str(trend_id)+'\''
+				cursor_tweets = conn.cursor()
+				cursor_tweets.execute(query_tweets)
+				tweets_column = 0
 
-				for row in cursor:
-					trend_id = row[trend_id_column]
-					print 'Processing for trend ' +trend_id
-					query_tweets = 'select tweets from tweets where trendId = \''+str(trend_id)+'\''
-					cursor_tweets = conn.cursor()
-					cursor_tweets.execute(query_tweets)
-					tweets_column = 0
+				with open(trend_id+'.txt','w') as f:
 
+					# rows of tweets array
 					for tweets_row in cursor_tweets:
 						tweets_json_array = tweets_row[tweets_column]
 
+						# tweets in a tweets array
 						for json_in in tweets_json_array:
+
 							id = json_in['id']
 							tweet_id_exists = tweet_id_dict.get(id)
+
 							if tweet_id_exists is None:
 								#print jsonIn
 								tweet_id_dict[id] = 1
@@ -121,20 +129,25 @@ class Pipeline:
 
 							else:
 								continue
+
 							# array of tweets json ends here
 							#break
 
 						# total number of tweets rows for a given trend ends here
 						#break
-					# all trends finish here
-					#break
 
-			print 'Writing to table'
-			with open('organized_data.txt') as f:
-				cursor.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend_id'))
+				print 'Writing to table'
 
-			conn.commit()
-			os.remove('organized_data.txt')
+				with open(trend_id+'.txt') as f:
+					cursor_write = conn.cursor()
+					cursor_write.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend_id'))
+
+				conn.commit()
+				os.remove(trend_id+'.txt')
+
+				# all trends finish here
+				#break
+
 
 
 		except Exception , err :
@@ -144,8 +157,8 @@ class Pipeline:
 
 
 
-pipeLine = Pipeline()
-pipeLine.update_organized_tweets()
+#pipeLine = Pipeline()
+#pipeLine.update_organized_tweets()
 #list = pipeLine.get_locations()
 # conn = PostgresConnector().get_connection()
 # cursor = conn.cursor()

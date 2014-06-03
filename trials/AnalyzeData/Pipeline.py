@@ -57,100 +57,106 @@ class Pipeline:
 		try:
 			conn = PostgresConnector().get_connection()
 			cursor = conn.cursor()
-			query = 'select id from "trends"'
-			cursor.execute(query)
-			trend_id_column = 0
-			trend_count = 0
+			query_location = 'select id from location'	
+			cursor.execute(query_location)
+			location_column = 0
 
-			for row in cursor:
-				print row
-				trend_count = trend_count + 1
-				trend_id = row[trend_id_column]
-				print 'Processing for trend ' +trend_id+' , ' +str(trend_count)
-				query_tweets = 'select tweets from tweets where trendId = \''+str(trend_id)+'\''
-				cursor_tweets = conn.cursor()
-				cursor_tweets.execute(query_tweets)
-				tweets_column = 0
+			for row_location in cursor:
 
-				with open(trend_id+'.txt','w') as f:
+				query = 'select id from (select count(*) as c,trend,id from trends where locationid = %s group by trend,id)as t1 order by c desc limit 15'
+				cursor = conn.cursor()
+				cursor.execute(query,(row_location[location_column],))
+				trend_id_column = 0
+				trend_count = 0
 
-					# rows of tweets array
-					for tweets_row in cursor_tweets:
-						tweets_json_array = tweets_row[tweets_column]
+				for row in cursor:
+					trend_count = trend_count + 1
+					trend_id = row[trend_id_column]
+					print 'Processing for trend ' +trend_id+' , ' +str(trend_count)
+					query_tweets = 'select tweets from tweets where trendId = \''+str(trend_id)+'\''
+					cursor_tweets = conn.cursor()
+					cursor_tweets.execute(query_tweets)
+					tweets_column = 0
 
-						# tweets in a tweets array
-						for json_in in tweets_json_array:
+					with open(trend_id+'.txt','w') as f:
 
-							id = json_in['id']
-							tweet_id_exists = tweet_id_dict.get(id)
+						# rows of tweets array
+						for tweets_row in cursor_tweets:
+							tweets_json_array = tweets_row[tweets_column]
 
-							if tweet_id_exists is None:
-								#print jsonIn
-								tweet_id_dict[id] = 1
-								geo =  'none' if json_in['geo'] is None else 'none' #json['geo']
-								retweeted = json_in['retweeted']
-								in_reply_to_screen_name = 'none' if json_in['in_reply_to_screen_name'] is None else json_in['in_reply_to_screen_name']
-								truncated = 'none' if json_in['truncated'] is None else json_in['truncated']
-								source = json_in['source']
-								created_at = json_in['created_at']
-								place = 'none' if json_in['place'] is None else 'none'#json['place']
-								user_id = json_in['user']['id']
-								text = json_in['text'].strip()
-								#text = " ".join(str(text).split())
-								text = str(filter(lambda x: x in string.printable,text))
-								#text = text.encode('utf-16')
-								text = re.sub('\s+',' ',text)
-								text = text.replace('\\','')
-								entities = json_in['entities']['hashtags']
-								user_mentions = json_in['entities']['user_mentions']
-								user_mentions = [] 
-								retweet_count = json_in['retweet_count']
-								favorite_count = json_in['favorite_count']
-								entities_json_list = []
+							# tweets in a tweets array
+							for json_in in tweets_json_array:
 
-								if len(entities) > 0:
-									for entity in entities:
-										for k,v in entity.items():
-											if k in 'text':
-												entity_list = {}
-												new_v = entity[k]
-												new_v = str(new_v.encode('utf-8'))
-												new_v = filter(lambda x: x in string.printable,new_v)
-												#print id,check,new_v,len(new_v)
-												if len(new_v) > 0: 
-													entity[k] = new_v
-												else:
-													entity[k] = ''
+								id = json_in['id']
+								tweet_id_exists = tweet_id_dict.get(id)
+
+								if tweet_id_exists is None:
+									#print jsonIn
+									tweet_id_dict[id] = 1
+									geo =  'none' if json_in['geo'] is None else 'none' #json['geo']
+									retweeted = json_in['retweeted']
+									in_reply_to_screen_name = 'none' if json_in['in_reply_to_screen_name'] is None else json_in['in_reply_to_screen_name']
+									truncated = 'none' if json_in['truncated'] is None else json_in['truncated']
+									source = json_in['source']
+									created_at = json_in['created_at']
+									place = 'none' if json_in['place'] is None else 'none'#json['place']
+									user_id = json_in['user']['id']
+									text = json_in['text'].strip()
+									#text = " ".join(str(text).split())
+									text = str(filter(lambda x: x in string.printable,text))
+									#text = text.encode('utf-16')
+									text = re.sub('\s+',' ',text)
+									text = text.replace('\\','')
+									entities = json_in['entities']['hashtags']
+									user_mentions = json_in['entities']['user_mentions']
+									user_mentions = [] 
+									retweet_count = json_in['retweet_count']
+									favorite_count = json_in['favorite_count']
+									entities_json_list = []
+
+									if len(entities) > 0:
+										for entity in entities:
+											for k,v in entity.items():
+												if k in 'text':
+													entity_list = {}
+													new_v = entity[k]
+													new_v = str(new_v.encode('utf-8'))
+													new_v = filter(lambda x: x in string.printable,new_v)
+													#print id,check,new_v,len(new_v)
+													if len(new_v) > 0: 
+														entity[k] = new_v
+													else:
+														entity[k] = ''
 
 
 
-								#print id,geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
-								f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(json.dumps(entities))+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_id)+'\n')
+									#print id,geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
+									f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(json.dumps(entities))+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_id)+'\n')
 
-							else:
-								continue
+								else:
+									continue
 
-							# array of tweets json ends here
+								# array of tweets json ends here
+								#break
+
+							# total number of tweets rows for a given trend ends here
 							#break
 
-						# total number of tweets rows for a given trend ends here
-						#break
+					print 'Writing to table'
 
-				print 'Writing to table'
+					with open(trend_id+'.txt') as f:
+						cursor_write = conn.cursor()
+						cursor_write.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend_id'))
 
-				with open(trend_id+'.txt') as f:
-					cursor_write = conn.cursor()
-					cursor_write.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend_id'))
+					conn.commit()
+					os.remove(trend_id+'.txt')
 
-				conn.commit()
-				os.remove(trend_id+'.txt')
-
-				# all trends finish here
-				#break
+					# all trends finish here
+					#break
 
 
 
-		except Exception , err :
+		except Exception :
 			print traceback.format_exc()
 
 	    		

@@ -67,22 +67,25 @@ class Pipeline:
 
 			for row_location in cursor:
 
-				query = 'select id from (select count(*) as c,trend,id from trends where locationid = %s group by trend,id)as t1 order by c desc limit 15'
+				query = 'select id,trend from (select count(*) as c,trend,id from trends where locationid = %s group by trend,id)as t1 order by c desc limit 15'
 				cursor = conn.cursor()
-				cursor.execute(query,(row_location[location_column],))
+				location_id = row_location[location_column]
+				cursor.execute(query,(location_id,))
 				trend_id_column = 0
+				trend_name_column = 1
 				trend_count = 0
 
 				for row in cursor:
 					trend_count = trend_count + 1
 					trend_id = row[trend_id_column]
+					trend_name = row[trend_name_column]
 					print 'Processing for trend ' +trend_id+' , ' +str(trend_count)
 					query_tweets = 'select tweets from tweets where trendId = \''+str(trend_id)+'\''
 					cursor_tweets = conn.cursor()
 					cursor_tweets.execute(query_tweets)
 					tweets_column = 0
 
-					with open(trend_id+'.txt','w') as f:
+					with open(trend_name+'.txt','w') as f:
 
 						# rows of tweets array
 						for tweets_row in cursor_tweets:
@@ -135,7 +138,7 @@ class Pipeline:
 
 
 									#print id,geo,retweeted ,in_reply_to_screen_name ,truncated ,source ,created_at ,place ,user_id ,text ,entities ,user_mentions,retweet_count,favorite_count
-									f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(json.dumps(entities))+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_id)+'\n')
+									f.write(str(id)+'\t'+str(geo)+'\t'+str(retweeted)+'\t'+str(in_reply_to_screen_name.encode('utf-8'))+'\t'+str(truncated)+'\t'+str(source.encode('utf-8'))+'\t'+str(created_at.encode('utf-8'))+'\t'+str(place)+'\t'+str(user_id)+'\t'+text+'\t'+str(json.dumps(entities))+'\t'+str(user_mentions)+'\t'+str(retweet_count)+'\t'+str(favorite_count)+'\t'+str(trend_name)+'\t'+str(location_id)+'\n')
 
 								else:
 									continue
@@ -148,12 +151,12 @@ class Pipeline:
 
 					print 'Writing to table'
 
-					with open(trend_id+'.txt') as f:
+					with open(trend_name+'.txt') as f:
 						cursor_write = conn.cursor()
-						cursor_write.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend_id'))
+						cursor_write.copy_from(f,'organized_tweets',columns=('id','geo','retweeted','in_reply_to_screen_name','truncated','source','created_at','place','user_id','text','entities','user_mentions','retweet_count','favorite_count','trend','location_id'))
 
 					conn.commit()
-					os.remove(trend_id+'.txt')
+					os.remove(trend_name+'.txt')
 
 					# all trends finish here
 					#break

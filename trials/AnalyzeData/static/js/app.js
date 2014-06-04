@@ -17,23 +17,71 @@ $( function(){
 					var lineItem = '<li> <a href="#" class="location-items" data-geoid="'+location.geoid+'">'+location.city+'</a></li>';
 					lineItems = lineItems+lineItem;
 				});
-					$("#location-list").html(lineItems);
+				$("#location-list").html(lineItems);
 			},
 
 
 			getTrends : function(geoid){
-				alert("mofo");
 				$.ajax({
 					type: "GET",
 					url : "/trends/"+geoid,
-					}).success(function(response){
-						console.log(response);
-					}).error(function(response){
-						console.log(response);
-					});
+				}).success(function(response){
+					graph.displayTrends(response.data);
+				}).error(function(response){
+					console.log(response);
+				});
+			}
+
+		}
+
+		graph = {
+
+			displayTrends: function(trends){
+				var fill = d3.scale.category20();
+
+				d3.layout.cloud().size([800, 300])
+				.words(trends
+					.map(function(d) {
+						return {text: d.trend, size: 20 + d.count};
+					}))
+				.padding(5)
+				.font("Impact")
+				.fontSize(function(d) { return d.size; })
+				.on("end", draw)
+				.start();
+
+				function draw(words) {
+					console.log(words);
+					d3.select(".trends-chart").append("svg")
+					.attr("width", 800)
+					.attr("height", 300)
+					.append("g")
+					.attr("width",800)
+					.attr("height",300)
+					.attr("transform", "translate(350,100)")
+					.selectAll("text")
+					.data(words)
+					.enter().append("text")
+					.style("font-size", function(d) { return d.size + "px"; })
+					.style("font-family", "Impact")
+					.style("fill", function(d, i) { return fill(i); })
+					.attr("text-anchor", "middle")
+					.attr("transform", function(d) {
+						return "translate(" + [d.x+20, d.y+10] + ")";
+					})
+					.text(function(d) { return d.text; });
 				}
 
-		}}());
+			}
+		}
+
+
+
+
+	}());
+
+
+
 
 app.init();
 
@@ -45,4 +93,3 @@ $("#location-list").on('click',".location-items" , function(event){
 	app.getTrends($(this).attr("data-geoid"));
 
 });
-

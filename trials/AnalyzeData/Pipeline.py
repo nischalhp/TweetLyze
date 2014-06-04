@@ -36,10 +36,14 @@ class Pipeline:
 		try:
 			conn = PostgresConnector().get_connection()
 			cursor = conn.cursor()
-			query = 'select trend,count from (select count(id) as "count",trend from "trends" where locationid = %s group by trend) as t1 order by count desc'
+			query = """
+			select c,trend from
+			(select count(*) as c,trend from trends where 
+				locationid = %s group by trend)as t1 order by c desc limit 15
+			"""
 			cursor.execute(query,(location_id,))
-			trend_column = 0
-			count_column = 1
+			trend_column = 1
+			count_column = 0
 			for row in cursor:
 				trend_count = {}
 				trend_count["trend"] = row[trend_column]

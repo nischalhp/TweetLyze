@@ -58,7 +58,7 @@ $( function(){
 					.append("g")
 					.attr("width",800)
 					.attr("height",300)
-					.attr("transform", "translate(350,100)")
+					.attr("transform", "translate(400,100)")
 					.selectAll("text")
 					.data(words)
 					.enter().append("text")
@@ -67,7 +67,7 @@ $( function(){
 					.style("fill", function(d, i) { return fill(i); })
 					.attr("text-anchor", "middle")
 					.attr("transform", function(d) {
-						return "translate(" + [d.x+20, d.y+10] + ")";
+						return "translate(" + [d.x, d.y] + ")";
 					})
 					.text(function(d) { return d.text; });
 				}

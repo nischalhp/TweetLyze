@@ -67,7 +67,12 @@ class Pipeline:
 
 			for row_location in cursor:
 
-				query = 'select id,trend from (select count(*) as c,trend,id from trends where locationid = %s group by trend,id)as t1 order by c desc limit 15'
+				query = """
+				select id,trend from trends 
+				where trend in(select trend from (select count(*) as c,trend from 
+					trends where locationid = %s group by trend)as t1 order 
+					by c desc limit 15)
+						"""
 				cursor = conn.cursor()
 				location_id = row_location[location_column]
 				cursor.execute(query,(location_id,))
@@ -119,21 +124,20 @@ class Pipeline:
 									user_mentions = [] 
 									retweet_count = json_in['retweet_count']
 									favorite_count = json_in['favorite_count']
-									entities_json_list = []
 
-									if len(entities) > 0:
-										for entity in entities:
-											for k,v in entity.items():
-												if k in 'text':
-													entity_list = {}
-													new_v = entity[k]
-													new_v = str(new_v.encode('utf-8'))
-													new_v = filter(lambda x: x in string.printable,new_v)
-													#print id,check,new_v,len(new_v)
-													if len(new_v) > 0: 
-														entity[k] = new_v
-													else:
-														entity[k] = ''
+									# if len(entities) > 0:
+									# 	for entity in entities:
+									# 		for k,v in entity.items():
+									# 			if k in 'text':
+									# 				entity_list = {}
+									# 				new_v = entity[k]
+									# 				new_v = str(new_v.encode('utf-8'))
+									# 				new_v = filter(lambda x: x in string.printable,new_v)
+									# 				#print id,check,new_v,len(new_v)
+									# 				if len(new_v) > 0: 
+									# 					entity[k] = new_v
+									# 				else:
+									# 					entity[k] = ''
 
 
 

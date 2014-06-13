@@ -21,13 +21,20 @@ Things Done :
 
 * Procedures to disintegrate the tweets
 
+* TFIDF computation
 
 To Do : 
 
 
-* UI 
+* UI - This week
 
-* Visualization
+* Visualization - This week
 
-* TFIDF computation
+* Build Trend - Entity Matrix
+
+* Understand what needs to go in as input into K-Means
+
+* Use k means to group trends - 
+
+* Build log likelhood ratio and find the difference in entity tag cloud - Monday
 

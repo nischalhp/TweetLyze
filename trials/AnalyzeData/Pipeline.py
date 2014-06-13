@@ -170,6 +170,59 @@ class Pipeline:
 		except Exception :
 			print traceback.format_exc()
 
+
+
+	# getting tfidf for a trend in a given location
+
+	def get_tfidf(self,locationid,trend):
+		tfidf_list = []
+		try:
+			conn = PostgresConnector().get_connection()
+			cursor = conn.cursor()
+			tfidf_query = """
+			select entity,tf_idf_score from 
+				(select t4.entity,sum(t4.tf_idf) as tf_idf_score
+				from
+				(select t1.id,t1.entity,t2.count_id,t3.count_entity,
+				(1.0/t3.count_entity)*log((
+				select count(*) from organized_tweets 
+				where trend = %s 
+				and location_id = %s )/t2.count_id) as tf_idf  from
+					(select id,entity from id_entity where id in
+					(select id from organized_tweets 
+					where trend = %s 
+					and location_id = %s)) as t1
+				inner join
+					(select entity,count(id) as count_id from id_entity where id in
+					(select id from organized_tweets 
+					where trend = %s 
+					and location_id = %s)group by entity) as t2
+				on
+					t1.entity = t2.entity
+				inner join
+					(select id,count(entity) as count_entity from id_entity 
+					where id in(select id from organized_tweets 
+					where trend = %s 
+					and location_id = %s )group by id) as t3
+				on 
+					t1.id = t3.id) as t4 group by entity)as t5 order by 
+					tf_idf_score desc;
+			"""
+			cursor.execute(query,(trend,locationid,trend,locationid,trend,locationid,trend,locationid))
+			entity_column = 0
+			tfidf_column = 1
+			for row in cursor:
+				entity_tfidf_score = {}
+				entity_tfidf_score["entity"] = row.get[entity_column]
+				entity_tfidf_score["tfidf"] = row.get[tfidf_column]
+				tfidf_list.append(entity_tfidf_score)
+
+			return tfidf_list
+		except Exception :
+			print traceback.format_exc()
+
+
+
 	    		
 
 

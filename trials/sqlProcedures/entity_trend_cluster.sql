@@ -1,4 +1,4 @@
-﻿select t1.entity,t2.trend from
+﻿select t1.entity,t2.trend,t1.id from
 	(select id,entity from id_entity ) as t1
 	inner join
 	(select id,trend from organized_tweets where trend in 

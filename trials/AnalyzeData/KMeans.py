@@ -1,9 +1,10 @@
 from PostgresConnector import PostgresConnector
 import traceback
+from sklearn.feature_extraction.text import TfidfVectorizer 
 class KMeans:
 
 	def get_data(self,locationid):
-		entity_trend = []
+		entity_trend_dict = {} 
 		try:
 			conn = PostgresConnector().get_connection()
 			cursor = conn.cursor()
@@ -21,16 +22,25 @@ class KMeans:
 			entity_column = 0
 			trend_column = 1
 			for row in cursor:
-				entity_trend_tuple = (row[entity_column],row[trend_column])
-				entity_trend.append(entity_trend_tuple)
+				id = row[trend_column]
+				if id in entity_id_dict.keys():
+					entity_list = entity_id_dict[id]
+					entity_list.append(row[entity_column])
+					entity_id_dict[id] = entity_list
+				else:
+					entity_id_dict[id] = [row[entity_column]]
+
+
 		except Exception:
 			print traceback.format_exc()
 
-		return entity_trend		
+		return entity_trend_dict
 
 
 	def build_kMeans(self,locationid):
-		entity_trend = self.get_data(locationid)
-		print entity_trend	
+		entity_trend_dict = self.get_data(locationid)
+		vectorize = TfidfVectorizer()
+		x = vectorize.fit_transform(entity_trend_dict)
+		print x
 
 

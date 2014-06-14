@@ -10,6 +10,8 @@
   <!-- Le styles -->
   <link href="static/css/bootstrap.min.css" rel="stylesheet">
   <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="static/css/iThing.css" rel="stylesheet">
+
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -28,27 +30,45 @@
 
             <div class="well" id="location-list-container">
               <ul class="nav nav-list" id="location-list">
-              <li class="nav-header">Locations</li>
+                <li class="nav-header">Locations</li>
               </ul>
             </div>
           </div>
-          <div class="container span8 trends-chart">
-         </div>
-       </div>
-
-     </div>
-     <!--/.fluid-container-->
+          <div class="container span8 trends-chart"></div>
+        </div>
+        <div class="row">
+          <div id="slider" ></div>
+        </div>
+      </div>
+      <!--/.fluid-container-->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <script src="static/js/jquery-2.1.1.min.js"></script>
+    <!--  <script src="static/js/jquery-2.1.1.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <script src="static/js/bootstrap.js"></script>
+    <script src="static/js/jQDateRangeSlider-min.js"></script>
+    
     <script src="static/js/app.js"></script>
-    <script src="static/js/d3.min.js"></script>
-    <script src="static/js/d3.layout.cloud.js"></script>
-   
+    <script>
+     var min = new Date(2012, 0, 1),max = new Date(2012, 11, 31);
+     $('#slider').dateRangeSlider({
+      bounds:{
+       min  : min,
+       max : max
+     },
+     defaultValues:{
+      min: new Date(2012, 0, 1),
+      max: new Date(2012, 11, 31)
+    },
+    arrows:true,
+  });
+   </script>
 
-  </body>
-  </html>
+
+
+ </body>
+ </html>

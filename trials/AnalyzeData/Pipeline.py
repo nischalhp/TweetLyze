@@ -236,13 +236,13 @@ class Pipeline:
 					t1.id = t3.id) as t4 group by entity)as t5 order by 
 					tf_idf_score desc;
 			"""
-			cursor.execute(query,(trend,locationid,trend,locationid,trend,locationid,trend,locationid))
+			cursor.execute(tfidf_query,(trend,locationid,trend,locationid,trend,locationid,trend,locationid))
 			entity_column = 0
 			tfidf_column = 1
 			for row in cursor:
 				entity_tfidf_score = {}
-				entity_tfidf_score["entity"] = row.get[entity_column]
-				entity_tfidf_score["tfidf"] = row.get[tfidf_column]
+				entity_tfidf_score["entity"] = row[entity_column]
+				entity_tfidf_score["tfidf"] = row[tfidf_column]
 				tfidf_list.append(entity_tfidf_score)
 
 			return tfidf_list

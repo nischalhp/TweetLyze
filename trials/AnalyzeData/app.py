@@ -23,7 +23,15 @@ def get_trends(location_id):
 	trends_list = pipeline_obj.get_trends(location_id)
 	json_dict = {}
 	json_dict['data'] = trends_list
-	print jsonify(json_dict)
+	return jsonify(json_dict)
+
+@app.route('/dates/<location_id>',methods=['GET'])
+def get_dates(location_id):
+	pipeline_obj = Pipeline()
+	dates_list = pipeline_obj.get_dates_location(location_id)
+	json_dict = {}
+	json_dict['data'] = dates_list 
+	print json_dict
 	return jsonify(json_dict)
 
 

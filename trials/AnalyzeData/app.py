@@ -1,4 +1,5 @@
 from flask import Flask,send_file,jsonify,make_response
+from flask import request
 from Pipeline import Pipeline
 app = Flask(__name__,instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -17,10 +18,13 @@ def get_locations():
 	print jsonify(json_dict)
 	return jsonify(json_dict)
 
-@app.route('/trends/<location_id>',methods=['GET'])
-def get_trends(location_id):
+@app.route('/trends',methods=['GET'])
+def get_trends():
+	location_id = request.args.get('locationid')
+	min_date = request.args.get('min_date')
+	max_date = request.args.get('max_date')
 	pipeline_obj = Pipeline()
-	trends_list = pipeline_obj.get_trends(location_id)
+	trends_list = pipeline_obj.get_trends(location_id,min_date,max_date)
 	json_dict = {}
 	json_dict['data'] = trends_list
 	return jsonify(json_dict)

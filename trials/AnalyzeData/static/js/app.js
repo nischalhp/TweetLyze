@@ -37,7 +37,7 @@ $( function(){
 			getDates : function(locationid){
 				$.ajax({
 					type: "GET",
-					url : "/dates/"+locationid,
+					url : "/dates/"+locationid
 				}).success(function(response){
 					app.setSlider(response.data[0].min_date,response.data[0].max_date);
 					console.log(response);
@@ -63,6 +63,17 @@ $( function(){
 					},
 					arrows:true,
 				});	
+			},
+
+			getTfidfEntites : function(locationid,trend){
+				$.ajax({
+					type: "GET",
+					url : "/tfidf?locationid="+locationid+"&trend="+trend
+				}).success(function(response){
+					console.log(response);
+				}).error(function(response){
+					console.log(response);
+				});
 			}
 
 		}
@@ -105,6 +116,7 @@ $( function(){
 					.text(function(d) { return d.text; })
 					.on("click",function(d){
 						console.log(d.text);
+						app.getTfidfEntites(geoid,d.text);
 					});
 				}
 

@@ -102,7 +102,10 @@ $( function(){
 					.attr("transform", function(d) {
 						return "translate(" + [d.x, d.y] + ")";
 					})
-					.text(function(d) { return d.text; });
+					.text(function(d) { return d.text; })
+					.on("click",function(d){
+						console.log(d.text);
+					});
 				}
 
 			}

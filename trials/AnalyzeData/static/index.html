@@ -24,6 +24,7 @@
     <body>
 
       <h1 class="text-center"> TweetLyze</h1> 
+      <!-- first container -->
       <div class="container span12">
         <div class="row">
           <div class="container span3">
@@ -36,11 +37,15 @@
           </div>
           <div class="container span8 trends-chart"></div>
         </div>
-        <div class="row">
-          <div id="slider" ></div>
-        </div>
       </div>
-      <!--/.fluid-container-->
+      <!-- second container --> 
+        <div class="containter span12">
+          <div class="row">
+            <div id="slider" class="span3" >
+          </div>
+
+          </div>
+        </div>
 
     <!-- Le javascript
     ================================================== -->
@@ -55,20 +60,6 @@
     <script src="static/js/jQDateRangeSlider-min.js"></script>
     
     <script src="static/js/app.js"></script>
-    <script>
-     var min = new Date(2012, 0, 1),max = new Date(2012, 11, 31);
-     $('#slider').dateRangeSlider({
-      bounds:{
-       min  : min,
-       max : max
-     },
-     defaultValues:{
-      min: new Date(2012, 0, 1),
-      max: new Date(2012, 11, 31)
-    },
-    arrows:true,
-  });
-   </script>
 
 
 

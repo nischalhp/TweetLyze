@@ -55,6 +55,10 @@ $( function(){
 						min  : min,
 						max : max
 					},
+					defaultValues:{
+						min : min,
+						max : max
+					},
 					arrows:true,
 				});	
 			}
@@ -120,4 +124,10 @@ $("#location-list").on('click',".location-items" , function(event){
 	/*app.getTrends($(this).attr("data-geoid"));*/
 	app.getDates($(this).attr("data-geoid"));
 
+});
+
+
+// bind function to date slider
+$("#slider").bind("valuesChanging", function(e, data){
+  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
 });

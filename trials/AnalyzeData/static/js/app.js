@@ -1,3 +1,4 @@
+var geoid = '';
 $( function(){
 	app = {
 			//init is the property of the object app which is
@@ -21,10 +22,11 @@ $( function(){
 			},
 
 
-			getTrends : function(geoid){
+			getTrends : function(geoid,min_date,max_date){
+				console.log(min_date,max_date);
 				$.ajax({
 					type: "GET",
-					url : "/trends/"+geoid,
+					url : "/trends/locationid="+geoid+"&min_date="+min_date+"&max_date="+max_date
 				}).success(function(response){
 					graph.displayTrends(response.data);
 				}).error(function(response){
@@ -122,12 +124,30 @@ $("#location-list").on('click',".location-items" , function(event){
 	/* The click is on the anchor tag but we need make the whole line as active hence we uses this.parent*/
 	$(this).parent().addClass("active");	
 	/*app.getTrends($(this).attr("data-geoid"));*/
-	app.getDates($(this).attr("data-geoid"));
+	geoid = '';
+	geoid = $(this).attr("data-geoid") ;
+	app.getDates(geoid);
 
 });
 
 
 // bind function to date slider
-$("#slider").bind("valuesChanging", function(e, data){
-  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
+$("#slider").bind("valuesChanged", function(e, data){
+  var  min_date = convertMillisecondsToDate(Date.parse(data.values.min));
+  var max_date = convertMillisecondsToDate(Date.parse(data.values.max));
+  app.getTrends(geoid,min_date,max_date);
 });
+
+function convertMillisecondsToDate(millseconds){
+	date = new Date(millseconds).getDate();
+	year = new Date(millseconds).getFullYear();
+	month = new Date(millseconds).getMonth();
+	month = month + 1;
+	if (month < 10){
+		month = '0'+month;
+	}
+	if (date < 10){
+		date = '0'+date;
+	}
+	return year+'-'+month+'-'+date;//+"-"+month+"-"date;
+}

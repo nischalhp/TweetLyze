@@ -30,6 +30,33 @@ $( function(){
 				}).error(function(response){
 					console.log(response);
 				});
+			},
+
+			getDates : function(locationid){
+				$.ajax({
+					type: "GET",
+					url : "/dates/"+locationid,
+				}).success(function(response){
+					app.setSlider(response.data[0].min_date,response.data[0].max_date);
+					console.log(response);
+					console.log(response.data[0]);
+				}).error(function(response){
+					console.log(response);
+				});
+
+
+			},
+
+			setSlider : function(min_date,max_date){
+				console.log(min_date,max_date);
+				var min = new Date(min_date),max = new Date(max_date);
+				$('#slider').dateRangeSlider({
+					bounds:{
+						min  : min,
+						max : max
+					},
+					arrows:true,
+				});	
 			}
 
 		}
@@ -90,6 +117,7 @@ $("#location-list").on('click',".location-items" , function(event){
 	$(".location-items").parent().removeClass("active");
 	/* The click is on the anchor tag but we need make the whole line as active hence we uses this.parent*/
 	$(this).parent().addClass("active");	
-	app.getTrends($(this).attr("data-geoid"));
+	/*app.getTrends($(this).attr("data-geoid"));*/
+	app.getDates($(this).attr("data-geoid"));
 
 });

@@ -26,7 +26,7 @@ $( function(){
 				console.log(min_date,max_date);
 				$.ajax({
 					type: "GET",
-					url : "/trends/locationid="+geoid+"&min_date="+min_date+"&max_date="+max_date
+					url : "/trends?locationid="+geoid+"&min_date="+min_date+"&max_date="+max_date
 				}).success(function(response){
 					graph.displayTrends(response.data);
 				}).error(function(response){
@@ -135,6 +135,7 @@ $("#location-list").on('click',".location-items" , function(event){
 $("#slider").bind("valuesChanged", function(e, data){
   var  min_date = convertMillisecondsToDate(Date.parse(data.values.min));
   var max_date = convertMillisecondsToDate(Date.parse(data.values.max));
+  $("#trends").html("");
   app.getTrends(geoid,min_date,max_date);
 });
 

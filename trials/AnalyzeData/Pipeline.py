@@ -31,7 +31,35 @@ class Pipeline:
 		return locations_list
 
 
-	def get_trends(self,location_id):
+	def get_dates_location(self,locationid):
+		min_max_date_list = [] 
+		try:
+			conn = PostgresConnector().get_connection()
+			cursor = conn.cursor()
+			query = """
+			select max(date),min(date) from trends where trend in 
+			(select t1.trend as trend from
+			(select count(*) as c,trend from trends where 
+				locationid = %s group by trend)as t1 order by c desc limit 15)
+				and locationid = %s
+			"""
+			cursor.execute(query,(locationid,locationid))
+			min_date_column = 1
+			max_date_column = 0
+			for row in cursor:
+				min_max_date_dict = {}
+				min_max_date_dict["min_date"] = str(row[min_date_column])
+				min_max_date_dict["max_date"] = str(row[max_date_column])
+				min_max_date_list.append(min_max_date_dict)
+
+		 
+		except Exception:
+			traceback.format_exc()
+
+		return min_max_date_list
+
+
+	def get_trends(self,location_id,start_date,end_date):
 		trends_list = []	
 		try:
 			conn = PostgresConnector().get_connection()

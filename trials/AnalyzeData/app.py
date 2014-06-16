@@ -42,11 +42,9 @@ def get_dates(location_id):
 def get_tfidf():
 	location_id = request.args.get('locationid')
 	trend = request.args.get('trend')
-	print location_id,trend
 	pipeline_obj = Pipeline()
 	tfidf_list = pipeline_obj.get_tfidf(location_id,trend)
 	json_dict = {}
-	print tfidf_list
 	json_dict['data'] = tfidf_list 
 	print json_dict
 	return jsonify(json_dict)

@@ -23,14 +23,13 @@ Things Done :
 
 * TFIDF computation
 
-To Do : 
+* UI
 
-
-* UI - This week
-
-* Visualization - This week
+* Visualization 
 
 * Build Trend - Entity Matrix
+
+To Do : 
 
 * Understand what needs to go in as input into K-Means
 

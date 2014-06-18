@@ -28,7 +28,7 @@ $( function(){
 					type: "GET",
 					url : "/trends?locationid="+geoid+"&min_date="+min_date+"&max_date="+max_date
 				}).success(function(response){
-					graph.displayTrends(response.data);
+					graphTrends.displayTrends(response.data);
 				}).error(function(response){
 					console.log(response);
 				});
@@ -66,12 +66,12 @@ $( function(){
 			},
 
 			getTfidfEntites : function(locationid,trend){
+				console.log(trend);
 				$.ajax({
 					type: "GET",
 					url : "/tfidf?locationid="+locationid+"&trend="+trend
 				}).success(function(response){
-					console.log(response);
-					graph.displayTfidf(response.data);
+					graphTfidf.displayTfidf(response.data);
 				}).error(function(response){
 					console.log(response);
 				});
@@ -79,7 +79,7 @@ $( function(){
 
 		}
 
-		graph = {
+		graphTrends = {
 
 			displayTrends: function(trends){
 				var fill = d3.scale.category20();
@@ -115,18 +115,21 @@ $( function(){
 					})
 					.text(function(d) { return d.text; })
 					.on("click",function(d){
-						console.log(d.text);
 						app.getTfidfEntites(geoid,d.text);
 					});
 				}
 
-			},
+			}
 
-			displayTfidf : function(trend){
+		}
+
+		graphTfidf = {
+
+			displayTfidf: function(trends){
 				var fill = d3.scale.category20();
 
 				d3.layout.cloud().size([800, 300])
-				.words(trend
+				.words(trends
 					.map(function(d) {
 						return {text: d.entity, size: 20 + d.tfidf};
 					}))
@@ -137,7 +140,6 @@ $( function(){
 				.start();
 
 				function draw(words) {
-					console.log(words);
 					d3.select(".tfidf-chart").append("svg")
 					.attr("width", 800)
 					.attr("height", 300)
@@ -157,12 +159,14 @@ $( function(){
 					})
 					.text(function(d) { return d.text; })
 					.on("click",function(d){
-						console.log(d.text);
+						app.getTfidfEntites(geoid,d.text);
 					});
 				}
 
 			}
+
 		}
+
 
 
 

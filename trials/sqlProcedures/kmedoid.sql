@@ -1,4 +1,8 @@
-﻿select * from(select first_block.trend as ft,second_block.trend as st,first_block.entity fe
+﻿select ft,st, ((fti_sti)/((sqrt(sum(fti_square)))*(sqrt(sum(sti_square))))) as cosine_distance
+from
+(select ft,st,fe,se,fti*sti as fti_sti,(fti*fti) as fti_square,(sti*sti) as sti_square
+from
+(select first_block.trend as ft,second_block.trend as st,first_block.entity fe
 ,second_block.entity as se,first_block.tf_idf_score as fti,second_block.tf_idf_score as sti from 
 (select * from
 (select main.entity,main.trend,sum(main.tf_idf) as tf_idf_score
@@ -78,4 +82,4 @@ inner join
 on
 third.id = first.id)as main group by trend,entity) as main_out order by trend) as second_block
 where second_block.trend > first_block.trend and
-first_block.entity = second_block.entity)as full_block order by ft,st
+first_block.entity = second_block.entity)as full_block order by ft,st)as computed_block group by ft,st,fti_sti

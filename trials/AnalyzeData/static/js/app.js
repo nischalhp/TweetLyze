@@ -40,8 +40,7 @@ $( function(){
 					url : "/dates/"+locationid
 				}).success(function(response){
 					app.setSlider(response.data[0].min_date,response.data[0].max_date);
-					console.log(response);
-					console.log(response.data[0]);
+					app.getTrends(geoid,response.data[0].min_date,response.data[0].max_date);
 				}).error(function(response){
 					console.log(response);
 				});

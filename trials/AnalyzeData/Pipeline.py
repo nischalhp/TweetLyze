@@ -67,9 +67,9 @@ class Pipeline:
 			query = """
 			select c,trend from
 			(select count(*) as c,trend from trends where 
-				locationid = %s group by trend)as t1 order by c desc limit 15
+				locationid = %s and date between %s and %s group by trend)as t1 order by c desc limit 15
 			"""
-			cursor.execute(query,(location_id,))
+			cursor.execute(query,(location_id,start_date,end_date))
 			trend_column = 1
 			count_column = 0
 			for row in cursor:

@@ -1,6 +1,11 @@
 from KMedoid import KMedoid
 
 kmedoid_obj = KMedoid()
-return_matrix = kmedoid_obj.get_matrix('2295420')
-for rows in return_matrix:
-	print rows
+clusterid , trends_list = kmedoid_obj.generate_kmedoid('2295420')
+print clusterid
+count = 0
+print trends_list
+for cluster in clusterid:
+	print trends_list[cluster],trends_list[count]
+	count = count + 1
+

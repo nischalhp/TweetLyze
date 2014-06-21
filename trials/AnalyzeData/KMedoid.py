@@ -75,15 +75,16 @@ class KMedoid:
 
 			for row in cursor:
 				trend1 = row[trend1_column]
-
+				trend2 = row[trend2_column]
 				if trend1 not in trends_list:
 					trends_list.append(trend1)	
+				if trend2 not in trends_list:
+					trends_list.append(trend2)
 
 				# this is to check 0,0 1,1 and so on
 				distance_matrix[row_counter][row_counter] = 0
 				# this populates 1,2 and 2,1 and so on 
 				# this avoid 2 loops
-				print "writing data for the current row " +str(row_counter)+ " and column " +str(column_iteration)
 
 				distance_matrix[row_counter][column_iteration] = row[distance_value_column]	
 				distance_matrix[column_iteration][row_counter] = row[distance_value_column]	
@@ -94,9 +95,14 @@ class KMedoid:
 					column_iteration = row_counter + 1 
 						
 
-			return distance_matrix
+			return distance_matrix,trends_list
 
 		except Exception:
 			print traceback.format_exc()
 
 
+	def generate_kmedoid(self,locationid):
+
+		trend_cross_trend_matrix,trends_list = self.get_matrix(locationid)
+		clusterid , error , nfound = Pycluster.kmedoids(trend_cross_trend_matrix,nclusters=4,npass=100)
+		return clusterid , trends_list

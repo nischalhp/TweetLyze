@@ -29,11 +29,17 @@ Things Done :
 
 * Build Trend - Entity Matrix
 
+* Understand what needs to go in as input into K-Medoid
+
+* Use k medoid to group trends - 
+
+* Add sentiment analyzer
+
 To Do : 
 
-* Understand what needs to go in as input into K-Means
+* UI 
 
-* Use k means to group trends - 
+* Documentation 
 
-* Build log likelhood ratio and find the difference in entity tag cloud - Monday
+
 

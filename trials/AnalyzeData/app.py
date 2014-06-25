@@ -9,7 +9,7 @@ app.config.from_pyfile('config.py')
 def hello_world():
 	return send_file('static/index.html')
 
-@app.route('/locations',methods=['GET'])
+@app.route('/locations/',methods=['GET'])
 def get_locations():
 	pipeline_obj = Pipeline();
 	locations_list = pipeline_obj.get_locations()
@@ -18,7 +18,7 @@ def get_locations():
 	print jsonify(json_dict)
 	return jsonify(json_dict)
 
-@app.route('/trends',methods=['GET'])
+@app.route('/trends/',methods=['GET'])
 def get_trends():
 	location_id = request.args.get('locationid')
 	min_date = request.args.get('min_date')
@@ -29,7 +29,7 @@ def get_trends():
 	json_dict['data'] = trends_list
 	return jsonify(json_dict)
 
-@app.route('/dates/<location_id>',methods=['GET'])
+@app.route('/dates/<location_id>/',methods=['GET'])
 def get_dates(location_id):
 	pipeline_obj = Pipeline()
 	dates_list = pipeline_obj.get_dates_location(location_id)
@@ -38,7 +38,7 @@ def get_dates(location_id):
 	print json_dict
 	return jsonify(json_dict)
 
-@app.route('/tfidf',methods=['GET'])
+@app.route('/tfidf/',methods=['GET'])
 def get_tfidf():
 	location_id = request.args.get('locationid')
 	trend = request.args.get('trend')

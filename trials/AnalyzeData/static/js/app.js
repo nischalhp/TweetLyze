@@ -15,7 +15,7 @@ $( function(){
 			onLocationSuccess : function(response){
 				var lineItems = '';
 				$.each(response.data, function(index,location){
-					var lineItem = '<li> <a href="#" class="location-items" data-geoid="'+location.geoid+'">'+location.city+'</a></li>';
+					var lineItem = '<li class="pull-left li-items" > <a href="#" class="location-items" data-geoid="'+location.geoid+'">'+location.city+'</a></li>';
 					lineItems = lineItems+lineItem;
 				});
 				$("#location-list").html(lineItems);
@@ -68,7 +68,7 @@ $( function(){
 				console.log(trend);
 				$.ajax({
 					type: "GET",
-					url : "/tfidf?locationid="+locationid+"&trend="+trend
+					url : "/tfidf/?locationid="+locationid+"&trend="+trend
 				}).success(function(response){
 					graphTfidf.displayTfidf(response.data);
 				}).error(function(response){
@@ -83,12 +83,12 @@ $( function(){
 			displayTrends: function(trends){
 				var fill = d3.scale.category20();
 
-				d3.layout.cloud().size([800, 300])
+				d3.layout.cloud().size([1200, 300])
 				.words(trends
 					.map(function(d) {
 						return {text: d.trend, size: 20 + d.count};
 					}))
-				.padding(5)
+				.padding(30)
 				.font("Impact")
 				.fontSize(function(d) { return d.size; })
 				.on("end", draw)
@@ -96,11 +96,11 @@ $( function(){
 
 				function draw(words) {
 					d3.select(".trends-chart").append("svg")
-					.attr("width", 800)
+					.attr("width", 960)
 					.attr("height", 300)
 					.append("g")
-					.attr("width",800)
-					.attr("height",300)
+					.attr("width",900)
+					.attr("height",250)
 					.attr("transform", "translate(400,100)")
 					.selectAll("text")
 					.data(words)
@@ -127,7 +127,7 @@ $( function(){
 			displayTfidf: function(trends){
 				var fill = d3.scale.category20();
 
-				d3.layout.cloud().size([800, 300])
+				d3.layout.cloud().size([1200, 300])
 				.words(trends
 					.map(function(d) {
 						return {text: d.entity, size: 20 + d.tfidf};
@@ -139,7 +139,7 @@ $( function(){
 				.start();
 
 				function draw(words) {
-					d3.select(".tfidf-chart").append("svg")
+					d3.select("#entity-chart").append("svg")
 					.attr("width", 800)
 					.attr("height", 300)
 					.append("g")

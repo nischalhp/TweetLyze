@@ -4,6 +4,7 @@
 # then to extract the required columns
 # then create the id,entity table
 from PostgresConnector import PostgresConnector
+from KMedoid import KMedoid
 import traceback
 import os
 import re
@@ -234,7 +235,7 @@ class Pipeline:
 					and location_id = %s )group by id) as t3
 				on 
 					t1.id = t3.id) as t4 group by entity)as t5 order by 
-					tf_idf_score desc;
+					tf_idf_score desc limit 100;
 			"""
 			cursor.execute(tfidf_query,(trend,locationid,trend,locationid,trend,locationid,trend,locationid))
 			entity_column = 0
@@ -248,6 +249,42 @@ class Pipeline:
 			return tfidf_list
 		except Exception :
 			print traceback.format_exc()
+
+	def get_cluster(self,location_id):
+		kmedoid_obj = KMedoid()
+		clusterid,trends_list = kmedoid_obj.generate_kmedoid(location_id)
+		nodes_array = [] 
+		links_array = []
+		cluster_id_list = list(set(clusterid))
+		cluster_id_key = {}
+
+		for i in xrange(len(cluster_id_list)):
+			cluster_id_key[cluster_id_list[i]] = i
+
+		for i in xrange(len(clusterid)):
+			name = trends_list[i]
+			cluster_id = clusterid[i]
+			cluster_trend_dict = {}
+			cluster_trend_dict["group"] = cluster_id_key[cluster_id]
+			cluster_trend_dict["nodeName"] = name
+			nodes_array.append(cluster_trend_dict)
+
+			target = cluster_id
+			links_group_dict = {}
+			links_group_dict["source"] = i
+			links_group_dict["target"] = target 
+			links_group_dict["value"] = 1
+			links_array.append(links_group_dict)
+
+		return nodes_array,links_array
+
+
+
+
+
+
+
+
 
 
 

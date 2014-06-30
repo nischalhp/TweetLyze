@@ -12,10 +12,19 @@
   <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet">
   <link href="static/css/iThing.css" rel="stylesheet">
   <style>
-  .li-items{
-    display : inline-block;
-    margin-left:50px;
-  }
+    .li-items{
+      display : inline-block;
+      margin-left:50px;
+    }
+    text{
+      cursor:pointer;
+    }
+    #trends-chart-row{
+      margin-top: 20px;
+    }
+    #entity-chart-row{
+      margin-top: 20px;
+    }
   </style>
 
 
@@ -31,34 +40,48 @@
 
       <h1 class="text-center"> TweetLyze</h1> 
       <!-- location container -->
-      <div class="container span12">
-        <div class="row">
+      <div class="row">
         <div class="container span12">
 
-            <div class="well" id="location-list-container">
-              <ul class="" id="location-list">
-                <li class="nav-header">Locations</li>
-              </ul>
-            </div>
+          <div class="well span12" id="location-list-container">
+            <ul class="" id="location-list">
+              <li class="nav-header">Locations</li>
+            </ul>
           </div>
         </div>
-        
+      </div>
+
       <!-- slider container --> 
-      <div class="containter span12">
-        <div class="row">
-          <div id="slider" class="span3" ></div>
-          <div class="container span8 tfidf-chart" id="tfidfchart"></div>
+      <div class="row">
+        <div class="containter span12">
+          <div id="slider" class="span12" ></div>
 
         </div>
       </div>
 
+      <div class="row" id="trends-chart-row">
+      <!-- trends chart container-->
+      <div class="container span12">
+        <div class="offset1 span10 trends-chart" id="trends"></div>
+      </div>
+    </div>
+
+    <!-- Tfidf chart-->
+      <div class="row" id="entity-chart-row">
+      <!-- trends chart container-->
+      <div class="container span12">
+        <div class="offset1 span10 " id="entity-chart"></div>
+      </div>
+    </div>
+
+      <!-- 
       <div class="container span12">
       <div class="container span8 trends-chart" id="trends"></div>
 
       </div>
 
 
-    <!-- Le javascript
+    <!-- Le javascript 
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 

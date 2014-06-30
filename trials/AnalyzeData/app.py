@@ -46,10 +46,18 @@ def get_tfidf():
 	tfidf_list = pipeline_obj.get_tfidf(location_id,trend)
 	json_dict = {}
 	json_dict['data'] = tfidf_list 
-	print json_dict
+	return jsonify(json_dict)
+
+@app.route('/kmedoids/<location_id>/',methods=['GET'])
+def get_cluster(location_id):
+	pipeline_obj = Pipeline()
+	nodes_list,links_list = pipeline_obj.get_cluster(location_id)
+	json_dict = {}
+	json_dict['nodes'] = nodes_list 
+	json_dict['links'] = links_list
 	return jsonify(json_dict)
 
 
 if __name__ == '__main__':
-	app.run(debug=app.config["DEBUG"])
+	app.run(host='0.0.0.0',debug=app.config["DEBUG"])
 

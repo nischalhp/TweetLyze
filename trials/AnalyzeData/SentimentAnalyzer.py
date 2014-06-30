@@ -5,6 +5,7 @@ from textblob.sentiments import NaiveBayesAnalyzer
 class SentimentAnalyzer:
 
 	def get_sentiments(self):
+
 		conn = PostgresConnector().get_connection()
 		cursor = conn.cursor()
 		query = """
@@ -13,19 +14,17 @@ class SentimentAnalyzer:
 		cursor.execute(query)
 		id_column = 0
 		text_column = 1
-		for row in cursor:
-			cursor_insert = conn.cursor()
-			text = row[text_column]
-			blob = TextBlob(text,analyzer=NaiveBayesAnalyzer())
-			print "inserting sentiments for the text %s" % text
-			insert_query = """
-				update organized_tweets
-				set sentiment = %s,
-				pos_sentiment = %s,
-				neg_sentiment = %s
-				where id = %s
+		with open("sentiments.tsv","w") as f:
+			for row in cursor:
+				text = row[text_column]
+				blob = TextBlob(text,analyzer=NaiveBayesAnalyzer())
+				print 'writing for tweet with id ' +str(row[id_column])
 
-			"""
-			cursor_insert.execute(insert_query,(blob.sentiment.classification,
-				blob.sentiment.p_pos,blob.sentiment.p_neg,row[id_column]))
-			conn.commit()	
+				f.write(str(row[id_column])+'\t'+str(blob.sentiment.classification)+'\t'+str(blob.sentiment.p_pos)+'\t'+str(blob.sentiment.p_neg)+'\n')
+
+		# with open('sentiments.txt') as f:
+		# 	cursor.write = conn.cursor()
+		# 	cursor.write.copy_from(f,'sentiments',columns=('id','sentiment','pos_sentiment','neg_sentiment'))
+
+		# conn.commit()
+		# os.remove('sentiments.txt')

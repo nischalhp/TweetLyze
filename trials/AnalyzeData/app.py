@@ -48,6 +48,16 @@ def get_tfidf():
 	json_dict['data'] = tfidf_list 
 	return jsonify(json_dict)
 
+@app.route('/tweets/',methods=['GET'])
+def get_tweets():
+	trend = request.args.get('trend')
+	entity = request.args.get('entity')
+	pipeline_obj = Pipeline()
+	tweets_list = pipeline_obj.get_tweets(trend,entity)
+	json_dict = {}
+	json_dict['data'] = tweets_list 
+	return jsonify(json_dict)
+
 @app.route('/kmedoids/<location_id>/',methods=['GET'])
 def get_cluster(location_id):
 	pipeline_obj = Pipeline()

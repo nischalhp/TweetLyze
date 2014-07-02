@@ -68,7 +68,10 @@ class Pipeline:
 			query = """
 			select c,trend from
 			(select count(*) as c,trend from trends where 
-				locationid = %s and date between %s and %s group by trend)as t1 order by c desc limit 15
+				locationid = %s and date between %s and %s 
+				and id in(select trendid from tweets)
+				group by trend)
+			as t1 order by c desc limit 15
 			"""
 			cursor.execute(query,(location_id,start_date,end_date))
 			trend_column = 1
@@ -100,7 +103,7 @@ class Pipeline:
 				select id,trend from trends 
 				where trend in(select trend from (select count(*) as c,trend from 
 					trends where locationid = %s group by trend)as t1 order 
-					by c desc limit 15)
+					by c desc limit 80)
 						"""
 				cursor = conn.cursor()
 				location_id = row_location[location_column]
@@ -277,6 +280,25 @@ class Pipeline:
 			links_array.append(links_group_dict)
 
 		return nodes_array,links_array
+
+	def get_tweets(self,trend,entity):
+		conn = PostgresConnector().get_connection()
+		cursor = conn.cursor()
+		query_tweets = """
+
+			select text from organized_tweets
+			where id in (select id from id_entity where 
+			entity = %s) limit 50
+		"""
+		cursor.execute(query_tweets,(entity,))
+		text_list = []
+		for row in cursor:
+			text_dict = {}
+			text_dict["name"] = row[0]
+			text_list.append(text_dict)
+
+		return text_list
+
 
 
 

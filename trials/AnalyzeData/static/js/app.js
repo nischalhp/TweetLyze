@@ -1,4 +1,5 @@
 var geoid = '';
+var trend = '';
 $( function(){
 	app = {
 			//init is the property of the object app which is
@@ -10,7 +11,19 @@ $( function(){
 				}).success(function(response){
 					app.onLocationSuccess(response);
 				});
+
+				var source = $("#tweet-tpl").html();
+				var template = Handlebars.compile(source);
+				this.tweet_template = template;
+
+
+
+				var source_adj = $("#adj-tpl").html();
+				var template_adj = Handlebars.compile(source_adj);
+				this.template_adj = template_adj;
+
 			},
+
 
 			onLocationSuccess : function(response){
 				var lineItems = '';
@@ -68,15 +81,40 @@ $( function(){
 				console.log(trend);
 				$.ajax({
 					type: "GET",
-					url : "/tfidf/?locationid="+locationid+"&trend="+trend
+					url : "/tfidf/?locationid="+encodeURIComponent(locationid)+"&trend="+encodeURIComponent(trend)
 				}).success(function(response){
 					graphTfidf.displayTfidf(response.data);
 				}).error(function(response){
 					console.log(response);
 				});
-			}
+			},
+			getTweets : function(trend,entity){
+				console.log(trend);
+				$.ajax({
+					type: "GET",
+					url : "/tweets/?trend="+encodeURIComponent(trend)+"&entity="+encodeURIComponent(entity)
+				}).success(function(response){
+					$("#tweets-container").html(app.tweet_template(response));
+					$("#tweetModal").modal("show");
+					console.log(response)
+				}).error(function(response){
+					console.log(response);
+				});
+			},
+				getAdjacencyMatrix : function(geoid){
+				console.log(trend);
+				$.ajax({
+					type: "GET",
+					url : "/kmedoids/"+geoid
+				}).success(function(response){
+					miserables = response;
+					$("#adj-cont").html(app.template_adj(response));
+				}).error(function(response){
+					console.log(response);
+				});
 
 		}
+	}
 
 		graphTrends = {
 
@@ -114,6 +152,8 @@ $( function(){
 					})
 					.text(function(d) { return d.text; })
 					.on("click",function(d){
+						$("#entity-chart").html("");
+						trend = d.text;
 						app.getTfidfEntites(geoid,d.text);
 					});
 				}
@@ -125,12 +165,12 @@ $( function(){
 		graphTfidf = {
 
 			displayTfidf: function(trends){
-				var fill = d3.scale.category20();
+				var fill = d3.scale.category10();
 
 				d3.layout.cloud().size([1200, 300])
 				.words(trends
 					.map(function(d) {
-						return {text: d.entity, size: 20 + d.tfidf};
+						return {text: d.entity, size: 20 + Math.log(d.tfidf)};
 					}))
 				.padding(5)
 				.font("Impact")
@@ -140,11 +180,11 @@ $( function(){
 
 				function draw(words) {
 					d3.select("#entity-chart").append("svg")
-					.attr("width", 800)
+					.attr("width", 960)
 					.attr("height", 300)
 					.append("g")
-					.attr("width",800)
-					.attr("height",300)
+					.attr("width",900)
+					.attr("height",250)
 					.attr("transform", "translate(400,100)")
 					.selectAll("text")
 					.data(words)
@@ -158,7 +198,7 @@ $( function(){
 					})
 					.text(function(d) { return d.text; })
 					.on("click",function(d){
-						app.getTfidfEntites(geoid,d.text);
+						app.getTweets(trend,d.text);
 					});
 				}
 
@@ -185,6 +225,8 @@ $("#location-list").on('click',".location-items" , function(event){
 	/*app.getTrends($(this).attr("data-geoid"));*/
 	geoid = '';
 	geoid = $(this).attr("data-geoid") ;
+	$('#trends').html("");
+	$('#entity-chart').html("");
 	app.getDates(geoid);
 
 });
@@ -192,10 +234,16 @@ $("#location-list").on('click',".location-items" , function(event){
 
 // bind function to date slider
 $("#slider").bind("valuesChanged", function(e, data){
-  var  min_date = convertMillisecondsToDate(Date.parse(data.values.min));
-  var max_date = convertMillisecondsToDate(Date.parse(data.values.max));
-  $("#trends").html("");
-  app.getTrends(geoid,min_date,max_date);
+	var  min_date = convertMillisecondsToDate(Date.parse(data.values.min));
+	var max_date = convertMillisecondsToDate(Date.parse(data.values.max));
+	$("#trends").html("");
+	$("#entity-chart").html("");
+	app.getTrends(geoid,min_date,max_date);
+});
+
+$("#adj-mat").on('click',"#btn-sim" , function(event){
+	app.getAdjacencyMatrix(geoid);
+
 });
 
 function convertMillisecondsToDate(millseconds){

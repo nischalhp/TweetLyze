@@ -35,11 +35,13 @@ Things Done :
 
 * Add sentiment analyzer
 
-To Do : 
-
 * UI 
 
 * Documentation 
+
+
+To Do : 
+
 
 
 

@@ -11,6 +11,12 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * This class builds a pool of twitter consumer objects
+ * that is used to fetch data from twitter
+ * @author nischalhp
+ *
+ */
 public class ConsumerPool {
 
 	private static Logger log;

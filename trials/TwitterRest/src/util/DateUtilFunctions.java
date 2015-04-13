@@ -1,11 +1,11 @@
-package helpers;
+package util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Utilities {
+public class DateUtilFunctions {
 	public static Date getCurrentDate() throws ParseException {
 
 		Calendar cal = Calendar.getInstance();

@@ -5,15 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import models.UrlDTO;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
@@ -24,9 +22,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONException;
 
-import twitter.GetTrends;
+import services.twitter.TwitterServices;
 
-public class JuliusCaesar {
+public class TweetsDownloader {
 
 	private static String propertiesMain = "properties/property.properties";
 	public static BlockingQueue<OAuthConsumer> consumerPool;
@@ -50,7 +48,7 @@ public class JuliusCaesar {
 			String logPath = PropertyHandler.getProperty("logPath");
 
 			PropertyConfigurator.configure(logPath);
-			log = Logger.getLogger(JuliusCaesar.class.getName());
+			log = Logger.getLogger(TweetsDownloader.class.getName());
 			log.info("consumer pool created");
 
 			/*
@@ -91,7 +89,7 @@ public class JuliusCaesar {
 			 */
 			while (true) {
 
-				Stack<MrUrl> jobStack = MrMestri.buildJobs();
+				Stack<UrlDTO> jobStack = JobController.buildJobs();
 				int jobToken = 0;
 
 				/*
@@ -106,11 +104,11 @@ public class JuliusCaesar {
 				 * 
 				 */
 				if (jobStack.size() == 0){
-					OAuthConsumer consumerObj = JuliusCaesar
+					OAuthConsumer consumerObj = TweetsDownloader
 							.getConsumerObject();
-					GetTrends.retrieveTrends(consumerObj);
+					TwitterServices.retrieveTrends(consumerObj);
 					log.info("Trends for the day has been added to the database");
-					JuliusCaesar.putConsumerObject(consumerObj);
+					TweetsDownloader.putConsumerObject(consumerObj);
 				}
 
 				while (jobStack.size() > 0) {
@@ -121,7 +119,7 @@ public class JuliusCaesar {
 					 * process again
 					 */
 
-					MrRunnable worker = new MrRunnable(jobStack.pop());
+					JobRunner worker = new JobRunner(jobStack.pop());
 
 					jobToken++;
 					executor.execute(worker);

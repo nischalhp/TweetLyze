@@ -1,14 +1,14 @@
-package main;
+package models;
 
 import java.net.URL;
 import java.util.UUID;
 
-public class MrUrl {
+public class UrlDTO {
 
 	private URL url;
 	private UUID trendId;
 
-	public MrUrl(URL url, UUID id) {
+	public UrlDTO(URL url, UUID id) {
 
 		this.url = url;
 		this.trendId = id;

@@ -1,4 +1,4 @@
-package helpers;
+package util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 
-import main.MrUrl;
+import models.UrlDTO;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
@@ -31,7 +31,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 
-import twitter.GetTrends;
+import services.twitter.TwitterServices;
 
 public class ExampleTrials {
 
@@ -97,12 +97,10 @@ public class ExampleTrials {
 
 		Calendar cal = Calendar.getInstance();
 		Date d = cal.getTime();
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"HH");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH");
 		String d1 = dateFormat.format(d);
 		System.out.println(d1);
-		SimpleDateFormat dateFormat2 = new SimpleDateFormat(
-				"mm");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("mm");
 		String d2 = dateFormat2.format(d);
 		System.out.println(d2);
 
@@ -154,7 +152,7 @@ public class ExampleTrials {
 		OAuthConsumer consumerObj = null;
 		try {
 			consumerObj = consumerPool.take();
-			GetTrends.retrieveTrends(consumerObj);
+			TwitterServices.retrieveTrends(consumerObj);
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
 				| OAuthCommunicationException | IOException | JSONException
 				| ParseException | SQLException e) {
@@ -170,7 +168,7 @@ public class ExampleTrials {
 				try {
 					OAuthConsumer consumerObj2 = consumerPool.take();
 					consumerPool.put(consumerObj);
-					GetTrends.retrieveTrends(consumerObj2);
+					TwitterServices.retrieveTrends(consumerObj2);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				} catch (OAuthMessageSignerException
@@ -185,7 +183,7 @@ public class ExampleTrials {
 		}
 	}
 
-	public static void searchTweets(OAuthConsumer consumer, MrUrl urlObj)
+	public static void searchTweets(OAuthConsumer consumer, UrlDTO urlObj)
 
 	throws OAuthMessageSignerException, OAuthExpectationFailedException,
 			OAuthCommunicationException, ClientProtocolException, IOException,

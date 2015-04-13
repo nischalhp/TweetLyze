@@ -4,11 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import net.oauth.OAuthConsumer;
+import models.UrlDTO;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
@@ -18,14 +17,20 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONException;
 
-import twitter.SearchTrends;
+import services.twitter.TwitterServices;
 
-public class MrRunnable implements Runnable {
+/**
+ * This class runs the job
+ * @author nischalhp
+ *
+ */
+
+public class JobRunner implements Runnable {
 
 	private static String propertiesMain = "properties/property.properties";
-	private MrUrl urlObj;
+	private UrlDTO urlObj;
 
-	MrRunnable(MrUrl urlObj) {
+	JobRunner(UrlDTO urlObj) {
 
 		this.urlObj = urlObj;
 	}
@@ -39,11 +44,11 @@ public class MrRunnable implements Runnable {
 			propertyHandler.load(new FileInputStream(propertiesMain));
 			String logPath = propertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
-			log = Logger.getLogger(MrRunnable.class.getName());
+			log = Logger.getLogger(JobRunner.class.getName());
 			//log.info("Logger has been set , now firing call to get tweets");
-			oauth.signpost.OAuthConsumer consumerObj= JuliusCaesar.getConsumerObject();
-			SearchTrends.getTweets(consumerObj, urlObj);
-			JuliusCaesar.putConsumerObject(consumerObj);
+			oauth.signpost.OAuthConsumer consumerObj= TweetsDownloader.getConsumerObject();
+			TwitterServices.getTweets(consumerObj, urlObj);
+			TweetsDownloader.putConsumerObject(consumerObj);
 
 		} catch (FileNotFoundException e) {
 			log.error(e);

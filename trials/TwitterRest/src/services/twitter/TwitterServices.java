@@ -1,11 +1,10 @@
-package twitter;
-
-import helpers.MrPostgres;
-import helpers.Utilities;
+package services.twitter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
 
+import models.UrlDTO;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
@@ -31,14 +31,79 @@ import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.postgresql.util.PGobject;
 
-public class GetTrends {
+import util.DateUtilFunctions;
+import util.MrPostgres;
 
-	private static Logger log;
+public class TwitterServices {
 	private static String propertiesMain = "properties/property.properties";
 
-	public GetTrends() {
+	public static void getTweets(OAuthConsumer consumer, UrlDTO urlObj)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			ClientProtocolException, IOException, IllegalStateException,
+			JSONException, URISyntaxException, SQLException, HttpException {
+		/*
+		 * 
+		 * We have the url and the trend id once we get the array of tweets , we
+		 * shall store it in postgres
+		 */
+		Properties propertyHandler = new Properties();
+		propertyHandler.load(new FileInputStream(propertiesMain));
+		String logPath = propertyHandler.getProperty("logPath");
+		PropertyConfigurator.configure(new FileInputStream(logPath));
+		Logger log = Logger.getLogger(TwitterServices.class.getName());
 
+		URL url = urlObj.getUrl();
+		HttpGet requestObj = new HttpGet(url.toURI());
+		// log.info("signing object using consumerObj "
+		// +consumer.getConsumerKey());
+		consumer.sign(requestObj);
+		HttpClient client = new DefaultHttpClient();
+		HttpResponse response = client.execute(requestObj);
+		// System.out.println(response);
+		// log.info(response);
+		/*
+		 * String res = response.toString(); String[] getLimit =
+		 * res.split("x-rate-limit-remaining:"); String[] limit =
+		 * getLimit[1].split(","); //log.info("limit for consumer Obj "
+		 * +consumer.getConsumerKey() + " is " +limit[0]);
+		 */
+		int statusCode = response.getStatusLine().getStatusCode();
+
+		if (statusCode == 200) {
+			JSONObject searchArray = new JSONObject(IOUtils.toString(response
+					.getEntity().getContent()));
+			JSONArray statusesJson = searchArray.getJSONArray("statuses");
+			// System.out.println(statusesJson);
+
+			Connection conn = MrPostgres.getPostGresConnection();
+			String query = "INSERT INTO tweets(trendid,tweets) values(?,?)";
+			PreparedStatement stmt = conn.prepareStatement(query);
+			int parameterPlaceHolder = 1;
+
+			PGobject toInsertObjectJson = new PGobject();
+			toInsertObjectJson.setType("json");
+			toInsertObjectJson.setValue(statusesJson.toString());
+
+			PGobject toInsertObjectUuid = new PGobject();
+			toInsertObjectUuid.setType("uuid");
+			toInsertObjectUuid.setValue(urlObj.getId().toString());
+
+			stmt.setObject(parameterPlaceHolder++, toInsertObjectUuid);
+			stmt.setObject(parameterPlaceHolder++, toInsertObjectJson);
+
+			boolean executeStatus = stmt.execute();
+			log.info("execution status of inserting tweets to the table for the trend "
+					+ url);
+			conn.close();
+		} else {
+			log.error("Something went wrong will getting tweets for the trend with id "
+					+ urlObj.getId());
+			throw new HttpException("Check the status code"
+					+ Integer.toString(statusCode));
+		}
 	}
 
 	public static void retrieveTrends(OAuthConsumer consumer)
@@ -54,7 +119,7 @@ public class GetTrends {
 		PropertyHandler.load(new FileInputStream(propertiesMain));
 		PropertyConfigurator.configure(PropertyHandler.getProperty("logPath"));
 
-		log = Logger.getLogger(GetTrends.class.getName());
+		log = Logger.getLogger(TwitterServices.class.getName());
 		log.info("Property file initialized , logger initialized");
 		String trendsUrl = PropertyHandler.getProperty("trendsUrl");
 		log.info("trend url retrieved " + trendsUrl);
@@ -98,8 +163,8 @@ public class GetTrends {
 				/*
 				 * System.out.println(response.getStatusLine().getReasonPhrase()
 				 * + " , status code " + statusCode);
-				System.out.println(response);
-				*/
+				 * System.out.println(response);
+				 */
 				if (statusCode == 200) {
 					StringWriter writer = new StringWriter();
 					IOUtils.copy(response.getEntity().getContent(), writer);
@@ -111,7 +176,7 @@ public class GetTrends {
 						JSONObject jsonObjTrend = jsonArrayTrends
 								.getJSONObject(i);
 						String name = jsonObjTrend.getString("name");
-						Date currentDate = Utilities.getCurrentDate();
+						Date currentDate = DateUtilFunctions.getCurrentDate();
 						java.sql.Date sqlDate = new java.sql.Date(
 								currentDate.getTime());
 						String insertQuery = "INSERT INTO trends(trend,date,locationId) values(?,?,?)";
@@ -126,7 +191,8 @@ public class GetTrends {
 					}
 
 				} else {
-					log.error("Something went wrong while retrieving trends,perform further operations based on the status code" +statusCode);
+					log.error("Something went wrong while retrieving trends,perform further operations based on the status code"
+							+ statusCode);
 					throw new HttpException(Integer.toString(statusCode));
 				}
 				// break;
@@ -137,12 +203,4 @@ public class GetTrends {
 
 		// return trends;
 	}
-
-	/*
-	 * System.out.println(searchUrl); searchUrl =
-	 * searchUrl.replaceAll("/search", "/search/tweets.json"); searchUrl =
-	 * searchUrl.replaceAll("//twitter.com", "//api.twitter.com/1.1"); searchUrl
-	 * = searchUrl.replaceAll("http", "https"); searchUrl = searchUrl +
-	 * "&lang=en"; System.out.println(searchUrl)
-	 */
 }

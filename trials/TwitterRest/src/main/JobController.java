@@ -1,8 +1,5 @@
 package main;
 
-import helpers.MrPostgres;
-import helpers.Utilities;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,22 +14,25 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.UUID;
 
+import models.UrlDTO;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import util.MrPostgres;
+import util.DateUtilFunctions;
 
 /*
  This class will help in building the job stack 
  that will be used by threads to work on
- Mestri in kannada means a person who assigns jobs 
- to people in construction business
  */
 
-public class MrMestri {
+public class JobController {
 	private static String propertiesMain = "properties/property.properties";
 
-	public static Stack<MrUrl> buildJobs() {
+	public static Stack<UrlDTO> buildJobs() {
 
-		Stack<MrUrl> jobStack = new Stack<MrUrl>();
+		Stack<UrlDTO> jobStack = new Stack<UrlDTO>();
 		Logger log = null;
 
 		try {
@@ -40,7 +40,7 @@ public class MrMestri {
 			PropertyHandler.load(new FileInputStream(propertiesMain));
 			String logPath = PropertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
-			log = Logger.getLogger(MrMestri.class.getName());
+			log = Logger.getLogger(JobController.class.getName());
 			Connection postgresConn = MrPostgres.getPostGresConnection();
 
 			String dbTables = PropertyHandler.getProperty("dbTables");
@@ -73,7 +73,7 @@ public class MrMestri {
 
 				String selectTrends = "SELECT id,trend,date from "
 						+ dbTablesPropertyHandler.getProperty("trends")
-						+ " where date = '" + Utilities.getCurrentDate() + "'";
+						+ " where date = '" + DateUtilFunctions.getCurrentDate() + "'";
 
 				PreparedStatement stmt = postgresConn
 						.prepareStatement(selectTrends);
@@ -82,7 +82,7 @@ public class MrMestri {
 
 				if (rs == null) {
 					log.error("Was unable to fetch trends for the date"
-							+ Utilities.getCurrentDate()
+							+ DateUtilFunctions.getCurrentDate()
 							+ " , something has gone wrong ");
 				} else {
 					while (rs.next()) {
@@ -96,7 +96,7 @@ public class MrMestri {
 						trend = URLEncoder.encode(trend, "ISO-8859-1");
 						searchUrl = searchUrl + trend + "&lang=en&count=100&result_type=recent";
 						URL searchURL = new URL(searchUrl);
-						MrUrl urlObj = new MrUrl(searchURL, id);
+						UrlDTO urlObj = new UrlDTO(searchURL, id);
 						jobStack.push(urlObj);
 
 					}

@@ -1,4 +1,4 @@
-package main;
+package util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import main.TweetsDownloader;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
@@ -20,9 +21,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONException;
 
-import twitter.GetTrends;
+import services.twitter.TwitterServices;
 
-public class MrTimer extends TimerTask {
+public class TimingController extends TimerTask {
 
 	private final static long oncePerDay = 1000 * 60 * 60 * 24;
 	private final static int time = 00;
@@ -33,11 +34,11 @@ public class MrTimer extends TimerTask {
 
 	public void run() {
 		try {
-			OAuthConsumer consumerObj = JuliusCaesar.getConsumerObject();
+			OAuthConsumer consumerObj = TweetsDownloader.getConsumerObject();
 
-			GetTrends.retrieveTrends(consumerObj);
+			TwitterServices.retrieveTrends(consumerObj);
 			log.info("Trends for the day has been added to the database");
-			JuliusCaesar.putConsumerObject(consumerObj);
+			TweetsDownloader.putConsumerObject(consumerObj);
 
 		} catch (OAuthMessageSignerException | OAuthExpectationFailedException
 				| OAuthCommunicationException | IOException | JSONException
@@ -70,9 +71,9 @@ public class MrTimer extends TimerTask {
 			propertyHandler.load(new FileInputStream(propertiesMain));
 			String logPath = propertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
-			log = Logger.getLogger(MrTimer.class.getName());
+			log = Logger.getLogger(TimingController.class.getName());
 
-			MrTimer task = new MrTimer();
+			TimingController task = new TimingController();
 			Timer timer = new Timer();
 			timer.schedule(task, getTommorowTime(), oncePerDay);
 		} catch (IOException e) {

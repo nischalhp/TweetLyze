@@ -34,7 +34,7 @@ import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
 import util.DateUtilFunctions;
-import util.MrPostgres;
+import util.PostgresConnector;
 
 public class TwitterServices {
 	private static String propertiesMain = "properties/property.properties";
@@ -78,7 +78,7 @@ public class TwitterServices {
 			JSONArray statusesJson = searchArray.getJSONArray("statuses");
 			// System.out.println(statusesJson);
 
-			Connection conn = MrPostgres.getPostGresConnection();
+			Connection conn = PostgresConnector.getPostGresConnection();
 			String query = "INSERT INTO tweets(trendid,tweets) values(?,?)";
 			PreparedStatement stmt = conn.prepareStatement(query);
 			int parameterPlaceHolder = 1;
@@ -126,7 +126,7 @@ public class TwitterServices {
 
 		// Get postgres connection and call the location tables to get the codes
 
-		Connection conn = MrPostgres.getPostGresConnection();
+		Connection conn = PostgresConnector.getPostGresConnection();
 		if (conn != null) {
 			log.info("Connection object to postgres is created");
 

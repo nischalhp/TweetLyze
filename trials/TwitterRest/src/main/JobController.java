@@ -19,7 +19,7 @@ import models.UrlDTO;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import util.MrPostgres;
+import util.PostgresConnector;
 import util.DateUtilFunctions;
 
 /*
@@ -41,7 +41,7 @@ public class JobController {
 			String logPath = PropertyHandler.getProperty("logPath");
 			PropertyConfigurator.configure(new FileInputStream(logPath));
 			log = Logger.getLogger(JobController.class.getName());
-			Connection postgresConn = MrPostgres.getPostGresConnection();
+			Connection postgresConn = PostgresConnector.getPostGresConnection();
 
 			String dbTables = PropertyHandler.getProperty("dbTables");
 			Properties dbTablesPropertyHandler = new Properties();

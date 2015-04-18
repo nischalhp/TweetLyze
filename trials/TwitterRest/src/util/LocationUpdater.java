@@ -36,7 +36,7 @@ public class LocationUpdater {
 			Properties dbProperties = new Properties();
 			dbProperties.load(new FileInputStream(dbTables));
 			// get a postGres connection object
-			Connection conn = MrPostgres.getPostGresConnection();
+			Connection conn = PostgresConnector.getPostGresConnection();
 			log.info("Connection object to postgres database recieved");
 			String locationTableName = dbProperties.getProperty("location");
 			String queryToInsert = "INSERT INTO location(id,city) values(?,?)";

@@ -11,7 +11,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-public class MrPostgres {
+public class PostgresConnector {
 
 	private static String propertiesMain = "properties/property.properties";
 
@@ -31,7 +31,7 @@ public class MrPostgres {
 			String logPath = PropertyHandler.getProperty("logPath");
 
 			PropertyConfigurator.configure(logPath);
-			log = Logger.getLogger(MrPostgres.class.getName());
+			log = Logger.getLogger(PostgresConnector.class.getName());
 			//log.info(" Required credentials to connect to the postgres server is complete");
 			conn = DriverManager.getConnection("jdbc:postgresql://" + hostName
 					+ ":" + port + "/" + dbName, uname, pwd);

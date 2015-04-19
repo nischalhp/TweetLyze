@@ -40,7 +40,13 @@ Things Done :
 * Documentation 
 
 
-To Do : 
+Twitter REST:
+
+Getting Trends based on different locations without breaching rate limits.
+
+Ability to add multiple accounts and maintain rate limit across all of them.
+
+Database used: Postgres.
 
 
 
